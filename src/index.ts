@@ -1,7 +1,6 @@
 import ConfigParams from './Client/ConfigParams';
 import FurudeConfig from './Client/FurudeConfig';
 import FurudeRika from './Client/FurudeRika';
-import fs from 'fs';
 import { token, defaultPrefixes } from './json/config.json';
 import CommandsReader from './IO/CommandsReader';
 

@@ -4,7 +4,7 @@ import { clientID, devGuildID, token } from '../json/config.json';
 import consola from 'consola';
 import CommandsReader from '../IO/CommandsReader';
 
-const isDev = true;
+const isDev = false;
 
 const commands = CommandsReader.getCommands().map((command) => command.toJSON());
 const rest = new REST({ version: '9' }).setToken(token);
