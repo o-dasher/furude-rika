@@ -1,14 +1,10 @@
-import ConfigParams from './Client/ConfigParams';
 import FurudeConfig from './Client/FurudeConfig';
 import FurudeRika from './Client/FurudeRika';
-import { token, defaultPrefixes } from './json/config.json';
+import * as configParams from './json/config.json';
 import CommandsReader from './IO/CommandsReader';
+import Localizer from './Localization/Localizer';
 
-
-const configParams: ConfigParams = {
-  token: token,
-  defaultPrefixes: defaultPrefixes
-};
+Localizer.init();
 
 const config = new FurudeConfig(configParams);
 const client = new FurudeRika(config);

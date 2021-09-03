@@ -1,0 +1,18 @@
+{
+  "resources": {
+    "en": {
+      "translation": {
+        "ping": "Pong! took PINGMSms to aswer your message! and PINGAPIMSms to ping the API!",
+        "avatarTitle": "That's a nice avatar...",
+        "avatarDescription": "Here, USER's avatar for you."
+      }
+    },
+    "pt": {
+      "translation": {
+        "ping": "Pingo! levei PINGMSms pra responder a sua mensagem! e PINGAPIMSms pra pingar a API!",
+        "avatarTitle": "Que ícone bonito esse...",
+        "avatarDescription": "Pega ai o avatar do USER logo..."
+      }
+    }
+  }
+}

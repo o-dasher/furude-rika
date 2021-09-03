@@ -1,9 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import CommandABC from '../interfaces/CommandABC';
+import IOPaths from './IOPaths';
 
 class CommandsReader {
-  public static commandsPath: string = path.join(path.resolve("./"), 'src', 'commands/');
+  public static commandsPath: string = path.join(
+    path.resolve('./'),
+    IOPaths.srcPath,
+    IOPaths.commandsPath
+  );
 
   static getCommands(): CommandABC[] {
     const commandsStrings = fs
