@@ -1,33 +1,23 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import {
+  SlashCommandBuilder,
+  SlashCommandSubcommandBuilder,
+  SlashCommandSubcommandsOnlyBuilder
+} from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
-import i18next from 'i18next';
 
 import Command from './Command';
+import SubCommandABC from './SubCommandABC';
 
 abstract class CommandABC extends SlashCommandBuilder implements Command {
+  private readonly subCommands: SubCommandABC[] = [];
   abstract run(interaction: CommandInteraction): void;
-
-  protected getLocaleString(
-    interaction: CommandInteraction,
-    tag: string
-  ): string {
-    return i18next.t(tag, { lng: this.getlanguage(interaction) });
+  public addSelfSubcommand(subcommand: SubCommandABC): SubCommandABC {
+    super.addSubcommand(subcommand);
+    this.subCommands.push(subcommand);
+    return subcommand;
   }
-
-  private getlanguage(interaction: CommandInteraction): string {
-    let language = i18next.language;
-    switch (interaction.guild.preferredLocale) {
-      case 'pt-BR':
-        language = 'pt';
-        break;
-      case 'pt':
-        language = 'pt';
-        break;
-      default:
-        language = i18next.language;
-        break;
-    }
-    return language;
+  public getSubcommand(subCommandString: string): SubCommandABC {
+    return this.subCommands.filter((c) => c.name === subCommandString)[0];
   }
 }
 

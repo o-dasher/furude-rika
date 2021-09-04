@@ -4,6 +4,7 @@ import BotEmbed from '../../Classes/Embed/BotEmbed';
 import InteractionHelper from '../../Classes/Interactions/InteractionHelper';
 import UserOption from '../../Classes/SlashCommands/SlashOptions/UserOption';
 import CommandABC from '../../interfaces/CommandABC';
+import Localizer from '../../Localization/Localizer';
 import LocalizeTags from '../../Localization/LocalizeTags';
 
 class Avatar extends CommandABC {
@@ -19,12 +20,15 @@ class Avatar extends CommandABC {
   async run(interaction: CommandInteraction) {
     const user = InteractionHelper.defaultOptionalUser(interaction);
     const embed = new BotEmbed(interaction)
-      .setTitle(this.getLocaleString(interaction, LocalizeTags.avatarTitle))
+      .setTitle(
+        Localizer.getLocaleString(interaction, LocalizeTags.avatarTitle)
+      )
       .setDescription(
         ` ** 
-        ${super
-          .getLocaleString(interaction, LocalizeTags.avatarDescription)
-          .replace('USER', `[${user}](${user.avatarURL()})`)}
+        ${Localizer.getLocaleString(
+          interaction,
+          LocalizeTags.avatarDescription
+        ).replace('USER', `[${user}](${user.avatarURL()})`)}
         ** `
       )
       .setImage(user.avatarURL({ dynamic: true, size: 1024 }));

@@ -2,6 +2,7 @@ import { CommandInteraction, Permissions, TextChannel } from 'discord.js';
 import i18next from 'i18next';
 import OptionsTags from '../../Classes/SlashCommands/SlashOptions/OptionsTags';
 import CommandABC from '../../interfaces/CommandABC';
+import Localizer from '../../Localization/Localizer';
 import LocalizeTags from '../../Localization/LocalizeTags';
 
 class Clear extends CommandABC {
@@ -22,10 +23,10 @@ class Clear extends CommandABC {
 
     await interaction.channel.bulkDelete(amount, true);
     await interaction.reply(
-      `** ${super.getLocaleString(interaction, LocalizeTags.clearReply).replace(
-        'AMOUNT',
-        amount.toString()
-      )} **
+      `** ${Localizer.getLocaleString(
+        interaction,
+        LocalizeTags.clearReply
+      ).replace('AMOUNT', amount.toString())} **
       `
     );
   }

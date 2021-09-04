@@ -5,6 +5,7 @@ import CommandABC from '../../interfaces/CommandABC';
 import { evaluate } from 'mathjs';
 import i18next from 'i18next';
 import LocalizeTags from '../../Localization/LocalizeTags';
+import Localizer from '../../Localization/Localizer';
 
 class Math extends CommandABC {
   constructor() {
@@ -23,17 +24,17 @@ class Math extends CommandABC {
       result = evaluate(expression);
     } catch (err) {
       await interaction.reply(
-        ` ** ${super
-          .getLocaleString(interaction, LocalizeTags.mathEvalError)
-          .replace('EXPRESSION', expression)} **
+        ` ** ${Localizer.getLocaleString(
+          interaction,
+          LocalizeTags.mathEvalError
+        ).replace('EXPRESSION', expression)} **
         `
       );
       return;
     }
 
     await interaction.reply(
-      `** ${super
-        .getLocaleString(interaction, LocalizeTags.mathReply)
+      `** ${Localizer.getLocaleString(interaction, LocalizeTags.mathReply)
         .replace('EXPRESSION', expression)
         .replace('RESULT', result.toString())} **
       `
