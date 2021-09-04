@@ -47,7 +47,6 @@ class DroidScrapeApi {
       }
 
       const el = $.load(pullRight[i]);
-      console.log(el.text());
       const textSafe = el.text().replaceAll(',', '');
 
       const val = parseInt(textSafe);
