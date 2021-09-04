@@ -1,15 +1,15 @@
 import OsuDroidUser from '../Users/OsuDroidUser';
 import ParamString from './ParamString';
-import cheerio, { Cheerio } from 'cheerio';
+import cheerio from 'cheerio';
 import axios from 'axios';
 
 class DroidScrapeApi {
-  private static baseUrl = 'http://ops.dgsrz.com/';
-  private static profileEndPoint = new ParamString(
+  private baseUrl = 'http://ops.dgsrz.com/';
+  private profileEndPoint = new ParamString(
     this.baseUrl.concat('profile.php')
   );
 
-  public static async getUser(username: string): Promise<OsuDroidUser> {
+  public async getUser(username: string): Promise<OsuDroidUser> {
     let user: OsuDroidUser = new OsuDroidUser();
     let finalEndpoint = new ParamString(this.profileEndPoint.toString());
     finalEndpoint.addParam('uid', username);
@@ -39,6 +39,16 @@ class DroidScrapeApi {
     user.id = parseInt(username);
     user.profileUrl = `http://ops.dgsrz.com/profile.php?uid=${user.id}`;
 
+    const images = $('img');
+
+    for (let i = 0; i < images.length; i++) {
+      const el = images[i];
+      if (i == 3 && el.attribs.src != undefined) {
+        user.avatarUrl = el.attribs.src;
+        break;
+      }
+    }
+
     const pullRight = $('span.pull-right');
 
     for (let i = 0; i < pullRight.length; i++) {
@@ -48,7 +58,6 @@ class DroidScrapeApi {
 
       const el = $.load(pullRight[i]);
       const textSafe = el.text().replaceAll(',', '');
-
       const val = parseInt(textSafe);
 
       switch (i) {
@@ -62,6 +71,7 @@ class DroidScrapeApi {
           break;
         case 5:
           user.counts.plays = val;
+          break;
       }
     }
 

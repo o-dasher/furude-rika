@@ -1,12 +1,12 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
 
-import Command from '../interfaces/Command';
+import ICommand from '../interfaces/ICommand';
 import SubCommandABC from './SubCommandABC';
 
-abstract class CommandABC extends SlashCommandBuilder implements Command {
+abstract class CommandABC extends SlashCommandBuilder implements ICommand {
   private readonly subCommands: SubCommandABC[] = [];
-  abstract run(interaction: CommandInteraction): void;
+  abstract run(interaction: CommandInteraction): Promise<void>;
   public addSelfSubcommand(subcommand: SubCommandABC): SubCommandABC {
     super.addSubcommand(subcommand);
     this.subCommands.push(subcommand);

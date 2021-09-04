@@ -29,6 +29,7 @@ abstract class AbstractUser implements User {
   public joinDate: string | Date;
   public accuracyFormatted: string
   public profileUrl: string;
+  public avatarUrl: string;
 
   public abstract buildUser(username: string): Promise<AbstractUser>;
 }

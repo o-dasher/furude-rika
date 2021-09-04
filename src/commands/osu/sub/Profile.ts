@@ -30,18 +30,21 @@ class Profile extends SubCommandABC {
       Rank: #${user.pp.rank} (#${user.pp.countryRank})`);
     }
     performanceInfo = performanceInfo.concat(
-      `Accuracy: ${user.accuracyFormatted}
-      PlayCount: ${user.counts.plays}
-      Total Score: ${user.scores.total.toLocaleString(
-        interaction.guild.preferredLocale
-      )}
-      Ranked Score: ${user.scores.ranked.toLocaleString(
-        interaction.guild.preferredLocale
-      )}`
+      `
+       Accuracy: ${user.accuracyFormatted}
+       PlayCount: ${user.counts.plays}
+       Total Score: ${user.scores.total.toLocaleString(
+         interaction.guild.preferredLocale
+       )}
+       Ranked Score: ${user.scores.ranked.toLocaleString(
+         interaction.guild.preferredLocale
+       )}`
     );
     if (!(server instanceof Droid)) {
       performanceInfo = performanceInfo.concat(
-        ` Level: ${user.level.toFixed(2)}`
+        `
+        Level: ${user.level.toFixed(2)}
+        `
       );
     }
     performanceInfo = performanceInfo.concat('**');
@@ -53,8 +56,8 @@ class Profile extends SubCommandABC {
           LocalizeTags.osuProfileTitle
         ).replace('USER', user.name)}](${user.profileUrl})**`
       )
-      .addField('Perfomance', performanceInfo, true)
-      .setThumbnail(`http://s.ppy.sh/a/${user.id}`);
+      .addField('---Perfomance', performanceInfo, true)
+      .setThumbnail(user.avatarUrl);
 
     if (!(server instanceof Droid)) {
       embed.addField(

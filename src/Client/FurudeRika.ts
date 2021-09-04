@@ -1,10 +1,10 @@
 import FurudeConfig from './FurudeConfig';
 import { Client, Collection } from 'discord.js';
 import consola from 'consola';
-import Command from '../interfaces/Command';
+import ICommand from '../interfaces/ICommand';
 
 class FurudeRika extends Client {
-  public commands: Collection<string, Command> = new Collection();
+  public commands: Collection<string, ICommand> = new Collection();
   public config: FurudeConfig;
 
   public constructor(config: FurudeConfig) {
