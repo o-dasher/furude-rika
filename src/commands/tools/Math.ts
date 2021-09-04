@@ -23,8 +23,8 @@ class Math extends CommandABC {
       result = evaluate(expression);
     } catch (err) {
       await interaction.reply(
-        ` ** ${i18next
-          .t(LocalizeTags.mathEvalError)
+        ` ** ${super
+          .getLocaleString(interaction, LocalizeTags.mathEvalError)
           .replace('EXPRESSION', expression)} **
         `
       );
@@ -32,8 +32,8 @@ class Math extends CommandABC {
     }
 
     await interaction.reply(
-      `** ${i18next
-        .t(LocalizeTags.mathReply)
+      `** ${super
+        .getLocaleString(interaction, LocalizeTags.mathReply)
         .replace('EXPRESSION', expression)
         .replace('RESULT', result.toString())} **
       `

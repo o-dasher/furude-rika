@@ -21,9 +21,9 @@ class CommandsReader {
 
   public static getAllCommands(): CommandABC[] {
     const commands: CommandABC[] = [];
-    
+
     for (const pathname of CommandsReader.paths) {
-      commands.concat(CommandsReader.getCommands(pathname));
+      commands.push.apply(commands, CommandsReader.getCommands(pathname));
     }
 
     return commands;

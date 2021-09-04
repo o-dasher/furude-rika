@@ -10,9 +10,8 @@ class Ping extends CommandABC {
   }
   async run(interaction: CommandInteraction) {
     await interaction.reply(
-      `
-      **${i18next
-        .t(LocalizeTags.pingReply)
+      ` ** ${super
+        .getLocaleString(interaction, LocalizeTags.pingReply)
         .replace(
           'PINGMS',
           (Date.now() - interaction.createdTimestamp).toString()
@@ -20,8 +19,7 @@ class Ping extends CommandABC {
         .replace(
           'PINGAPIMS',
           Math.round(interaction.client.ws.ping).toString()
-        )}**
-        `
+        )} ** `
     );
   }
 }

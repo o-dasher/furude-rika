@@ -22,9 +22,10 @@ class Clear extends CommandABC {
 
     await interaction.channel.bulkDelete(amount, true);
     await interaction.reply(
-      `** ${i18next
-        .t(LocalizeTags.clearReply)
-        .replace('AMOUNT', amount.toString())} **
+      `** ${super.getLocaleString(interaction, LocalizeTags.clearReply).replace(
+        'AMOUNT',
+        amount.toString()
+      )} **
       `
     );
   }

@@ -8,7 +8,7 @@
         "rollReply": "I picked... RANDOM",
         "clearReply": "HAI! just cleared AMOUNT messages!",
         "mathReply": "Question evaluated! EXPRESSION = RESULT",
-        "mathEvalError": "I am too dumb to undersand this: `EXPRESSION`"
+        "mathEvalError": "I am too dumb to understand this: `EXPRESSION`"
       }
     },
     "pt": {

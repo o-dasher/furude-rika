@@ -23,10 +23,11 @@ class Roll extends CommandABC {
   async run(interaction: CommandInteraction) {
     const bound = interaction.options.getNumber(this.boundTag, true);
     const random = RandomHelper.getRandomInt(0, bound);
-    await interaction.reply(`** ${i18next
-      .t(LocalizeTags.rollReply)
-      .replace('RANDOM', random.toString())} **
-    `);
+    await interaction.reply(
+      `** ${super
+        .getLocaleString(interaction, LocalizeTags.rollReply)
+        .replace('RANDOM', random.toString())} ** `
+    );
   }
 }
 

@@ -19,14 +19,13 @@ class Avatar extends CommandABC {
   async run(interaction: CommandInteraction) {
     const user = InteractionHelper.defaultOptionalUser(interaction);
     const embed = new BotEmbed(interaction)
-      .setTitle(i18next.t(LocalizeTags.avatarTitle))
+      .setTitle(this.getLocaleString(interaction, LocalizeTags.avatarTitle))
       .setDescription(
-        `
-      ** ${i18next
-        .t(LocalizeTags.avatarDescription)
-        .replace('USER', `[${user}](${user.avatarURL()})`)}
-      **
-      `
+        ` ** 
+        ${super
+          .getLocaleString(interaction, LocalizeTags.avatarDescription)
+          .replace('USER', `[${user}](${user.avatarURL()})`)}
+        ** `
       )
       .setImage(user.avatarURL({ dynamic: true, size: 1024 }));
     await interaction.reply({
