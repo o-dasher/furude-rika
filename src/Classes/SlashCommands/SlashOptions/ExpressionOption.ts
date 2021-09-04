@@ -1,4 +1,5 @@
 import { SlashCommandStringOption } from '@discordjs/builders';
+import { CommandInteraction } from 'discord.js';
 import CommandOption from './CommandOption';
 import OptionHelper from './OptionHelper';
 import OptionsTags from './OptionsTags';
@@ -11,8 +12,11 @@ class ExpressionOption
 
   public constructor() {
     super();
-    OptionHelper.build(this);
-    this.setDescription('A mathematical expression.');
+    OptionHelper.build(this).setDescription('A mathematical expression.');
+  }
+
+  public static getTag(interaction: CommandInteraction): string {
+    return interaction.options.getString(OptionsTags.expression);
   }
 }
 

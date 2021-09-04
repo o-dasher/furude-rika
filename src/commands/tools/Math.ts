@@ -3,7 +3,6 @@ import ExpressionOption from '../../Classes/SlashCommands/SlashOptions/Expressio
 import OptionsTags from '../../Classes/SlashCommands/SlashOptions/OptionsTags';
 import CommandABC from '../../interfaces/CommandABC';
 import { evaluate } from 'mathjs';
-import i18next from 'i18next';
 import LocalizeTags from '../../Localization/LocalizeTags';
 import Localizer from '../../Localization/Localizer';
 
@@ -14,10 +13,7 @@ class Math extends CommandABC {
     this.addStringOption(new ExpressionOption().setRequired(true));
   }
   async run(interaction: CommandInteraction) {
-    const expression = interaction.options.getString(
-      OptionsTags.expression,
-      true
-    );
+    const expression = ExpressionOption.getTag(interaction);
 
     let result = 0;
     try {

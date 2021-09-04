@@ -1,4 +1,6 @@
 import { CommandInteraction } from 'discord.js';
+import OsuServerOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
+import OsuUserOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
 import SubCommandABC from '../../../interfaces/SubCommandABC';
 
 class Profile extends SubCommandABC {
@@ -7,9 +9,12 @@ class Profile extends SubCommandABC {
     this.setName('profile').setDescription(
       "Views yours or someone's osu! profile"
     );
+    this.addStringOption(new OsuUserOption().setRequired(true));
+    this.addStringOption(new OsuServerOption().setRequired(true));
   }
-  run(interaction: CommandInteraction): void {
-    
+  async run(interaction: CommandInteraction) {
+    const user = OsuServerOption.getTag(interaction);
+    const server = OsuServerOption.getTag(interaction);
   }
 }
 

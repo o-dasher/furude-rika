@@ -8,7 +8,7 @@ class Osu extends CommandABC {
     this.setName('osu').setDescription('osu! related commands...');
     this.addSelfSubcommand(new Profile());
   }
-  run(interaction: CommandInteraction): void {
+  async run(interaction: CommandInteraction) {
     const subCommandString = interaction.options.getSubcommand(true);
     this.getSubcommand(subCommandString).run(interaction);
   }

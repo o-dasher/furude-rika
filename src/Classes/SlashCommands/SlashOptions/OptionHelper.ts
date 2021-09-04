@@ -2,8 +2,10 @@ import { SlashCommandOptionBase } from '@discordjs/builders/dist/interactions/sl
 import CommandOption from './CommandOption';
 
 class OptionHelper {
-  public static build(option: CommandOption & SlashCommandOptionBase): void {
-    option.setName(option.tag);
+  public static build(
+    option: CommandOption & SlashCommandOptionBase
+  ): CommandOption & SlashCommandOptionBase {
+    return option.setName(option.tag);
   }
 }
 
