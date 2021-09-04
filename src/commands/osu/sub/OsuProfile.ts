@@ -29,9 +29,11 @@ class OsuProfile extends SubCommandABC {
 
     let performanceInfo = '>>> **';
     if (!(server instanceof Droid)) {
-      performanceInfo = performanceInfo.concat(`PP: ${user.pp.raw}
-      Rank: #${user.pp.rank} (#${user.pp.countryRank})
-      `);
+      performanceInfo = performanceInfo.concat(`PP: ${user.pp.raw}\n`);
+    }
+    performanceInfo = performanceInfo.concat(`Rank: #${user.pp.rank}`);
+    if (!(server instanceof Droid)) {
+      performanceInfo = performanceInfo.concat(` (#${user.pp.countryRank})`);
     }
     performanceInfo = performanceInfo.concat(
       `Accuracy: ${user.accuracyFormatted}

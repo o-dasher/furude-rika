@@ -45,9 +45,10 @@ class OsuSet extends SubCommandABC {
     }
 
     if (interaction.options.getString(OptionsTags.osuUser)) {
-      userData.osu[`${server.name}`] = (
-        await OsuUserOption.getTag(interaction, server, userData)
-      ).id;
+      const user = await OsuUserOption.getTag(interaction, server, userData);
+      if (user != null) {
+        userData.osu[`${server.name}`] = user.id;
+      }
     }
 
     await DBManager.furudeDB
