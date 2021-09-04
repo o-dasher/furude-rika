@@ -17,6 +17,7 @@ class BanchoUser extends AbstractUser {
     this.raw_joinDate = user.raw_joinDate;
     this.secondsPlayed = user.secondsPlayed;
     this.scores = user.scores;
+    this.profileUrl = `https://osu.ppy.sh/users/${user.id}`;
     return this;
   }
 }

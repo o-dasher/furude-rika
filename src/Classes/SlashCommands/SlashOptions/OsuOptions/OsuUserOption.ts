@@ -1,5 +1,6 @@
 import { SlashCommandStringOption } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
+import DroidScrapeApi from '../../../../Osu!/API/DroidScrapeApi';
 import Bancho from '../../../../Osu!/Servers/Bancho';
 import Droid from '../../../../Osu!/Servers/Droid';
 import OsuServer from '../../../../Osu!/Servers/OsuServer';
@@ -30,7 +31,7 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
         osuUser = await new BanchoUser().buildUser(username);
       } catch (err) {}
     } else if (server instanceof Droid) {
-      osuUser = await new OsuDroidUser().buildUser(username);
+      osuUser = await DroidScrapeApi.getUser(username);
     }
 
     if (osuUser == null) {

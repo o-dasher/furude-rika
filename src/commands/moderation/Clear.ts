@@ -1,14 +1,17 @@
 import { CommandInteraction, Permissions, TextChannel } from 'discord.js';
-import i18next from 'i18next';
 import OptionsTags from '../../Classes/SlashCommands/SlashOptions/OptionsTags';
 import CommandABC from '../CommandABC';
 import Localizer from '../../Localization/Localizer';
 import LocalizeTags from '../../Localization/LocalizeTags';
+import AmountOption from '../../Classes/SlashCommands/SlashOptions/AmountOption';
 
 class Clear extends CommandABC {
   constructor() {
     super();
     this.setName('clear').setDescription('Clear messages in a certain channel');
+    this.addNumberOption(
+      new AmountOption().setDescription('Amount of messages to be cleared.')
+    );
   }
   async run(interaction: CommandInteraction) {
     if (
@@ -22,13 +25,22 @@ class Clear extends CommandABC {
     const amount = interaction.options.getNumber(OptionsTags.amount, true);
 
     await interaction.channel.bulkDelete(amount, true);
-    await interaction.reply(
-      `** ${Localizer.getLocaleString(
+    
+    const reply = await interaction.reply({
+      content: `** ${Localizer.getLocaleString(
         interaction,
         LocalizeTags.clearReply
-      ).replace('AMOUNT', amount.toString())} **
-      `
-    );
+      ).replace('AMOUNT', amount.toString())} **`,
+      fetchReply: true
+    });
+
+    setTimeout(async () => {
+      const message = await interaction.channel.messages.fetch(reply.id);
+      if (message.deletable) {
+        await message.delete();
+      }
+    }, 2500);
+
   }
 }
 

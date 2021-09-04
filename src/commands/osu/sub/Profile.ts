@@ -4,6 +4,7 @@ import OsuServerOption from '../../../Classes/SlashCommands/SlashOptions/OsuOpti
 import OsuUserOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
 import Localizer from '../../../Localization/Localizer';
 import LocalizeTags from '../../../Localization/LocalizeTags';
+import Droid from '../../../Osu!/Servers/Droid';
 import SubCommandABC from '../../SubCommandABC';
 
 class Profile extends SubCommandABC {
@@ -23,25 +24,40 @@ class Profile extends SubCommandABC {
       return;
     }
 
+    let performanceInfo = '>>> **';
+    if (!(server instanceof Droid)) {
+      performanceInfo = performanceInfo.concat(`PP: ${user.pp.raw}
+      Rank: #${user.pp.rank} (#${user.pp.countryRank})`);
+    }
+    performanceInfo = performanceInfo.concat(
+      `Accuracy: ${user.accuracyFormatted}
+      PlayCount: ${user.counts.plays}
+      Total Score: ${user.scores.total.toLocaleString(
+        interaction.guild.preferredLocale
+      )}
+      Ranked Score: ${user.scores.ranked.toLocaleString(
+        interaction.guild.preferredLocale
+      )}`
+    );
+    if (!(server instanceof Droid)) {
+      performanceInfo = performanceInfo.concat(
+        ` Level: ${user.level.toFixed(2)}`
+      );
+    }
+    performanceInfo = performanceInfo.concat('**');
+
     const embed = new BotEmbed(interaction)
       .setDescription(
         `**[${Localizer.getLocaleString(
           interaction,
           LocalizeTags.osuProfileTitle
-        ).replace('USER', user.name)}](https://osu.ppy.sh/users/${user.id})**`
+        ).replace('USER', user.name)}](${user.profileUrl})**`
       )
-      .addField(
-        'Perfomance',
-        `**
-        PP: ${user.pp.raw}
-        Rank: #${user.pp.rank} (#${user.pp.countryRank})
-        Accuracy: ${user.accuracyFormatted}
-        PlayCount: ${user.counts.plays}
-        Level: ${user.level.toFixed(2)}
-        **`,
-        true
-      )
-      .addField(
+      .addField('Perfomance', performanceInfo, true)
+      .setThumbnail(`http://s.ppy.sh/a/${user.id}`);
+
+    if (!(server instanceof Droid)) {
+      embed.addField(
         'Counts',
         `**
           SSH: ${user.counts.SSH}
@@ -49,8 +65,8 @@ class Profile extends SubCommandABC {
           A: ${user.counts.A}
         **`,
         true
-      )
-      .setThumbnail(`http://s.ppy.sh/a/${user.id}`);
+      );
+    }
 
     await interaction.reply({
       embeds: [embed]
