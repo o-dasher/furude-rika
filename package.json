@@ -71,6 +71,7 @@
     "cheerio": "^1.0.0-rc.10",
     "consola": "^2.15.3",
     "discord-api-types": "^0.22.0",
+    "firebase-admin": "^9.11.1",
     "i18next": "^20.6.0",
     "mathjs": "^9.4.4",
     "node-osu": "^2.2.1"

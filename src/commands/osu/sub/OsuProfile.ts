@@ -2,13 +2,14 @@ import { CommandInteraction } from 'discord.js';
 import BotEmbed from '../../../Classes/Embed/BotEmbed';
 import OsuServerOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
 import OsuUserOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
+import DBManager from '../../../DB/DBManager';
 import Localizer from '../../../Localization/Localizer';
 import LocalizeTags from '../../../Localization/LocalizeTags';
 import Droid from '../../../Osu!/Servers/Droid';
 import SubCommandABC from '../../SubCommandABC';
 
-class Profile extends SubCommandABC {
-  constructor() {
+class OsuProfile extends SubCommandABC {
+  public constructor() {
     super();
     this.setName('profile').setDescription(
       "Views yours or someone's osu! profile"
@@ -17,8 +18,10 @@ class Profile extends SubCommandABC {
     this.addStringOption(new OsuServerOption());
   }
   async run(interaction: CommandInteraction) {
-    const server = OsuServerOption.getTag(interaction);
-    const user = await OsuUserOption.getTag(interaction, server);
+    const userData = await DBManager.getUserData(interaction);
+
+    const server = OsuServerOption.getTag(interaction, userData);
+    const user = await OsuUserOption.getTag(interaction, server, userData);
 
     if (user == null) {
       return;
@@ -27,11 +30,11 @@ class Profile extends SubCommandABC {
     let performanceInfo = '>>> **';
     if (!(server instanceof Droid)) {
       performanceInfo = performanceInfo.concat(`PP: ${user.pp.raw}
-      Rank: #${user.pp.rank} (#${user.pp.countryRank})`);
+      Rank: #${user.pp.rank} (#${user.pp.countryRank})
+      `);
     }
     performanceInfo = performanceInfo.concat(
-      `
-       Accuracy: ${user.accuracyFormatted}
+      `Accuracy: ${user.accuracyFormatted}
        PlayCount: ${user.counts.plays}
        Total Score: ${user.scores.total.toLocaleString(
          interaction.guild.preferredLocale
@@ -77,4 +80,4 @@ class Profile extends SubCommandABC {
   }
 }
 
-export default Profile;
+export default OsuProfile;

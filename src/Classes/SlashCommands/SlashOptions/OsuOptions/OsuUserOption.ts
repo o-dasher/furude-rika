@@ -1,7 +1,8 @@
 import { SlashCommandStringOption } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
-import ApiManager from '../../../../Osu!/API/ApiManager';
-import DroidScrapeApi from '../../../../Osu!/API/DroidScrapeApi';
+import DBManager from '../../../../DB/DBManager';
+import DBPaths from '../../../../DB/DBPaths';
+import IDBUser from '../../../../DB/IDBUser';
 import Bancho from '../../../../Osu!/Servers/Bancho';
 import Droid from '../../../../Osu!/Servers/Droid';
 import OsuServer from '../../../../Osu!/Servers/OsuServer';
@@ -22,10 +23,13 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
 
   public static async getTag(
     interaction: CommandInteraction,
-    server: OsuServer
+    server: OsuServer,
+    userData: IDBUser
   ) {
     let osuUser: AbstractUser = null;
-    let username = interaction.options.getString(OptionsTags.osuUser);
+    let username =
+      interaction.options.getString(OptionsTags.osuUser) ??
+      userData.osu[server.name];
 
     if (server instanceof Bancho) {
       try {
@@ -41,6 +45,7 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
         content: `**Error trying to fetch ${username} from ${server.name}'s server**'`
       });
     }
+
     return osuUser;
   }
 }

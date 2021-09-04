@@ -6,4 +6,5 @@ dist
 !.yarn/sdks
 !.yarn/versions
 src/json/config.json
+src/json/FirebaseConfig.json
 node_modules/
