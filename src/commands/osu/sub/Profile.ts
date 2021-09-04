@@ -1,5 +1,4 @@
 import { CommandInteraction } from 'discord.js';
-import { re } from 'mathjs';
 import BotEmbed from '../../../Classes/Embed/BotEmbed';
 import OsuServerOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
 import OsuUserOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
