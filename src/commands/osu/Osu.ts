@@ -1,5 +1,5 @@
 import { CommandInteraction } from 'discord.js';
-import CommandABC from '../../interfaces/CommandABC';
+import CommandABC from '../CommandABC';
 import Profile from './sub/Profile';
 
 class Osu extends CommandABC {

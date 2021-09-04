@@ -8,7 +8,8 @@
         "rollReply": "I picked... RANDOM",
         "clearReply": "HAI! just cleared AMOUNT messages!",
         "mathReply": "Question evaluated! EXPRESSION = RESULT",
-        "mathEvalError": "I am too dumb to understand this: `EXPRESSION`"
+        "mathEvalError": "I am too dumb to understand this: `EXPRESSION`",
+        "osuProfileTitle": "USER's profile!"
       }
     },
     "pt": {
@@ -19,7 +20,8 @@
         "rollReply": "Eu escolhi o número... RANDOM",
         "clearReply": "Acabei de limpar AMOUNT mensagens para você",
         "mathReply": "EU SEI A RESPOSTA! EXPRESSION = RESULT",
-        "mathEvalError": "Talvez eu seja burra mas eu não consegui responder isso: `EXPRESSION`"
+        "mathEvalError": "Talvez eu seja burra mas eu não consegui responder isso: `EXPRESSION`",
+        "osuProfileTitle": "Perfil do(a) USER"
       }
     }
   }

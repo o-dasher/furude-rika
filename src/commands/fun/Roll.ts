@@ -1,6 +1,6 @@
 import { SlashCommandNumberOption } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
-import CommandABC from '../../interfaces/CommandABC';
+import CommandABC from '../CommandABC';
 import Localizer from '../../Localization/Localizer';
 import LocalizeTags from '../../Localization/LocalizeTags';
 import RandomHelper from '../../Math/RandomHelper';

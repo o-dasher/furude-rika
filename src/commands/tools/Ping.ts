@@ -1,6 +1,5 @@
 import { CommandInteraction } from 'discord.js';
-import i18next from 'i18next';
-import CommandABC from '../../interfaces/CommandABC';
+import CommandABC from '../CommandABC';
 import Localizer from '../../Localization/Localizer';
 import LocalizeTags from '../../Localization/LocalizeTags';
 

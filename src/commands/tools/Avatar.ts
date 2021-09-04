@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import BotEmbed from '../../Classes/Embed/BotEmbed';
 import InteractionHelper from '../../Classes/Interactions/InteractionHelper';
 import UserOption from '../../Classes/SlashCommands/SlashOptions/UserOption';
-import CommandABC from '../../interfaces/CommandABC';
+import CommandABC from '../CommandABC';
 import Localizer from '../../Localization/Localizer';
 import LocalizeTags from '../../Localization/LocalizeTags';
 

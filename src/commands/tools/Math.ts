@@ -1,7 +1,7 @@
 import { CommandInteraction } from 'discord.js';
 import ExpressionOption from '../../Classes/SlashCommands/SlashOptions/ExpressionOption';
 import OptionsTags from '../../Classes/SlashCommands/SlashOptions/OptionsTags';
-import CommandABC from '../../interfaces/CommandABC';
+import CommandABC from '../CommandABC';
 import { evaluate } from 'mathjs';
 import LocalizeTags from '../../Localization/LocalizeTags';
 import Localizer from '../../Localization/Localizer';

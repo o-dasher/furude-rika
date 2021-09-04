@@ -1,7 +1,7 @@
 import { CommandInteraction, Permissions, TextChannel } from 'discord.js';
 import i18next from 'i18next';
 import OptionsTags from '../../Classes/SlashCommands/SlashOptions/OptionsTags';
-import CommandABC from '../../interfaces/CommandABC';
+import CommandABC from '../CommandABC';
 import Localizer from '../../Localization/Localizer';
 import LocalizeTags from '../../Localization/LocalizeTags';
 

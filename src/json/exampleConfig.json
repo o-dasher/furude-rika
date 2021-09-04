@@ -1,0 +1,8 @@
+{
+  "debug": true,
+  "token": "TOKEN",
+  "defaultPrefixes": [""],
+  "clientID": "CLIENTID",
+  "devGuildID": "DEVGUILDID",
+  "osuApiKey": "OSUAPIKEY"
+}

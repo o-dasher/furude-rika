@@ -6,6 +6,7 @@ class LocalizeTags {
   public static readonly clearReply = 'clearReply';
   public static readonly mathReply = 'mathReply';
   public static readonly mathEvalError = 'mathEvalError';
+  public static readonly osuProfileTitle = 'osuProfileTitle';
 }
 
 export default LocalizeTags;

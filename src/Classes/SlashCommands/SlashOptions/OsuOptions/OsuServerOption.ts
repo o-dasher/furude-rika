@@ -19,7 +19,9 @@ class OsuServerOption
 
   public static getTag(interaction: CommandInteraction): OsuServer {
     const serverString = interaction.options.getString(OptionsTags.osuServer);
-    return OsuServers.getFromString(serverString);
+    return serverString
+      ? OsuServers.getFromString(serverString)
+      : OsuServers.bancho;
   }
 }
 
