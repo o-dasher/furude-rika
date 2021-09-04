@@ -1,6 +1,7 @@
 import { CommandInteraction } from 'discord.js';
 import i18next from 'i18next';
 import CommandABC from '../../interfaces/CommandABC';
+import Localizer from '../../Localization/Localizer';
 import LocalizeTags from '../../Localization/LocalizeTags';
 
 class Ping extends CommandABC {
@@ -10,8 +11,7 @@ class Ping extends CommandABC {
   }
   async run(interaction: CommandInteraction) {
     await interaction.reply(
-      ` ** ${super
-        .getLocaleString(interaction, LocalizeTags.pingReply)
+      ` ** ${Localizer.getLocaleString(interaction, LocalizeTags.pingReply)
         .replace(
           'PINGMS',
           (Date.now() - interaction.createdTimestamp).toString()
