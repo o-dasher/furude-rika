@@ -2,16 +2,24 @@
   "resources": {
     "en": {
       "translation": {
-        "ping": "Pong! took PINGMSms to aswer your message! and PINGAPIMSms to ping the API!",
+        "pingReply": "Pong! took PINGMSms to answer your message! and PINGAPIMSms to ping the API!",
         "avatarTitle": "That's a nice avatar...",
-        "avatarDescription": "Here, USER's avatar for you."
+        "avatarDescription": "Here, USER's avatar for you.",
+        "rollReply": "I picked... RANDOM",
+        "clearReply": "HAI! just cleared AMOUNT messages!",
+        "mathReply": "Question evaluated! EXPRESSION = RESULT",
+        "mathEvalError": "I am too dumb to undersand this: `EXPRESSION`"
       }
     },
     "pt": {
       "translation": {
-        "ping": "Pingo! levei PINGMSms pra responder a sua mensagem! e PINGAPIMSms pra pingar a API!",
+        "pingReply": "Pingo! levei PINGMSms pra responder a sua mensagem! e PINGAPIMSms pra pingar a API!",
         "avatarTitle": "Que ícone bonito esse...",
-        "avatarDescription": "Pega ai o avatar do USER logo..."
+        "avatarDescription": "Pega ai o avatar do USER logo...",
+        "rollReply": "Eu escolhi o número... RANDOM",
+        "clearReply": "Acabei de limpar AMOUNT mensagens para você",
+        "mathReply": "EU SEI A RESPOSTA! EXPRESSION = RESULT",
+        "mathEvalError": "Talvez eu seja burra mas eu não consegui responder isso: `EXPRESSION`"
       }
     }
   }

@@ -9,7 +9,7 @@ Localizer.init();
 const config = new FurudeConfig(configParams);
 const client = new FurudeRika(config);
 
-const commands = CommandsReader.getCommands();
+const commands = CommandsReader.getAllCommands();
 
 for (const command of commands) {
   client.commands.set(command.name, command);

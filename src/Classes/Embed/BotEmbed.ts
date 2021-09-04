@@ -5,10 +5,8 @@ import {
 } from 'discord.js';
 
 class BotEmbed extends MessageEmbed {
-  public constructor(data?: MessageEmbed | MessageEmbedOptions) {
+  public constructor(interaction: CommandInteraction, data?: MessageEmbed | MessageEmbedOptions) {
     super(data);
-  }
-  public init(interaction: CommandInteraction): void {
     this.setColor(interaction.guild.me.displayColor);
   }
 }

@@ -69,6 +69,7 @@
     "@discordjs/rest": "^0.1.0-canary.0",
     "consola": "^2.15.3",
     "discord-api-types": "^0.22.0",
-    "i18next": "^20.6.0"
+    "i18next": "^20.6.0",
+    "mathjs": "^9.4.4"
   }
 }
