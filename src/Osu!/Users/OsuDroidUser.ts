@@ -6,8 +6,8 @@ import OsuDroidScore from './score/OsuDroidScore';
 class OsuDroidUser extends AbstractUser {
   public droidScores: OsuDroidScore[] = [];
 
-  public async buildUser(username: string) {
-    Object.assign(this, await ApiManager.droidApi.getUser(username));
+  public async buildUser(username: string | number) {
+    Object.assign(this, await ApiManager.droidApi.getUser(username.toString()));
     return this;
   }
 

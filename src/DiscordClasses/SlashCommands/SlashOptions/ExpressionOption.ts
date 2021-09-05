@@ -15,7 +15,7 @@ class ExpressionOption
     OptionHelper.build(this).setDescription('A mathematical expression.');
   }
 
-  public static getTag(interaction: CommandInteraction): string {
+  public static getTag(interaction: CommandInteraction): string | null {
     return interaction.options.getString(OptionsTags.expression);
   }
 }

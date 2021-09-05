@@ -15,6 +15,7 @@ class Clear extends CommandABC {
   }
   async run(interaction: CommandInteraction) {
     if (
+      !interaction.member ||
       !(interaction.member.permissions instanceof Permissions) ||
       !interaction.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES) ||
       !(interaction.channel instanceof TextChannel)
@@ -25,7 +26,7 @@ class Clear extends CommandABC {
     const amount = interaction.options.getNumber(OptionsTags.amount, true);
 
     await interaction.channel.bulkDelete(amount, true);
-    
+
     const reply = await interaction.reply({
       content: `** ${Localizer.getLocaleString(
         interaction,
@@ -35,12 +36,14 @@ class Clear extends CommandABC {
     });
 
     setTimeout(async () => {
+      if (!interaction.channel) {
+        return;
+      }
       const message = await interaction.channel.messages.fetch(reply.id);
       if (message.deletable) {
         await message.delete();
       }
     }, 2500);
-
   }
 }
 

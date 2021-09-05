@@ -29,14 +29,17 @@ class OsuProfile extends OsuGameCommand {
       performanceInfo = performanceInfo.concat(` (#${osuUser.pp.countryRank})`);
     }
     performanceInfo = performanceInfo.concat(
-      `\nAccuracy: ${osuUser.accuracyFormatted}\nPlayCount: ${
-        osuUser.counts.plays
-      }\nTotal Score: ${osuUser.scores.total.toLocaleString(
-        interaction.guild.preferredLocale
-      )}\nRanked Score: ${osuUser.scores.ranked.toLocaleString(
-        interaction.guild.preferredLocale
-      )}`
+      `\nAccuracy: ${osuUser.accuracyFormatted}\nPlayCount: ${osuUser.counts.plays}`
     );
+    if (interaction.guild) {
+      performanceInfo = performanceInfo.concat(
+        `\nTotal Score: ${osuUser.scores.total.toLocaleString(
+          interaction.guild.preferredLocale
+        )}\nRanked Score: ${osuUser.scores.ranked.toLocaleString(
+          interaction.guild.preferredLocale
+        )}`
+      );
+    }
     if (!(server instanceof Droid)) {
       performanceInfo = performanceInfo.concat(
         `\nLevel: ${osuUser.level.toFixed(2)}`
@@ -57,7 +60,7 @@ class OsuProfile extends OsuGameCommand {
     if (!(server instanceof Droid)) {
       embed.addField(
         '---Counts',
-        `>>> **SSH: ${osuUser.counts.SSH}\nSS: ${osuUser.counts.SS}\nA: ${osuUser.counts.A}**`,
+        `>>> **SSH: ${osuUser.counts.SSH}\nSS: ${osuUser.counts.SS}\nSH: ${osuUser.counts.SH}\nS: ${osuUser.counts.S}\nA: ${osuUser.counts.A}**`,
         true
       );
     }

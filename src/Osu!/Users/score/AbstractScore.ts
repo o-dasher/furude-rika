@@ -1,9 +1,15 @@
 import { Beatmap, Score } from 'node-osu';
+import OwnedAPIBeatmap from '../beatmaps/OwnedAPIBeatmap';
 
 abstract class AbstractScore implements Score {
-  score: number;
-  user: { name: string; id: string };
-  beatmapId: string | Beatmap;
+  defaultString = 'NULL';
+
+  score: number = -1;
+  user: { name: string; id: string } = {
+    name: this.defaultString,
+    id: this.defaultString
+  };
+  beatmapId: string | Beatmap = '';
   counts: {
     '300': number;
     '100': number;
@@ -11,18 +17,25 @@ abstract class AbstractScore implements Score {
     geki: number;
     katu: number;
     miss: number;
+  } = {
+    '300': -1,
+    '100': -1,
+    '50': -1,
+    geki: -1,
+    katu: -1,
+    miss: -1
   };
-  maxCombo: number;
-  perfect: boolean;
-  raw_date: string;
-  rank: string;
-  pp: number;
-  hasReplay: boolean;
-  raw_mods: number;
-  beatmap: Beatmap;
-  date: string | Date;
-  mods: string | string[];
-  accuracy: number;
+  maxCombo: number = -1;
+  perfect: boolean = false;
+  raw_date: string = this.defaultString;
+  rank: string = this.defaultString;
+  pp: number = -1;
+  hasReplay: boolean = false;
+  raw_mods: number = -1;
+  beatmap: Beatmap = new OwnedAPIBeatmap();
+  date: string | Date = this.defaultString;
+  mods: string | string[] = this.defaultString;
+  accuracy: number = -1;
 }
 
 export default AbstractScore;

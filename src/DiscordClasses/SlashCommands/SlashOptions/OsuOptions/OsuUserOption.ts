@@ -6,6 +6,7 @@ import LocalizeTags from '../../../../Localization/LocalizeTags';
 import Bancho from '../../../../Osu!/Servers/Bancho';
 import Droid from '../../../../Osu!/Servers/Droid';
 import OsuServer from '../../../../Osu!/Servers/OsuServer';
+import OsuServers from '../../../../Osu!/Servers/OsuServers';
 import AbstractUser from '../../../../Osu!/Users/AbstractUser';
 import BanchoUser from '../../../../Osu!/Users/BanchoUser';
 import OsuDroidUser from '../../../../Osu!/Users/OsuDroidUser';
@@ -27,17 +28,29 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
     server: OsuServer,
     userData: IDBUser
   ) {
-    let osuUser: AbstractUser = null;
-    let username =
-      interaction.options.getString(OptionsTags.osuUser) ??
-      userData.osu[server.name];
+    let osuUser: AbstractUser | null = null;
+    let usernameOrID: string | null = interaction.options.getString(
+      OptionsTags.osuUser
+    );
 
+    if (!usernameOrID) {
+      switch (server) {
+        case OsuServers.droid:
+          usernameOrID = userData.osu.droid.toString();
+          break;
+        default:
+          usernameOrID = userData.osu.bancho.toString();
+          break;
+      }
+    }
+    
     if (server instanceof Bancho) {
       try {
-        osuUser = await new BanchoUser().buildUser(username);
+        osuUser = await new BanchoUser().buildUser(usernameOrID);
       } catch (err) {}
     } else if (server instanceof Droid) {
-      if (isNaN(username)) {
+      const id = parseInt(usernameOrID);
+      if (!id) {
         await interaction.editReply(
           `**${Localizer.getLocaleString(
             interaction,
@@ -46,18 +59,18 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
         );
         return;
       } else {
-        osuUser = await new OsuDroidUser().buildUser(username);
+        osuUser = await new OsuDroidUser().buildUser(usernameOrID);
       }
     }
 
-    if (!OsuUserHelper.userExists(osuUser)) {
+    if (!osuUser || !OsuUserHelper.userExists(osuUser)) {
       osuUser = null;
       await interaction.editReply(
         `**${Localizer.getLocaleString(
           interaction,
           LocalizeTags.osuUserFetchError
         )
-          .replace('USER', username)
+          .replace('USER', usernameOrID)
           .replace('SERVER', server.name)}**`
       );
       return;

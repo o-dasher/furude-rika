@@ -1,4 +1,6 @@
-class RandomHelper {
+abstract class RandomHelper {
+  private constructor() {}
+
   /**
    * Returns a random number between min (inclusive) and max (exclusive)
    */

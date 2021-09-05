@@ -12,7 +12,7 @@ class AmountOption extends SlashCommandNumberOption implements CommandOption {
     OptionHelper.build(this);
   }
 
-  public static getTag(interaction: CommandInteraction): number {
+  public static getTag(interaction: CommandInteraction): number | null {
     return interaction.options.getNumber(OptionsTags.amount);
   }
 }

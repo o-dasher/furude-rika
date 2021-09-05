@@ -12,7 +12,7 @@ class UserOption extends SlashCommandUserOption implements CommandOption {
     OptionHelper.build(this).setDescription('A discord user!');
   }
 
-  public static getTag(interaction: CommandInteraction): User {
+  public static getTag(interaction: CommandInteraction): User | null {
     return interaction.options.getUser(OptionsTags.user);
   }
 }

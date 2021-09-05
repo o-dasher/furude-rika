@@ -95,20 +95,40 @@ class DroidScrapeApi {
 
       const stats = idk[0].split('/');
       for (const stat of stats) {
-        if (score.raw_date == null && score.date == null) {
+        if (
+          score.raw_date === score.defaultString &&
+          score.date === score.defaultString
+        ) {
           const date = stat.slice(0, -1);
           score.date = date;
           score.raw_date = date;
-        } else if (score.score == null) {
+        } else if (score.score === -1) {
           score.score = parseInt(stat.replaceAll(',', ''));
-        } else if (score.mods == null) {
+        } else if (score.mods === score.defaultString) {
           score.mods = stat;
-        } else if (score.maxCombo == null) {
+          score.mods = score.mods
+            .replaceAll('DoubleTime', 'DT')
+            .replaceAll('HardRock', 'HR')
+            .replaceAll('Precise', 'PR')
+            .replaceAll('NightCore', 'NC')
+            .replaceAll('Hidden', 'HD')
+            .replaceAll('NoFail', 'NF')
+            .replaceAll('HalfTime', 'HT')
+            .replaceAll('Easy', 'EZ')
+            .replaceAll(',', '')
+            .replaceAll(' ', '');
+        } else if (score.maxCombo === -1) {
           score.maxCombo = parseInt(stat.replace('x', ''));
-        } else if (score.accuracy == null) {
+        } else if (score.accuracy === -1) {
           score.accuracy = parseFloat(stat);
         }
       }
+
+      if (score.mods == '') {
+        score.mods = 'NM';
+      }
+
+      score.mods += 'TD';
 
       idk = idk.slice(1);
       const hiddenSep = idk.join().split(':');

@@ -13,7 +13,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
     interaction: CommandInteraction
   ): Promise<IOSuWithCalc> {
     const { osuUser, server } = await super.getOsuParams(interaction);
-    const calcParams: IOSuWithCalc = {
+    return {
       osuUser,
       server,
       calculator:
@@ -22,7 +22,6 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
           : new OsuPerformanceCalculator(),
       osuParser: new Parser()
     };
-    return calcParams;
   }
 }
 

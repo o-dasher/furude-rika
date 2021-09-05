@@ -1,8 +1,7 @@
 import { CommandInteraction } from 'discord.js';
 import ExpressionOption from '../../DiscordClasses/SlashCommands/SlashOptions/ExpressionOption';
-import OptionsTags from '../../DiscordClasses/SlashCommands/SlashOptions/OptionsTags';
 import CommandABC from '../CommandABC';
-import { evaluate } from 'mathjs';
+import { evaluate, MathExpression } from 'mathjs';
 import LocalizeTags from '../../Localization/LocalizeTags';
 import Localizer from '../../Localization/Localizer';
 
@@ -15,12 +14,19 @@ class Math extends CommandABC {
   async run(interaction: CommandInteraction) {
     await interaction.deferReply();
 
-    const expression = ExpressionOption.getTag(interaction);
+    const expression: MathExpression =
+      ExpressionOption.getTag(interaction) ?? '';
 
+    let cantSolve = expression == '';
     let result = 0;
+
     try {
       result = evaluate(expression);
     } catch (err) {
+      cantSolve = true;
+    }
+
+    if (cantSolve) {
       await interaction.reply(
         ` ** ${Localizer.getLocaleString(
           interaction,

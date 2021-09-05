@@ -2,7 +2,7 @@ import { CommandInteraction } from 'discord.js';
 import i18next from 'i18next';
 import { resources } from './Strings.json';
 
-class Localizer {
+abstract class Localizer {
   public static init(): void {
     i18next.init({
       lng: 'en',
@@ -10,7 +10,7 @@ class Localizer {
       resources
     });
   }
-  
+
   public static getLocaleString(
     interaction: CommandInteraction,
     tag: string
@@ -20,6 +20,9 @@ class Localizer {
 
   private static getlanguage(interaction: CommandInteraction): string {
     let language = i18next.language;
+    if (!interaction.guild) {
+      return language;
+    }
     switch (interaction.guild.preferredLocale) {
       case 'pt-BR':
         language = 'pt';

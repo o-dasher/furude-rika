@@ -5,9 +5,14 @@ import {
 } from 'discord.js';
 
 class BotEmbed extends MessageEmbed {
-  public constructor(interaction: CommandInteraction, data?: MessageEmbed | MessageEmbedOptions) {
+  public constructor(
+    interaction: CommandInteraction,
+    data?: MessageEmbed | MessageEmbedOptions
+  ) {
     super(data);
-    this.setColor(interaction.guild.me.displayColor);
+    if (interaction.guild && interaction.guild.me) {
+      this.setColor(interaction.guild.me.displayColor);
+    }
   }
 }
 
