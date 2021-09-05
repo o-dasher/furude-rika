@@ -1,57 +1,49 @@
 import { CommandInteraction } from 'discord.js';
-import BotEmbed from '../../../Classes/Embed/BotEmbed';
-import OsuServerOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
-import OsuUserOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
+import BotEmbed from '../../../DiscordClasses/Embed/BotEmbed';
+import OsuServerOption from '../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
+import OsuUserOption from '../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
 import DBManager from '../../../DB/DBManager';
 import Localizer from '../../../Localization/Localizer';
 import LocalizeTags from '../../../Localization/LocalizeTags';
 import Droid from '../../../Osu!/Servers/Droid';
-import SubCommandABC from '../../SubCommandABC';
+import UserOption from '../../../DiscordClasses/SlashCommands/SlashOptions/UserOption';
+import OsuGameCommand from '../OsuGameCommand';
 
-class OsuProfile extends SubCommandABC {
+class OsuProfile extends OsuGameCommand {
   public constructor() {
     super();
     this.setName('profile').setDescription(
       "Views yours or someone's osu! profile"
     );
-    this.addStringOption(new OsuUserOption());
-    this.addStringOption(new OsuServerOption());
   }
   async run(interaction: CommandInteraction) {
     await interaction.deferReply();
+    const { osuUser, server } = await this.getOsuParams(interaction);
 
-    const userData = await DBManager.getUserData(interaction);
-
-    const server = OsuServerOption.getTag(interaction, userData);
-    const user = await OsuUserOption.getTag(interaction, server, userData);
-
-    if (user == null) {
+    if (osuUser == null) {
       return;
     }
 
     let performanceInfo = '>>> **';
     if (!(server instanceof Droid)) {
-      performanceInfo = performanceInfo.concat(`PP: ${user.pp.raw}\n`);
+      performanceInfo = performanceInfo.concat(`PP: ${osuUser.pp.raw}\n`);
     }
-    performanceInfo = performanceInfo.concat(`Rank: #${user.pp.rank} `);
+    performanceInfo = performanceInfo.concat(`Rank: #${osuUser.pp.rank} `);
     if (!(server instanceof Droid)) {
-      performanceInfo = performanceInfo.concat(` (#${user.pp.countryRank})`);
+      performanceInfo = performanceInfo.concat(` (#${osuUser.pp.countryRank})`);
     }
     performanceInfo = performanceInfo.concat(
-      `\nAccuracy: ${user.accuracyFormatted}
-       PlayCount: ${user.counts.plays}
-       Total Score: ${user.scores.total.toLocaleString(
-         interaction.guild.preferredLocale
-       )}
-       Ranked Score: ${user.scores.ranked.toLocaleString(
-         interaction.guild.preferredLocale
-       )}`
+      `\nAccuracy: ${osuUser.accuracyFormatted}\nPlayCount: ${
+        osuUser.counts.plays
+      }\nTotal Score: ${osuUser.scores.total.toLocaleString(
+        interaction.guild.preferredLocale
+      )}\nRanked Score: ${osuUser.scores.ranked.toLocaleString(
+        interaction.guild.preferredLocale
+      )}`
     );
     if (!(server instanceof Droid)) {
       performanceInfo = performanceInfo.concat(
-        `
-        Level: ${user.level.toFixed(2)}
-        `
+        `\nLevel: ${osuUser.level.toFixed(2)}`
       );
     }
     performanceInfo = performanceInfo.concat('**');
@@ -61,18 +53,15 @@ class OsuProfile extends SubCommandABC {
         `**[${Localizer.getLocaleString(
           interaction,
           LocalizeTags.osuProfileTitle
-        ).replace('USER', user.name)}](${user.profileUrl})**`
+        ).replace('USER', osuUser.name)}](${osuUser.profileUrl})**`
       )
       .addField('---Perfomance', performanceInfo, true)
-      .setThumbnail(user.avatarUrl);
+      .setThumbnail(osuUser.avatarUrl);
 
     if (!(server instanceof Droid)) {
       embed.addField(
-        'Counts',
-        `>>> **SSH: ${user.counts.SSH}
-        SS: ${user.counts.SS}
-        A: ${user.counts.A}
-        **`,
+        '---Counts',
+        `>>> **SSH: ${osuUser.counts.SSH}\nSS: ${osuUser.counts.SS}\nA: ${osuUser.counts.A}**`,
         true
       );
     }

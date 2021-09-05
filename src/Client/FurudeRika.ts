@@ -1,6 +1,6 @@
 import { Client, Collection, Intents } from 'discord.js';
 import consola from 'consola';
-import ICommand from '../interfaces/ICommand';
+import ICommand from '../Interfaces/ICommand';
 import { token } from '../json/Config.json';
 
 class FurudeRika extends Client {

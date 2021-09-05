@@ -1,8 +1,8 @@
 import { CommandInteraction, MessageEmbed } from 'discord.js';
 import i18next from 'i18next';
-import BotEmbed from '../../Classes/Embed/BotEmbed';
-import InteractionHelper from '../../Classes/Interactions/InteractionHelper';
-import UserOption from '../../Classes/SlashCommands/SlashOptions/UserOption';
+import BotEmbed from '../../DiscordClasses/Embed/BotEmbed';
+import InteractionHelper from '../../DiscordClasses/Interactions/InteractionHelper';
+import UserOption from '../../DiscordClasses/SlashCommands/SlashOptions/UserOption';
 import CommandABC from '../CommandABC';
 import Localizer from '../../Localization/Localizer';
 import LocalizeTags from '../../Localization/LocalizeTags';
@@ -19,8 +19,8 @@ class Avatar extends CommandABC {
   }
   async run(interaction: CommandInteraction) {
     await interaction.deferReply();
-
     const user = InteractionHelper.defaultOptionalUser(interaction);
+    
     const embed = new BotEmbed(interaction)
       .setTitle(
         Localizer.getLocaleString(interaction, LocalizeTags.avatarTitle)

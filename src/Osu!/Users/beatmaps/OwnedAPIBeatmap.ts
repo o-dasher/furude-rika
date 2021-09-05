@@ -1,6 +1,6 @@
 import { Beatmap } from 'node-osu';
 
-class OwnedBeatmap implements Beatmap {
+class OwnedAPIBeatmap implements Beatmap {
   id: string;
   beatmapSetId: string;
   hash: string;
@@ -73,4 +73,4 @@ class OwnedBeatmap implements Beatmap {
   hasAudio: boolean;
 }
 
-export default OwnedBeatmap;
+export default OwnedAPIBeatmap;

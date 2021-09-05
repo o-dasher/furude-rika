@@ -9,7 +9,7 @@ class UserOption extends SlashCommandUserOption implements CommandOption {
 
   public constructor() {
     super();
-    OptionHelper.build(this);
+    OptionHelper.build(this).setDescription('A discord user!');
   }
 
   public static getTag(interaction: CommandInteraction): User {

@@ -1,8 +1,8 @@
 import { CommandInteraction } from 'discord.js';
-import BotEmbed from '../../../Classes/Embed/BotEmbed';
-import OptionsTags from '../../../Classes/SlashCommands/SlashOptions/OptionsTags';
-import OsuServerOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
-import OsuUserOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
+import BotEmbed from '../../../DiscordClasses/Embed/BotEmbed';
+import OptionsTags from '../../../DiscordClasses/SlashCommands/SlashOptions/OptionsTags';
+import OsuServerOption from '../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
+import OsuUserOption from '../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
 import DBManager from '../../../DB/DBManager';
 import DBPaths from '../../../DB/DBPaths';
 import Localizer from '../../../Localization/Localizer';
@@ -37,7 +37,7 @@ class OsuSet extends SubCommandABC {
   async run(interaction: CommandInteraction): Promise<void> {
     await interaction.deferReply();
 
-    const userData = await DBManager.getUserData(interaction);
+    const userData = await DBManager.getUserData(interaction.user);
     let server = OsuServerOption.getTag(interaction, userData);
 
     if (interaction.options.getString(this.defaultServerOption)) {
@@ -66,12 +66,7 @@ class OsuSet extends SubCommandABC {
         Localizer.getLocaleString(interaction, LocalizeTags.osuSetTitle)
       )
       .setDescription(
-        `>>> **
-        Default Server: ${userData.osu.defaultServer}
-        Bancho: ${userData.osu.bancho}
-        Droid: ${userData.osu.droid}
-
-        **`
+        `>>> **Default Server: ${userData.osu.defaultServer}\nBancho: ${userData.osu.bancho}\nDroid: ${userData.osu.droid}**`
       );
 
     await interaction.editReply({ embeds: [embed] });

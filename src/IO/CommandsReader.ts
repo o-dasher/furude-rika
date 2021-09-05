@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import CommandABC from '../commands/CommandABC';
+import CommandABC from '../Commands/CommandABC';
 import IOPaths from './IOPaths';
 
 class CommandsReader {

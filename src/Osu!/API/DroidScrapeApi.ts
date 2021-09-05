@@ -3,7 +3,7 @@ import ParamString from './ParamString';
 import cheerio from 'cheerio';
 import axios from 'axios';
 import OsuDroidScore from '../Users/score/OsuDroidScore';
-import OwnedBeatmap from '../Users/beatmaps/OwnedBeatmap';
+import OwnedAPIBeatmap from '../Users/beatmaps/OwnedAPIBeatmap';
 
 class DroidScrapeApi {
   private baseUrl = 'http://ops.dgsrz.com/';
@@ -82,7 +82,7 @@ class DroidScrapeApi {
       }
 
       const score = new OsuDroidScore();
-      score.beatmap = new OwnedBeatmap();
+      score.beatmap = new OwnedAPIBeatmap();
 
       const el = $.load(liListGroupItem[i]);
       let idk = el.text().replaceAll('\n', '').replaceAll('  ', '').split(']');

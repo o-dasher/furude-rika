@@ -1,6 +1,6 @@
 import { SlashCommandSubcommandBuilder } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
-import ICommand from '../interfaces/ICommand';
+import ICommand from '../Interfaces/ICommand';
 
 abstract class SubCommandABC
   extends SlashCommandSubcommandBuilder

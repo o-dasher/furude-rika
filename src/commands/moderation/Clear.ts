@@ -1,9 +1,9 @@
 import { CommandInteraction, Permissions, TextChannel } from 'discord.js';
-import OptionsTags from '../../Classes/SlashCommands/SlashOptions/OptionsTags';
+import OptionsTags from '../../DiscordClasses/SlashCommands/SlashOptions/OptionsTags';
 import CommandABC from '../CommandABC';
 import Localizer from '../../Localization/Localizer';
 import LocalizeTags from '../../Localization/LocalizeTags';
-import AmountOption from '../../Classes/SlashCommands/SlashOptions/AmountOption';
+import AmountOption from '../../DiscordClasses/SlashCommands/SlashOptions/AmountOption';
 
 class Clear extends CommandABC {
   constructor() {
