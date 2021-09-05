@@ -4,5 +4,6 @@
   "defaultPrefixes": [""],
   "clientID": "CLIENTID",
   "devGuildID": "DEVGUILDID",
-  "osuApiKey": "OSUAPIKEY"
+  "osuApiKey": "OSUAPIKEY",
+  "ownerID": "OWNERID"
 }

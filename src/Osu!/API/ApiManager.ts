@@ -3,10 +3,13 @@ import osu from 'node-osu';
 import DroidScrapeApi from './DroidScrapeApi';
 
 class ApiManager {
+  private constructor() {}
+
   public static banchoApi = new osu.Api(osuApiKey, {
     completeScores: true,
     parseNumeric: true
   });
+
   public static droidApi = new DroidScrapeApi();
 }
 

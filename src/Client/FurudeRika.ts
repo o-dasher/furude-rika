@@ -1,26 +1,28 @@
-import FurudeConfig from './FurudeConfig';
-import { Client, Collection } from 'discord.js';
+import { Client, Collection, Intents } from 'discord.js';
 import consola from 'consola';
 import ICommand from '../interfaces/ICommand';
+import { token } from '../json/Config.json';
 
 class FurudeRika extends Client {
   public commands: Collection<string, ICommand> = new Collection();
-  public config: FurudeConfig;
 
-  public constructor(config: FurudeConfig) {
-    super(config);
-    this.config = config;
+  public constructor() {
+    super({
+      intents: [Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILDS]
+    });
   }
 
   public start(): void {
-    this.login(this.config.token);
+    this.login(token);
 
     this.once('ready', (client) => {
       consola.success(client.user.username + ' logged succesfully!');
     });
 
     this.on('interactionCreate', async (interaction) => {
-      if (!interaction.isCommand()) return;
+      if (!interaction.isCommand()) {
+        return;
+      }
 
       const command = this.commands.get(interaction.commandName);
 

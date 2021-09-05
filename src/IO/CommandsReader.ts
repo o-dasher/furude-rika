@@ -14,11 +14,13 @@ class CommandsReader {
   public static moderationPath = '/moderation/';
   public static toolsPath = '/tools/';
   public static osuPath = '/osu/';
+  public static ownerPath = '/owner/';
   public static paths = [
     CommandsReader.funPath,
     CommandsReader.moderationPath,
     CommandsReader.toolsPath,
-    CommandsReader.osuPath
+    CommandsReader.osuPath,
+    CommandsReader.ownerPath
   ];
 
   public static getAllCommands(): CommandABC[] {

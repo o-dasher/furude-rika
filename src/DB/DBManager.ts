@@ -5,6 +5,8 @@ import DBPaths from './DBPaths';
 import IDBUser from './IDBUser';
 
 class DBManager {
+  private constructor() {}
+
   public static furudeDB: firestore.Firestore;
 
   public static init() {

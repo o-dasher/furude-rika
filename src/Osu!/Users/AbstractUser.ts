@@ -1,4 +1,5 @@
 import { User } from 'node-osu';
+import AbstractScore from './score/AbstractScore';
 
 abstract class AbstractUser implements User {
   public id: number;
@@ -32,6 +33,7 @@ abstract class AbstractUser implements User {
   public avatarUrl: string;
 
   public abstract buildUser(username: string): Promise<AbstractUser>;
+  public abstract getScores(): Promise<AbstractScore[]>;
 }
 
 export default AbstractUser;
