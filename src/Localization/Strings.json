@@ -9,7 +9,10 @@
         "clearReply": "HAI! just cleared AMOUNT messages!",
         "mathReply": "Question evaluated! EXPRESSION = RESULT",
         "mathEvalError": "I am too dumb to understand this: `EXPRESSION`",
-        "osuProfileTitle": "USER's profile!"
+        "osuProfileTitle": "USER's profile!",
+        "osuSetTitle": "Your update DB data!",
+        "droidUserMustBeID": "Username must be your osu!droid UID if droid server.",
+        "osuUserFetchError": "Couldn't find USER in SERVER's server."
       }
     },
     "pt": {
@@ -21,7 +24,10 @@
         "clearReply": "Acabei de limpar AMOUNT mensagens para você",
         "mathReply": "EU SEI A RESPOSTA! EXPRESSION = RESULT",
         "mathEvalError": "Talvez eu seja burra mas eu não consegui responder isso: `EXPRESSION`",
-        "osuProfileTitle": "Perfil do(a) USER"
+        "osuProfileTitle": "Perfil do(a) USER",
+        "osuSetTitle": "Seus novos dados...",
+        "droidUserMustBeID": "Pro osu!droid o parâmetro username precisa ser uma uid do droid.",
+        "osuUserFetchError": "Não consegui encontrar o USER no SERVER."
       }
     }
   }

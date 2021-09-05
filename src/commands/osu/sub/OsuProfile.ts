@@ -18,6 +18,8 @@ class OsuProfile extends SubCommandABC {
     this.addStringOption(new OsuServerOption());
   }
   async run(interaction: CommandInteraction) {
+    await interaction.deferReply();
+
     const userData = await DBManager.getUserData(interaction);
 
     const server = OsuServerOption.getTag(interaction, userData);
@@ -31,12 +33,12 @@ class OsuProfile extends SubCommandABC {
     if (!(server instanceof Droid)) {
       performanceInfo = performanceInfo.concat(`PP: ${user.pp.raw}\n`);
     }
-    performanceInfo = performanceInfo.concat(`Rank: #${user.pp.rank}`);
+    performanceInfo = performanceInfo.concat(`Rank: #${user.pp.rank} `);
     if (!(server instanceof Droid)) {
       performanceInfo = performanceInfo.concat(` (#${user.pp.countryRank})`);
     }
     performanceInfo = performanceInfo.concat(
-      `Accuracy: ${user.accuracyFormatted}
+      `\nAccuracy: ${user.accuracyFormatted}
        PlayCount: ${user.counts.plays}
        Total Score: ${user.scores.total.toLocaleString(
          interaction.guild.preferredLocale
@@ -67,16 +69,15 @@ class OsuProfile extends SubCommandABC {
     if (!(server instanceof Droid)) {
       embed.addField(
         'Counts',
-        `**
-          SSH: ${user.counts.SSH}
-          SS: ${user.counts.SS}
-          A: ${user.counts.A}
+        `>>> **SSH: ${user.counts.SSH}
+        SS: ${user.counts.SS}
+        A: ${user.counts.A}
         **`,
         true
       );
     }
 
-    await interaction.reply({
+    await interaction.editReply({
       embeds: [embed]
     });
   }

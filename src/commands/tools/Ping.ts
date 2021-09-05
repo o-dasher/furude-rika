@@ -9,7 +9,8 @@ class Ping extends CommandABC {
     this.setName('ping').setDescription('Replies with pong!');
   }
   async run(interaction: CommandInteraction) {
-    await interaction.reply(
+    await interaction.deferReply();
+    await interaction.editReply(
       ` ** ${Localizer.getLocaleString(interaction, LocalizeTags.pingReply)
         .replace(
           'PINGMS',

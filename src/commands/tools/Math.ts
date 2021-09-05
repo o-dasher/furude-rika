@@ -13,6 +13,8 @@ class Math extends CommandABC {
     this.addStringOption(new ExpressionOption().setRequired(true));
   }
   async run(interaction: CommandInteraction) {
+    await interaction.deferReply();
+
     const expression = ExpressionOption.getTag(interaction);
 
     let result = 0;
@@ -29,7 +31,7 @@ class Math extends CommandABC {
       return;
     }
 
-    await interaction.reply(
+    await interaction.editReply(
       `** ${Localizer.getLocaleString(interaction, LocalizeTags.mathReply)
         .replace('EXPRESSION', expression)
         .replace('RESULT', result.toString())} **

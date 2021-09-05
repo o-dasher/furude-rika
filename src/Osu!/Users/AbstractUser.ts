@@ -27,7 +27,7 @@ abstract class AbstractUser implements User {
   public raw_joinDate: string;
   public events: any;
   public joinDate: string | Date;
-  public accuracyFormatted: string
+  public accuracyFormatted: string;
   public profileUrl: string;
   public avatarUrl: string;
 

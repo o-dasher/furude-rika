@@ -5,6 +5,8 @@ import OsuServerOption from '../../../Classes/SlashCommands/SlashOptions/OsuOpti
 import OsuUserOption from '../../../Classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
 import DBManager from '../../../DB/DBManager';
 import DBPaths from '../../../DB/DBPaths';
+import Localizer from '../../../Localization/Localizer';
+import LocalizeTags from '../../../Localization/LocalizeTags';
 import SubCommandABC from '../../SubCommandABC';
 
 class OsuSet extends SubCommandABC {
@@ -33,15 +35,18 @@ class OsuSet extends SubCommandABC {
   }
 
   async run(interaction: CommandInteraction): Promise<void> {
+    await interaction.deferReply();
+
     const userData = await DBManager.getUserData(interaction);
-    const server = OsuServerOption.getTag(interaction, userData);
+    let server = OsuServerOption.getTag(interaction, userData);
 
     if (interaction.options.getString(this.defaultServerOption)) {
-      userData.osu.defaultServer = OsuServerOption.getTagFromString(
+      server = OsuServerOption.getTagFromString(
         interaction,
         this.defaultServerOption,
         userData
-      ).name;
+      );
+      userData.osu.defaultServer = server.name;
     }
 
     if (interaction.options.getString(OptionsTags.osuUser)) {
@@ -57,7 +62,9 @@ class OsuSet extends SubCommandABC {
       .set(userData, { merge: true });
 
     const embed = new BotEmbed(interaction)
-      .setTitle('Your updated DB data')
+      .setTitle(
+        Localizer.getLocaleString(interaction, LocalizeTags.osuSetTitle)
+      )
       .setDescription(
         `>>> **
         Default Server: ${userData.osu.defaultServer}
@@ -67,7 +74,7 @@ class OsuSet extends SubCommandABC {
         **`
       );
 
-    await interaction.reply({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
   }
 }
 

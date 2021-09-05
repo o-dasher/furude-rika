@@ -18,6 +18,8 @@ class Avatar extends CommandABC {
     );
   }
   async run(interaction: CommandInteraction) {
+    await interaction.deferReply();
+
     const user = InteractionHelper.defaultOptionalUser(interaction);
     const embed = new BotEmbed(interaction)
       .setTitle(
@@ -32,7 +34,8 @@ class Avatar extends CommandABC {
         ** `
       )
       .setImage(user.avatarURL({ dynamic: true, size: 1024 }));
-    await interaction.reply({
+
+    await interaction.editReply({
       embeds: [embed]
     });
   }
