@@ -22,7 +22,7 @@ abstract class AbstractScore implements Score {
   beatmap: Beatmap;
   date: string | Date;
   mods: string | string[];
-  accuracy: string | number;
+  accuracy: number;
 }
 
 export default AbstractScore;

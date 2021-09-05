@@ -1,6 +1,6 @@
-class DBPaths {
+abstract class DBPaths {
   private constructor() {}
-  
+
   public static readonly users: string = 'users';
 }
 

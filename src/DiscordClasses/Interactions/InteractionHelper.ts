@@ -1,7 +1,9 @@
 import { CommandInteraction, User } from 'discord.js';
 import OptionsTags from '../SlashCommands/SlashOptions/OptionsTags';
 
-class InteractionHelper {
+abstract class InteractionHelper {
+  private constructor() {}
+  
   public static defaultOptionalUser(interaction: CommandInteraction): User {
     return interaction.options.getUser(OptionsTags.user) ?? interaction.user;
   }

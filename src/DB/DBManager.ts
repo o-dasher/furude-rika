@@ -1,11 +1,10 @@
-import { CommandInteraction, User } from 'discord.js';
+import { User } from 'discord.js';
 import { firestore } from 'firebase-admin';
-import UserOption from '../DiscordClasses/SlashCommands/SlashOptions/UserOption';
 import OsuServers from '../Osu!/Servers/OsuServers';
 import DBPaths from './DBPaths';
 import IDBUser from './IDBUser';
 
-class DBManager {
+abstract class DBManager {
   private constructor() {}
 
   public static furudeDB: firestore.Firestore;
