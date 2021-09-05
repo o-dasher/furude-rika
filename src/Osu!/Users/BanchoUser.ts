@@ -12,7 +12,7 @@ class BanchoUser extends AbstractUser {
     return this;
   }
   public async getScores(): Promise<AbstractScore[]> {
-    const scores = await ApiManager.banchoApi.getScores({ u: this.name });
+    const scores = await ApiManager.banchoApi.getScores({u: this.name});
     const banchoScores: BanchoScore[] = [];
 
     for (const score of scores) {

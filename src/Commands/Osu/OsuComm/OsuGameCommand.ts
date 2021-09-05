@@ -1,12 +1,12 @@
 import { CommandInteraction } from 'discord.js';
-import DBManager from '../../DB/DBManager';
-import OsuServerOption from '../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
-import OsuUserOption from '../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
-import UserOption from '../../DiscordClasses/SlashCommands/SlashOptions/UserOption';
-import CommandABC from '../CommandABC';
-import IOsuParams from './IOsuParams';
+import DBManager from '../../../DB/DBManager';
+import OsuServerOption from '../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
+import OsuUserOption from '../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
+import UserOption from '../../../DiscordClasses/SlashCommands/SlashOptions/UserOption';
+import SubCommandABC from '../../SubCommandABC';
+import IOsuParams from '../Sub/Utils/IOsuParams';
 
-abstract class OsuGameCommand extends CommandABC {
+abstract class OsuGameCommand extends SubCommandABC {
   protected constructor() {
     super();
     this.addStringOption(new OsuUserOption());

@@ -1,13 +1,9 @@
 import { CommandInteraction } from 'discord.js';
 import BotEmbed from '../../../DiscordClasses/Embed/BotEmbed';
-import OsuServerOption from '../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
-import OsuUserOption from '../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
-import DBManager from '../../../DB/DBManager';
 import Localizer from '../../../Localization/Localizer';
 import LocalizeTags from '../../../Localization/LocalizeTags';
 import Droid from '../../../Osu!/Servers/Droid';
-import UserOption from '../../../DiscordClasses/SlashCommands/SlashOptions/UserOption';
-import OsuGameCommand from '../OsuGameCommand';
+import OsuGameCommand from './Utils/OsuGameCommand';
 
 class OsuProfile extends OsuGameCommand {
   public constructor() {
