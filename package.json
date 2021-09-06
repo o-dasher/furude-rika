@@ -30,9 +30,6 @@
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.2"
   },
-  "optionalDependencies": {
-    "fsevents": "^2.0.7"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "yarn dlx @yarnpkg/doctor && lint-staged",
@@ -89,5 +86,8 @@
     "osu-droid": "https://gitpkg.now.sh/o-dasher/Alice/modules/osu-droid?master",
     "request": "^2.88.2",
     "unzipper": "^0.10.11"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.1.2"
   }
 }
