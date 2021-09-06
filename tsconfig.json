@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "lib": ["ESNext"],
-    "strict": false,
-    "module": "commonjs",
+    "strict": true,
+    "module": "ES2020",
     "moduleResolution": "node",
     "target": "ESNext",
     "outDir": "dist",
