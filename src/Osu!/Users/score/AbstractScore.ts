@@ -1,4 +1,9 @@
 import { Beatmap, Score } from 'node-osu';
+import {
+  DroidPerformanceCalculator,
+  Mod,
+  OsuPerformanceCalculator
+} from 'osu-droid';
 import OwnedAPIBeatmap from '../beatmaps/OwnedAPIBeatmap';
 
 abstract class AbstractScore implements Score {
@@ -32,10 +37,12 @@ abstract class AbstractScore implements Score {
   pp: number = -1;
   hasReplay: boolean = false;
   raw_mods: number = -1;
-  beatmap: Beatmap = new OwnedAPIBeatmap();
+  beatmap: OwnedAPIBeatmap = new OwnedAPIBeatmap();
   date: string | Date = this.defaultString;
   mods: string | string[] = this.defaultString;
   accuracy: number = -1;
+  processedMods: Mod[] = [];
+  calcs: OsuPerformanceCalculator | DroidPerformanceCalculator | null = null;
 }
 
 export default AbstractScore;

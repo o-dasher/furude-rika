@@ -12,11 +12,15 @@ class FurudeRika extends Client {
     });
   }
 
+  private logLogin(client: Client): void {
+    consola.success(client.user!.username + ' logged succesfully!');
+  }
+
   public start(): void {
     this.login(token);
 
     this.once('ready', (client) => {
-      consola.success(client.user.username + ' logged succesfully!');
+      this.logLogin(client);
     });
 
     this.on('interactionCreate', async (interaction) => {
@@ -31,6 +35,13 @@ class FurudeRika extends Client {
       }
 
       command.run(interaction);
+    });
+
+    process.on('unhandledRejection', (err) => {
+      consola.error(err);
+      consola.success('Reseting from previous Exception');
+      this.login(token);
+      this.logLogin(this);
     });
   }
 }

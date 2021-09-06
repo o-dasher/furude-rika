@@ -1,6 +1,7 @@
 import { Beatmap } from 'node-osu';
 
 class OwnedAPIBeatmap implements Beatmap {
+  exists: boolean = true;
   id: string = '';
   beatmapSetId: string = '';
   hash: string = '';

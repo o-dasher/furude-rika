@@ -4,7 +4,6 @@ import { CommandInteraction } from 'discord.js';
 import {
   DroidPerformanceCalculator,
   DroidStarRating,
-  Mod,
   OsuPerformanceCalculator,
   OsuStarRating,
   Parser
@@ -18,14 +17,15 @@ import IOSuWithCalc from './IOsuWithCalc';
 import OsuGameCommand from './OsuGameCommand';
 
 abstract class OsuWithCalcCommand extends OsuGameCommand {
-  override async getOsuParams(
-    interaction: CommandInteraction
+  async getScores(
+    interaction: CommandInteraction,
+    indexFrom: number,
+    indexTo: number
   ): Promise<IOSuWithCalc> {
     const params = await super.getOsuParams(interaction);
 
     const { osuUser, server } = params;
     let { error } = params;
-    let mods: Mod[] = [];
 
     const osuParser = new Parser();
     const calculator =
@@ -33,10 +33,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
         ? new DroidPerformanceCalculator()
         : new OsuPerformanceCalculator();
 
-    let score = null;
     let scores: AbstractScore[] = [];
-    let mapExists = false;
-    let apiBeatmap: OwnedAPIBeatmap | null = null;
 
     if (osuUser) {
       try {
@@ -56,58 +53,75 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
       }
 
       if (!error) {
-        score = scores[0];
+        for (let i = 0; i < indexTo; i++) {
+          if (i < indexFrom) {
+            continue;
+          }
 
-        try {
-          apiBeatmap =
-            server instanceof Droid
-              ? (
+          const score = scores[i];
+
+          try {
+            if (server instanceof Droid) {
+              let newBeatmap = new OwnedAPIBeatmap();
+              Object.assign(
+                newBeatmap,
+                (
                   await ApiManager.banchoApi.getBeatmaps({
                     h: score.beatmap.hash
                   })
                 )[0]
-              : score.beatmap;
-          mapExists = true;
-        } catch (err) {
-          apiBeatmap = score.beatmap;
-        }
-
-        if (server instanceof Droid) {
-          const modString = [score.mods].join();
-          mods = ModUtils.pcStringToMods(modString);
-        } else {
-          mods = mods.concat(
-            ModUtils.pcModbitsToMods(parseInt(score.mods.toString()))
-          );
-        }
-
-        if (mapExists) {
-          const mapDownloadUrl = `https://osu.ppy.sh/osu/${apiBeatmap.id}`;
-          const osu = await axios.get(mapDownloadUrl);
-          const map = osuParser.parse(osu.data, mods).map;
-          const stars = calculator.stars.calculate({ map, mods });
-
-          if (
-            stars instanceof DroidStarRating &&
-            calculator instanceof DroidPerformanceCalculator
-          ) {
-            calculator.calculate({
-              stars,
-              combo: score.maxCombo,
-              accPercent: score.accuracy,
-              miss: score.counts.miss
-            });
-          } else if (
-            stars instanceof OsuStarRating &&
-            calculator instanceof OsuPerformanceCalculator
-          ) {
-            calculator.calculate({
-              stars,
-              combo: score.maxCombo,
-              accPercent: score.accuracy,
-              miss: score.counts.miss
-            });
+              );
+              score.beatmap = newBeatmap;
+            }
+          } catch (err) {
+            consolaGlobalInstance.error(err);
+            score.beatmap.exists = false;
           }
+
+          if (server instanceof Droid) {
+            const modString = [score.mods].join();
+            score.processedMods = ModUtils.pcStringToMods(modString);
+          } else {
+            score.processedMods = ModUtils.pcModbitsToMods(
+              parseInt(score.mods.toString())
+            );
+          }
+
+          if (score.beatmap.exists) {
+            const mapDownloadUrl = `https://osu.ppy.sh/osu/${score.beatmap.id}`;
+            const osu = await axios.get(mapDownloadUrl);
+            const map = osuParser.parse(osu.data, score.processedMods).map;
+            const stars = calculator.stars.calculate({
+              map,
+              mods: score.processedMods
+            });
+
+            if (
+              stars instanceof DroidStarRating &&
+              calculator instanceof DroidPerformanceCalculator
+            ) {
+              calculator.calculate({
+                stars,
+                combo: score.maxCombo,
+                accPercent: score.accuracy,
+                miss: score.counts.miss
+              });
+            } else if (
+              stars instanceof OsuStarRating &&
+              calculator instanceof OsuPerformanceCalculator
+            ) {
+              calculator.calculate({
+                stars,
+                combo: score.maxCombo,
+                accPercent: score.accuracy,
+                miss: score.counts.miss
+              });
+            }
+
+            score.calcs = Object.assign({}, calculator);
+          }
+
+          scores.push(score);
         }
       }
     }
@@ -115,13 +129,8 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
     return {
       osuUser,
       server,
-      calculator,
-      osuParser,
-      score,
-      error,
-      apiBeatmap,
-      mapExists,
-      mods
+      scores,
+      error
     };
   }
 }

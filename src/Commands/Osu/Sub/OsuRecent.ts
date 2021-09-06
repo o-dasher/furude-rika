@@ -13,33 +13,35 @@ class OsuRecent extends OsuWithCalcCommand {
   async run(interaction: CommandInteraction): Promise<void> {
     await interaction.deferReply();
 
-    const { calculator, score, apiBeatmap, mapExists, error, mods } =
-      await this.getOsuParams(interaction);
+    const { scores, error } = await this.getScores(interaction, 0, 1);
 
     if (error) {
       return;
     }
 
-    const modstr = ModUtils.getStringRepr(mods);
+    const score = scores![0];
+    const modstr = ModUtils.getStringRepr(score.processedMods);
 
     let info = `Score: ${score!.score.toLocaleString(
       interaction.guild!.preferredLocale
     )}\nAccuracy: ${score!.accuracy}%\nCombo: ${score!.maxCombo} / ${
-      apiBeatmap!.maxCombo
+      score.beatmap.maxCombo
     }`;
-    if (mapExists) {
-      info = info.concat(`\nPP: ${calculator.total.toFixed(2)}`);
+    if (score.beatmap.exists && score.calcs) {
+      info = info.concat(`\nPP: ${score.calcs?.total.toFixed(2)}`);
     }
 
-    let title = `${apiBeatmap!.title} - [${apiBeatmap!.version}] +${modstr}`;
-    if (mapExists) {
-      title = title.concat(` [${calculator.stars.total.toFixed(2)}★]`);
+    let title = `${score.beatmap.title} - [${score.beatmap.version}] +${modstr}`;
+    if (score.beatmap.exists && score.calcs) {
+      title = title.concat(` [${score.calcs.stars.total.toFixed(2)}★]`);
     }
 
     const embed = new BotEmbed(interaction)
       .setTitle(`**${title}**`)
       .setDescription(`**${info}**`)
-      .setThumbnail(`https://b.ppy.sh/thumb/${apiBeatmap!.beatmapSetId}l.jpg`);
+      .setThumbnail(
+        `https://b.ppy.sh/thumb/${score.beatmap!.beatmapSetId}l.jpg`
+      );
 
     await interaction.editReply({
       embeds: [embed]
