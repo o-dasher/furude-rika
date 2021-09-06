@@ -30,6 +30,9 @@
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.2"
   },
+  "optionalDependencies": {
+    "fsevents": "^2.0.7"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "yarn dlx @yarnpkg/doctor && lint-staged",
