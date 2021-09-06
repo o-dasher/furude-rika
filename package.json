@@ -9,6 +9,9 @@
     "deploy": "ts-node-dev --respawn --transpile-only --poll ./src/rest/deploy-commands.ts",
     "lint": "prettier --write ."
   },
+  "engines": {
+    "node": "14.x"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
