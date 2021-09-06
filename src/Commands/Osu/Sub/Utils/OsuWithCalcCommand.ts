@@ -53,7 +53,9 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
       }
 
       if (!error) {
-        for (let i = 0; i < indexFrom + indexTo + 1; i++) {
+        indexFrom = Math.max(0, Math.min(indexFrom, scores.length - 1));
+        indexTo = indexFrom + indexTo + 1;
+        for (let i = 0; i < indexTo; i++) {
           if (i < indexFrom) {
             continue;
           }
@@ -74,7 +76,9 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
               score.beatmap = newBeatmap;
             }
           } catch (err) {
-            consolaGlobalInstance.error(err);
+            consolaGlobalInstance.error(
+              `Map: ${score.beatmap.hash}  not found!`
+            );
             score.beatmap.exists = false;
           }
 
@@ -130,7 +134,9 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
       osuUser,
       server,
       scores,
-      error
+      error,
+      indexFrom,
+      indexTo
     };
   }
 }

@@ -16,20 +16,27 @@ class OsuRecent extends OsuWithCalcCommand {
     await interaction.deferReply();
 
     const index = IndexOption.getTag(interaction);
-    const { scores, error } = await this.getScores(interaction, index, 0);
+    const { server, osuUser, scores, error, indexFrom } = await this.getScores(
+      interaction,
+      index,
+      0
+    );
 
     if (error) {
       return;
     }
 
-    const score = scores![index];
+    const score = scores![indexFrom];
     const modstr = ModUtils.getStringRepr(score.processedMods);
 
     let info = `Score: ${score!.score.toLocaleString(
       interaction.guild!.preferredLocale
-    )}\nAccuracy: ${score!.accuracy}%\nCombo: ${score!.maxCombo} / ${
-      score.beatmap.maxCombo
-    }\nMiss: ${score.counts.miss}`;
+    )}\nAccuracy: ${score!.accuracy}%\nMiss: ${score.counts.miss}\nCombo: ${
+      score!.maxCombo
+    }`;
+    if (score.beatmap.exists) {
+      info = info.concat(` / ${score.beatmap.maxCombo}`);
+    }
     if (score.beatmap.exists && score.calcs) {
       info = info.concat(`\nPP: ${score.calcs?.total.toFixed(2)}`);
     }
@@ -47,7 +54,10 @@ class OsuRecent extends OsuWithCalcCommand {
       );
 
     await interaction.editReply({
-      embeds: [embed]
+      embeds: [embed],
+      content: `**${indexFrom + 1}th Recent play from ${osuUser?.name} on ${
+        server.name
+      } servers**`
     });
   }
 }
