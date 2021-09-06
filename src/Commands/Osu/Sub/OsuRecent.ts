@@ -1,6 +1,7 @@
 import { CommandInteraction } from 'discord.js';
 
 import BotEmbed from '../../../DiscordClasses/Embed/BotEmbed';
+import IndexOption from '../../../DiscordClasses/SlashCommands/SlashOptions/IndexOption';
 import ModUtils from '../../../Osu!/Utils/ModUtils';
 import OsuWithCalcCommand from './Utils/OsuWithCalcCommand';
 
@@ -8,25 +9,27 @@ class OsuRecent extends OsuWithCalcCommand {
   public constructor() {
     super();
     this.setName('recent').setDescription('Gets your recent osu! scores');
+    this.addNumberOption(new IndexOption().setDescription('The play index'));
   }
 
   async run(interaction: CommandInteraction): Promise<void> {
     await interaction.deferReply();
 
-    const { scores, error } = await this.getScores(interaction, 0, 0);
+    const index = IndexOption.getTag(interaction);
+    const { scores, error } = await this.getScores(interaction, index, 0);
 
     if (error) {
       return;
     }
 
-    const score = scores![0];
+    const score = scores![index];
     const modstr = ModUtils.getStringRepr(score.processedMods);
 
     let info = `Score: ${score!.score.toLocaleString(
       interaction.guild!.preferredLocale
     )}\nAccuracy: ${score!.accuracy}%\nCombo: ${score!.maxCombo} / ${
       score.beatmap.maxCombo
-    }`;
+    }\nMiss: ${score.counts.miss}`;
     if (score.beatmap.exists && score.calcs) {
       info = info.concat(`\nPP: ${score.calcs?.total.toFixed(2)}`);
     }
