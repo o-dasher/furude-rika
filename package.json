@@ -10,7 +10,7 @@
     "lint": "prettier --write ."
   },
   "engines": {
-    "node": "14.x"
+    "node": "16.8.0"
   },
   "keywords": [],
   "author": "",
