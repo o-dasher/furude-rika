@@ -13,7 +13,7 @@ class OsuRecent extends OsuWithCalcCommand {
   async run(interaction: CommandInteraction): Promise<void> {
     await interaction.deferReply();
 
-    const { scores, error } = await this.getScores(interaction, 0, 1);
+    const { scores, error } = await this.getScores(interaction, 0, 0);
 
     if (error) {
       return;

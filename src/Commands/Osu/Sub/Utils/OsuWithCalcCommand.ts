@@ -53,7 +53,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
       }
 
       if (!error) {
-        for (let i = 0; i < indexTo; i++) {
+        for (let i = 0; i < indexTo + 1; i++) {
           if (i < indexFrom) {
             continue;
           }
