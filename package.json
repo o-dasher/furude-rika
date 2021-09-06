@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc && tsc --build ./node_modules/osu-droid/tsconfig.json",
+    "postinstall": "npm run build",
     "start": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
     "deploy": "ts-node-dev --respawn --transpile-only --poll ./src/rest/deploy-commands.ts",
     "lint": "prettier --write ."
