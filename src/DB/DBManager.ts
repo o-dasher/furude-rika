@@ -17,8 +17,8 @@ abstract class DBManager {
     const user: IDBUser = {
       osu: {
         defaultServer: OsuServers.bancho.name,
-        bancho: null,
-        droid: null
+        bancho: -1,
+        droid: -1
       }
     };
     const currentData = (

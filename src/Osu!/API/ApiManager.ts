@@ -1,11 +1,12 @@
-import { osuApiKey } from '../../json/config.json';
 import osu from 'node-osu';
 import DroidScrapeApi from './DroidScrapeApi';
+
+const { OSU_API_KEY } = process.env;
 
 class ApiManager {
   private constructor() {}
 
-  public static banchoApi = new osu.Api(osuApiKey, {
+  public static banchoApi = new osu.Api(OSU_API_KEY, {
     completeScores: true,
     parseNumeric: true
   });

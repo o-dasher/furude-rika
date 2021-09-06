@@ -8,6 +8,7 @@ import DBPaths from '../../../DB/DBPaths';
 import Localizer from '../../../Localization/Localizer';
 import LocalizeTags from '../../../Localization/LocalizeTags';
 import SubCommandABC from '../../SubCommandABC';
+import DBUserHelper from '../../../DB/DBUserHelper';
 
 class OsuSet extends SubCommandABC {
   private defaultServerOption = 'default-server';
@@ -51,9 +52,7 @@ class OsuSet extends SubCommandABC {
 
     if (interaction.options.getString(OptionsTags.osuUser)) {
       const user = await OsuUserOption.getTag(interaction, server, userData);
-      if (user != null) {
-        userData.osu[`${server.name}`] = user.id;
-      }
+      DBUserHelper.changeUserName(user, userData, server);
     }
 
     await DBManager.furudeDB

@@ -1,13 +1,16 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
-import { clientID, devGuildID, token, debug } from '../json/config.json';
+import { clientID, devGuildID, debug } from '../json/config.json';
 import consola from 'consola';
 import CommandsReader from '../IO/CommandsReader';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const commands = CommandsReader.getAllCommands().map((command) =>
   command.toJSON()
 );
-const rest = new REST({ version: '9' }).setToken(token);
+const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN);
 
 (async () => {
   const req = { body: commands };

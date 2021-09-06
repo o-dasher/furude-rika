@@ -1,12 +1,12 @@
 import { SlashCommandStringOption } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
+import DBUserHelper from '../../../../DB/DBUserHelper';
 import IDBUser from '../../../../DB/IDBUser';
 import Localizer from '../../../../Localization/Localizer';
 import LocalizeTags from '../../../../Localization/LocalizeTags';
 import Bancho from '../../../../Osu!/Servers/Bancho';
 import Droid from '../../../../Osu!/Servers/Droid';
 import OsuServer from '../../../../Osu!/Servers/OsuServer';
-import OsuServers from '../../../../Osu!/Servers/OsuServers';
 import AbstractUser from '../../../../Osu!/Users/AbstractUser';
 import BanchoUser from '../../../../Osu!/Users/BanchoUser';
 import OsuDroidUser from '../../../../Osu!/Users/OsuDroidUser';
@@ -34,16 +34,9 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
     );
 
     if (!usernameOrID) {
-      switch (server) {
-        case OsuServers.droid:
-          usernameOrID = userData.osu.droid.toString();
-          break;
-        default:
-          usernameOrID = userData.osu.bancho.toString();
-          break;
-      }
+      usernameOrID = DBUserHelper.getUserName(userData, server);
     }
-    
+
     if (server instanceof Bancho) {
       try {
         osuUser = await new BanchoUser().buildUser(usernameOrID);

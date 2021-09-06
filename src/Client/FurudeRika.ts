@@ -1,7 +1,6 @@
 import { Client, Collection, Intents } from 'discord.js';
 import consola from 'consola';
 import ICommand from '../Interfaces/ICommand';
-import { token } from '../json/Config.json';
 
 class FurudeRika extends Client {
   public commands: Collection<string, ICommand> = new Collection();
@@ -17,7 +16,7 @@ class FurudeRika extends Client {
   }
 
   public start(): void {
-    this.login(token);
+    this.login(process.env.BOT_TOKEN);
 
     this.once('ready', (client) => {
       this.logLogin(client);
@@ -40,7 +39,7 @@ class FurudeRika extends Client {
     process.on('unhandledRejection', (err) => {
       consola.error(err);
       consola.success('Reseting from previous Exception');
-      this.login(token);
+      this.login(process.env.BOT_TOKEN);
       this.logLogin(this);
     });
   }
