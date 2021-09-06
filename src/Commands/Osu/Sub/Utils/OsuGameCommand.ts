@@ -17,6 +17,8 @@ abstract class OsuGameCommand extends SubCommandABC {
   protected async getOsuParams(
     interaction: CommandInteraction
   ): Promise<IOsuParams> {
+    let error = false;
+
     const runnerData = await DBManager.getUserData(interaction.user);
     const server = OsuServerOption.getTag(interaction, runnerData);
     const discordUser = UserOption.getTag(interaction);
@@ -31,9 +33,12 @@ abstract class OsuGameCommand extends SubCommandABC {
       pickedUserData
     );
 
+    error = !osuUser;
+
     return {
       osuUser,
-      server
+      server,
+      error
     };
   }
 }
