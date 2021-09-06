@@ -86,6 +86,7 @@
     "node-osu": "^2.2.1",
     "osu-droid": "https://gitpkg.now.sh/o-dasher/Alice/modules/osu-droid?master",
     "request": "^2.88.2",
+    "strip-ansi": "^7.0.0",
     "unzipper": "^0.10.11"
   },
   "optionalDependencies": {
