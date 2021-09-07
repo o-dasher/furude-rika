@@ -4,7 +4,7 @@ import FurudeRika from '@furude-client/FurudeRika';
 import CommandsReader from '@furude-io/CommandsReader';
 import Localizer from '@furude-localization/Localizer';
 import * as admin from 'firebase-admin';
-import 'firebase/firestore';
+import 'firebase-admin/lib/firestore';
 import DBManager from '@furude-db/DBManager';
 import * as dotenv from 'dotenv';
 
