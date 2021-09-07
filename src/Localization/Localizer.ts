@@ -3,11 +3,13 @@ import i18next from 'i18next';
 import { resources } from '@furude-localization/Strings.json';
 
 abstract class Localizer {
+  public static defaultLocale = 'en';
+
   private constructor() {}
 
   public static init(): void {
     i18next.init({
-      lng: 'en',
+      lng: this.defaultLocale,
       debug: false,
       resources
     });
@@ -43,9 +45,9 @@ abstract class Localizer {
     interaction: CommandInteraction,
     number: number
   ): string {
-    return interaction.guild
-      ? number.toLocaleString(interaction.guild.preferredLocale)
-      : number.toString();
+    return number.toLocaleString(
+      interaction.guild ? interaction.guild.preferredLocale : this.defaultLocale
+    );
   }
 }
 
