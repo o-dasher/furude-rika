@@ -24,7 +24,7 @@ class Clear extends CommandABC {
       return;
     }
 
-    if (!this.ensurePermissions) {
+    if (!(await this.ensureUsage(interaction))) {
       return;
     }
 

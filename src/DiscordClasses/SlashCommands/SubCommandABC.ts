@@ -8,7 +8,7 @@ abstract class SubCommandABC
   implements ICommand
 {
   permissions: bigint[] = [];
-  ensurePermissions(interaction: CommandInteraction): Promise<boolean> {
+  ensureUsage(interaction: CommandInteraction): Promise<boolean> {
     return CommandHelper.checkPermissions(interaction, this.permissions);
   }
   abstract run(interaction: CommandInteraction): Promise<void>;

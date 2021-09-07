@@ -5,16 +5,13 @@ import ICommand from '@discord-classes/SlashCommands/ICommand';
 import SubCommandABC from '@discord-classes/SlashCommands/SubCommandABC';
 import CommandHelper from '@discord-classes/SlashCommands/CommandHelper';
 
-
 abstract class CommandABC extends SlashCommandBuilder implements ICommand {
   permissions: bigint[] = [];
   private readonly subCommands: SubCommandABC[] = [];
 
   abstract run(interaction: CommandInteraction): Promise<void>;
 
-  public async ensurePermissions(
-    interaction: CommandInteraction
-  ): Promise<boolean> {
+  public async ensureUsage(interaction: CommandInteraction): Promise<boolean> {
     return await CommandHelper.checkPermissions(interaction, this.permissions);
   }
 
