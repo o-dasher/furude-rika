@@ -4,7 +4,7 @@ import OsuServerOption from '@discord-classes/SlashCommands/SlashOptions/OsuOpti
 import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
 import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
 import SubCommandABC from '@discord-classes/SlashCommands/SubCommandABC';
-import IOsuParams from '@furude-commands/Osu/Sub/Utils/IOsuParams';
+import IOsuParams from '@furude-subs/Osu/Utils/IOsuParams';
 
 abstract class OsuGameCommand extends SubCommandABC {
   protected constructor() {

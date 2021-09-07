@@ -3,7 +3,7 @@ import { CommandInteraction } from 'discord.js';
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import IndexOption from '@discord-classes/SlashCommands/SlashOptions/IndexOption';
 import ModUtils from '@furude-osu/Utils/ModUtils';
-import OsuWithCalcCommand from '@furude-commands/Osu/Sub/Utils/OsuWithCalcCommand';
+import OsuWithCalcCommand from '@furude-subs/Osu/Utils/OsuWithCalcCommand';
 
 class OsuRecent extends OsuWithCalcCommand {
   public constructor() {

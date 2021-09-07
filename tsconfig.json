@@ -16,6 +16,7 @@
     "baseUrl": "src",
     "paths": {
       "@furude-commands/*": ["Commands/*"],
+      "@furude-subs/*": ["Subcommands/*"],
       "@discord-classes/*": ["DiscordClasses/*"],
       "@furude-client/*": ["Client/*"],
       "@furude-io/*": ["IO/*"],

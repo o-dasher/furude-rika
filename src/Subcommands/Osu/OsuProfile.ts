@@ -1,5 +1,5 @@
 import { CommandInteraction } from 'discord.js';
-import OsuGameCommand from '@furude-commands/Osu/Sub/Utils/OsuGameCommand';
+import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';

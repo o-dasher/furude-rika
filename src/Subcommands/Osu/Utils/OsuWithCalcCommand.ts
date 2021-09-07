@@ -13,8 +13,8 @@ import Droid from '@furude-osu/Servers/Droid';
 import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
 import AbstractScore from '@furude-osu/Users/score/AbstractScore';
 import ModUtils from '@furude-osu/Utils/ModUtils';
-import IOSuWithCalc from '@furude-commands/Osu/Sub/Utils/IOsuWithCalc';
-import OsuGameCommand from '@furude-commands/Osu/Sub/Utils/OsuGameCommand';
+import IOSuWithCalc from '@furude-subs/Osu/Utils/IOsuWithCalc';
+import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 
 abstract class OsuWithCalcCommand extends OsuGameCommand {
   async getScores(
