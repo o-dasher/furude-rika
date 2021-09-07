@@ -8,7 +8,7 @@ import RandomHelper from '@furude-math/RandomHelper';
 class Roll extends CommandABC {
   public boundTag = 'bound';
 
-  constructor() {
+  public constructor() {
     super();
     this.setName('roll').setDescription(
       'Randomly picks a number within a certain bound'
