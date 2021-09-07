@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && tsc --build ./node_modules/osu-droid/tsconfig.json",
+    "build": "tsc --build ./tsconfig.json && tsc --build ./node_modules/osu-droid/tsconfig.json",
     "start": "ts-node-dev --respawn --transpile-only --poll ./src/index.ts",
     "deploy": "ts-node-dev --respawn --transpile-only --poll ./src/rest/deploy-commands.ts",
     "lint": "prettier --write ."
