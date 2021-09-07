@@ -1,12 +1,16 @@
 abstract class StringUtils {
   private constructor() {}
 
+  public static prefixedString(prefix: string, value: string): string {
+    return `${prefix} | ${value}`;
+  }
+
   public static errorString(value: string): string {
-    return this.boldString(`:negative_squared_cross_mark: - ${value}`);
+    return this.boldString(this.prefixedString('❎', value));
   }
 
   public static successString(value: string): string {
-    return this.boldString(`:white_check_mark: - ${value}`);
+    return this.boldString(this.prefixedString('✅', value));
   }
 
   public static boldString(value: string): string {

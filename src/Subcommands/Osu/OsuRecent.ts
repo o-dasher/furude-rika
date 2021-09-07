@@ -59,7 +59,7 @@ class OsuRecent extends OsuWithCalcCommand {
 
     await interaction.editReply({
       embeds: [embed],
-      content: StringUtils.boldString(
+      content: StringUtils.successString(
         `${ordinal(indexFrom + 1)} Recent play from ${osuUser?.name} on ${
           server.name
         } servers`
