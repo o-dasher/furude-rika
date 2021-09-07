@@ -1,5 +1,5 @@
 import { CommandInteraction } from 'discord.js';
-import CommandABC from '@furude-commands/CommandABC';
+import CommandABC from '@discord-classes/SlashCommands/CommandABC';
 import OsuProfile from '@furude-commands/Osu/Sub/OsuProfile';
 import OsuRecent from '@furude-commands/Osu/Sub/OsuRecent';
 import OsuSet from '@furude-commands/Osu/Sub/OsuSet';

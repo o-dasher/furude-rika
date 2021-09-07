@@ -1,6 +1,6 @@
 import AmountOption from '@discord-classes/SlashCommands/SlashOptions/AmountOption';
 import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
-import CommandABC from '@furude-commands/CommandABC';
+import CommandABC from '@discord-classes/SlashCommands/CommandABC';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction, Permissions, TextChannel } from 'discord.js';

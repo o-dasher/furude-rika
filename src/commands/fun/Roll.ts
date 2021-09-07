@@ -1,5 +1,5 @@
 import { SlashCommandNumberOption } from '@discordjs/builders';
-import CommandABC from '@furude-commands/CommandABC';
+import CommandABC from '@discord-classes/SlashCommands/CommandABC';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';

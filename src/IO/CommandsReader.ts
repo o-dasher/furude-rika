@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import CommandABC from '@furude-commands/CommandABC';
+import CommandABC from '@discord-classes/SlashCommands/CommandABC';
 import IOPaths from '@furude-io/IOPaths';
 
 class CommandsReader {

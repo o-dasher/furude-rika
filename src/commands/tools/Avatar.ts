@@ -1,7 +1,7 @@
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import InteractionHelper from '@discord-classes/Interactions/InteractionHelper';
 import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
-import CommandABC from '@furude-commands/CommandABC';
+import CommandABC from '@discord-classes/SlashCommands/CommandABC';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';

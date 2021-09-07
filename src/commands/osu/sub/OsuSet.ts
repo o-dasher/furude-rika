@@ -2,7 +2,7 @@ import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 import OsuServerOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
 import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
-import SubCommandABC from '@furude-commands/SubCommandABC';
+import SubCommandABC from '@discord-classes/SlashCommands/SubCommandABC';
 import DBManager from '@furude-db/DBManager';
 import DBPaths from '@furude-db/DBPaths';
 import DBUserHelper from '@furude-db/DBUserHelper';
