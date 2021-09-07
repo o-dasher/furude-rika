@@ -1,8 +1,8 @@
 import { SlashCommandStringOption } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
-import CommandOption from './CommandOption';
-import OptionHelper from './OptionHelper';
-import OptionsTags from './OptionsTags';
+import CommandOption from '@discord-classes/SlashCommands/SlashOptions/CommandOption';
+import OptionHelper from '@discord-classes/SlashCommands/SlashOptions/OptionHelper';
+import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 
 class ExpressionOption
   extends SlashCommandStringOption

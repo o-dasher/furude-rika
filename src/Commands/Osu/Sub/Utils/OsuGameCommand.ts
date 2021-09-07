@@ -1,10 +1,10 @@
 import { CommandInteraction } from 'discord.js';
-import DBManager from '../../../../DB/DBManager';
-import OsuServerOption from '../../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
-import OsuUserOption from '../../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
-import UserOption from '../../../../DiscordClasses/SlashCommands/SlashOptions/UserOption';
-import SubCommandABC from '../../../SubCommandABC';
-import IOsuParams from './IOsuParams';
+import DBManager from '@furude-db/DBManager';
+import OsuServerOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
+import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
+import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
+import SubCommandABC from '@furude-commands/SubCommandABC';
+import IOsuParams from '@furude-commands/Osu/Sub/Utils/IOsuParams';
 
 abstract class OsuGameCommand extends SubCommandABC {
   protected constructor() {

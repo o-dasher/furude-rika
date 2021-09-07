@@ -1,7 +1,7 @@
 import { SlashCommandNumberOption } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
-import CommandOption from './CommandOption';
-import OptionsTags from './OptionsTags';
+import CommandOption from '@discord-classes/SlashCommands/SlashOptions/CommandOption';
+import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 
 class IndexOption extends SlashCommandNumberOption implements CommandOption {
   tag: string = OptionsTags.index;

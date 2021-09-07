@@ -1,8 +1,8 @@
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
-import { clientID, devGuildID, debug } from '../json/config.json';
+import { clientID, devGuildID, debug } from '@furude-json/Config.json';
 import consola from 'consola';
-import CommandsReader from '../IO/CommandsReader';
+import CommandsReader from '@furude-io/CommandsReader';
 import * as dotenv from 'dotenv';
 
 dotenv.config();

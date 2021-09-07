@@ -83,6 +83,7 @@
     "i18next": "^20.6.0",
     "java-deserialization": "^0.1.0",
     "mathjs": "^9.4.4",
+    "module-alias": "^2.2.2",
     "node-osu": "^2.2.1",
     "osu-droid": "https://gitpkg.now.sh/o-dasher/Alice/modules/osu-droid?master",
     "request": "^2.88.2",
@@ -94,6 +95,13 @@
   },
   "_moduleAliases": {
     "@furude-commands": "dist/Commands",
-    "@discord-classes": "dist/DiscordClasses"
+    "@discord-classes": "dist/DiscordClasses",
+    "@furude-client": "dist/Client",
+    "@furude-io": "dist/IO",
+    "@furude-localization": "dist/Localization",
+    "@furude-db": "dist/DB",
+    "@furude-osu": "dist/Osu!",
+    "@furude-json": "dist/JSON",
+    "@furude-math": "dist/Math"
   }
 }

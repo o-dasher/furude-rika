@@ -1,7 +1,7 @@
-import ApiManager from '../API/ApiManager';
-import AbstractUser from './AbstractUser';
-import AbstractScore from './score/AbstractScore';
-import OsuDroidScore from './score/OsuDroidScore';
+import ApiManager from '@furude-osu/API/ApiManager';
+import AbstractUser from '@furude-osu/Users/AbstractUser';
+import AbstractScore from '@furude-osu/Users/score/AbstractScore';
+import OsuDroidScore from '@furude-osu/Users/score/OsuDroidScore';
 
 class OsuDroidUser extends AbstractUser {
   public droidScores: OsuDroidScore[] = [];

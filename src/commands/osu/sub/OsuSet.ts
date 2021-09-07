@@ -1,14 +1,14 @@
+import BotEmbed from '@discord-classes/Embed/BotEmbed';
+import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
+import OsuServerOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
+import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
+import SubCommandABC from '@furude-commands/SubCommandABC';
+import DBManager from '@furude-db/DBManager';
+import DBPaths from '@furude-db/DBPaths';
+import DBUserHelper from '@furude-db/DBUserHelper';
+import Localizer from '@furude-localization/Localizer';
+import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';
-import BotEmbed from '../../../DiscordClasses/Embed/BotEmbed';
-import OptionsTags from '../../../DiscordClasses/SlashCommands/SlashOptions/OptionsTags';
-import OsuServerOption from '../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
-import OsuUserOption from '../../../DiscordClasses/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
-import DBManager from '../../../DB/DBManager';
-import DBPaths from '../../../DB/DBPaths';
-import Localizer from '../../../Localization/Localizer';
-import LocalizeTags from '../../../Localization/LocalizeTags';
-import SubCommandABC from '../../SubCommandABC';
-import DBUserHelper from '../../../DB/DBUserHelper';
 
 class OsuSet extends SubCommandABC {
   private defaultServerOption = 'default-server';

@@ -1,9 +1,9 @@
+import ExpressionOption from '@discord-classes/SlashCommands/SlashOptions/ExpressionOption';
+import CommandABC from '@furude-commands/CommandABC';
+import Localizer from '@furude-localization/Localizer';
+import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';
-import ExpressionOption from '../../DiscordClasses/SlashCommands/SlashOptions/ExpressionOption';
-import CommandABC from '../CommandABC';
 import { evaluate, MathExpression } from 'mathjs';
-import LocalizeTags from '../../Localization/LocalizeTags';
-import Localizer from '../../Localization/Localizer';
 
 class Math extends CommandABC {
   constructor() {

@@ -1,9 +1,9 @@
 import { CommandInteraction } from 'discord.js';
 
-import BotEmbed from '../../../DiscordClasses/Embed/BotEmbed';
-import IndexOption from '../../../DiscordClasses/SlashCommands/SlashOptions/IndexOption';
-import ModUtils from '../../../Osu!/Utils/ModUtils';
-import OsuWithCalcCommand from './Utils/OsuWithCalcCommand';
+import BotEmbed from '@discord-classes/Embed/BotEmbed';
+import IndexOption from '@discord-classes/SlashCommands/SlashOptions/IndexOption';
+import ModUtils from '@furude-osu/Utils/ModUtils';
+import OsuWithCalcCommand from '@furude-commands/Osu/Sub/Utils/OsuWithCalcCommand';
 
 class OsuRecent extends OsuWithCalcCommand {
   public constructor() {

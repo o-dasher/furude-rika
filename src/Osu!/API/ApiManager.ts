@@ -1,5 +1,5 @@
 import osu from 'node-osu';
-import DroidScrapeApi from './DroidScrapeApi';
+import DroidScrapeApi from '@furude-osu/API/DroidScrapeApi';
 
 const { OSU_API_KEY } = process.env;
 

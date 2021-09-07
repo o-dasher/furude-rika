@@ -1,9 +1,9 @@
+import AmountOption from '@discord-classes/SlashCommands/SlashOptions/AmountOption';
+import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
+import CommandABC from '@furude-commands/CommandABC';
+import Localizer from '@furude-localization/Localizer';
+import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction, Permissions, TextChannel } from 'discord.js';
-import OptionsTags from '../../DiscordClasses/SlashCommands/SlashOptions/OptionsTags';
-import CommandABC from '../CommandABC';
-import Localizer from '../../Localization/Localizer';
-import LocalizeTags from '../../Localization/LocalizeTags';
-import AmountOption from '../../DiscordClasses/SlashCommands/SlashOptions/AmountOption';
 
 class Clear extends CommandABC {
   constructor() {

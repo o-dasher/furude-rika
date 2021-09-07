@@ -4,7 +4,7 @@ import {
   Mod,
   OsuPerformanceCalculator
 } from 'osu-droid';
-import OwnedAPIBeatmap from '../beatmaps/OwnedAPIBeatmap';
+import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
 
 abstract class AbstractScore implements Score {
   defaultString = 'NULL';

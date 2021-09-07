@@ -1,7 +1,7 @@
-import ApiManager from '../API/ApiManager';
-import AbstractUser from './AbstractUser';
-import AbstractScore from './score/AbstractScore';
-import BanchoScore from './score/BanchoScore';
+import ApiManager from '@furude-osu/API/ApiManager';
+import AbstractUser from '@furude-osu/Users/AbstractUser';
+import AbstractScore from '@furude-osu/Users/score/AbstractScore';
+import BanchoScore from '@furude-osu/Users/score/BanchoScore';
 
 class BanchoUser extends AbstractUser {
   public async buildUser(username: string | number) {

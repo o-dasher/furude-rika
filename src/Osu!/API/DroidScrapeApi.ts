@@ -1,9 +1,9 @@
-import OsuDroidUser from '../Users/OsuDroidUser';
-import ParamString from './ParamString';
+import OsuDroidUser from '@furude-osu/Users/OsuDroidUser';
+import ParamString from '@furude-osu/API/ParamString';
 import cheerio from 'cheerio';
 import axios from 'axios';
-import OsuDroidScore from '../Users/score/OsuDroidScore';
-import OwnedAPIBeatmap from '../Users/beatmaps/OwnedAPIBeatmap';
+import OsuDroidScore from '@furude-osu/Users/score/OsuDroidScore';
+import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
 
 class DroidScrapeApi {
   private baseUrl = 'http://ops.dgsrz.com/';

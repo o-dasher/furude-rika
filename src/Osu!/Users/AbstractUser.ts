@@ -1,5 +1,5 @@
 import { User } from 'node-osu';
-import AbstractScore from './score/AbstractScore';
+import AbstractScore from '@furude-osu/Users/score/AbstractScore';
 
 abstract class AbstractUser implements User {
   public defaultString = '';

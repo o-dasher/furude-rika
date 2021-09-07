@@ -1,6 +1,6 @@
-import Bancho from './Bancho';
-import Droid from './Droid';
-import OsuServer from './OsuServer';
+import Bancho from '@furude-osu/Servers/Bancho';
+import Droid from '@furude-osu/Servers/Droid';
+import OsuServer from '@furude-osu/Servers/OsuServer';
 
 class OsuServers {
   public static bancho: Bancho = new Bancho();

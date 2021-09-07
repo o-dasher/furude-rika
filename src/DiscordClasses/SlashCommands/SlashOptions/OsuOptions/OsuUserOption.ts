@@ -1,19 +1,19 @@
 import { SlashCommandStringOption } from '@discordjs/builders';
+import DBUserHelper from '@furude-db/DBUserHelper';
+import IDBUser from '@furude-db/IDBUser';
+import Localizer from '@furude-localization/Localizer';
+import LocalizeTags from '@furude-localization/LocalizeTags';
+import Bancho from '@furude-osu/Servers/Bancho';
+import Droid from '@furude-osu/Servers/Droid';
+import OsuServer from '@furude-osu/Servers/OsuServer';
+import AbstractUser from '@furude-osu/Users/AbstractUser';
+import BanchoUser from '@furude-osu/Users/BanchoUser';
+import OsuDroidUser from '@furude-osu/Users/OsuDroidUser';
+import OsuUserHelper from '@furude-osu/Users/OsuUserHelper';
 import { CommandInteraction } from 'discord.js';
-import DBUserHelper from '../../../../DB/DBUserHelper';
-import IDBUser from '../../../../DB/IDBUser';
-import Localizer from '../../../../Localization/Localizer';
-import LocalizeTags from '../../../../Localization/LocalizeTags';
-import Bancho from '../../../../Osu!/Servers/Bancho';
-import Droid from '../../../../Osu!/Servers/Droid';
-import OsuServer from '../../../../Osu!/Servers/OsuServer';
-import AbstractUser from '../../../../Osu!/Users/AbstractUser';
-import BanchoUser from '../../../../Osu!/Users/BanchoUser';
-import OsuDroidUser from '../../../../Osu!/Users/OsuDroidUser';
-import OsuUserHelper from '../../../../Osu!/Users/OsuUserHelper';
-import CommandOption from '../CommandOption';
-import OptionHelper from '../OptionHelper';
-import OptionsTags from '../OptionsTags';
+import CommandOption from '@discord-classes/SlashCommands/SlashOptions/CommandOption';
+import OptionHelper from '@discord-classes/SlashCommands/SlashOptions/OptionHelper';
+import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 
 class OsuUserOption extends SlashCommandStringOption implements CommandOption {
   tag: string = OptionsTags.osuUser;

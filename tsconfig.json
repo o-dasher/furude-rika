@@ -16,7 +16,14 @@
     "baseUrl": "src",
     "paths": {
       "@furude-commands/*": ["Commands/*"],
-      "@discord-classes/*": ["DiscordClasses/*"]
+      "@discord-classes/*": ["DiscordClasses/*"],
+      "@furude-client/*": ["Client/*"],
+      "@furude-io/*": ["IO/*"],
+      "@furude-localization/*": ["Localization/*"],
+      "@furude-db/*": ["DB/*"],
+      "@furude-osu/*": ["Osu!/*"],
+      "@furude-json/*": ["JSON/*"],
+      "@furude-math/*": ["Math/*"]
     },
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true

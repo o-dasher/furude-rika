@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import CommandABC from '../Commands/CommandABC';
-import IOPaths from './IOPaths';
+import CommandABC from '@furude-commands/CommandABC';
+import IOPaths from '@furude-io/IOPaths';
 
 class CommandsReader {
   public static commandsPath = path.join(

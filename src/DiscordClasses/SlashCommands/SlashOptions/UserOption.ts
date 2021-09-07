@@ -1,8 +1,8 @@
 import { SlashCommandUserOption } from '@discordjs/builders';
 import { CommandInteraction, User } from 'discord.js';
-import CommandOption from './CommandOption';
-import OptionHelper from './OptionHelper';
-import OptionsTags from './OptionsTags';
+import CommandOption from '@discord-classes/SlashCommands/SlashOptions/CommandOption';
+import OptionHelper from '@discord-classes/SlashCommands/SlashOptions/OptionHelper';
+import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 
 class UserOption extends SlashCommandUserOption implements CommandOption {
   tag: string = OptionsTags.user;

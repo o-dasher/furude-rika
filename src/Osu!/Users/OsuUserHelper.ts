@@ -1,4 +1,4 @@
-import AbstractUser from './AbstractUser';
+import AbstractUser from '@furude-osu/Users/AbstractUser';
 
 class OsuUserHelper {
   public static userExists(osuUser: AbstractUser): boolean {

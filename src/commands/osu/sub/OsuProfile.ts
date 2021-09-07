@@ -1,9 +1,9 @@
 import { CommandInteraction } from 'discord.js';
-import BotEmbed from '../../../DiscordClasses/Embed/BotEmbed';
-import Localizer from '../../../Localization/Localizer';
-import LocalizeTags from '../../../Localization/LocalizeTags';
-import Droid from '../../../Osu!/Servers/Droid';
-import OsuGameCommand from './Utils/OsuGameCommand';
+import OsuGameCommand from '@furude-commands/Osu/Sub/Utils/OsuGameCommand';
+import BotEmbed from '@discord-classes/Embed/BotEmbed';
+import Localizer from '@furude-localization/Localizer';
+import LocalizeTags from '@furude-localization/LocalizeTags';
+import Droid from '@furude-osu/Servers/Droid';
 
 class OsuProfile extends OsuGameCommand {
   public constructor() {
@@ -26,10 +26,14 @@ class OsuProfile extends OsuGameCommand {
     }
     performanceInfo = performanceInfo.concat(`Rank: #${osuUser!.pp.rank} `);
     if (!(server instanceof Droid)) {
-      performanceInfo = performanceInfo.concat(` (#${osuUser!.pp.countryRank})`);
+      performanceInfo = performanceInfo.concat(
+        ` (#${osuUser!.pp.countryRank})`
+      );
     }
     performanceInfo = performanceInfo.concat(
-      `\nAccuracy: ${osuUser!.accuracyFormatted}\nPlayCount: ${osuUser!.counts.plays}`
+      `\nAccuracy: ${osuUser!.accuracyFormatted}\nPlayCount: ${
+        osuUser!.counts.plays
+      }`
     );
     if (interaction.guild) {
       performanceInfo = performanceInfo.concat(
@@ -60,7 +64,9 @@ class OsuProfile extends OsuGameCommand {
     if (!(server instanceof Droid)) {
       embed.addField(
         '---Counts',
-        `>>> **SSH: ${osuUser!.counts.SSH}\nSS: ${osuUser!.counts.SS}\nSH: ${osuUser!.counts.SH}\nS: ${osuUser!.counts.S}\nA: ${osuUser!.counts.A}**`,
+        `>>> **SSH: ${osuUser!.counts.SSH}\nSS: ${osuUser!.counts.SS}\nSH: ${
+          osuUser!.counts.SH
+        }\nS: ${osuUser!.counts.S}\nA: ${osuUser!.counts.A}**`,
         true
       );
     }

@@ -1,5 +1,6 @@
-import OsuServer from '../../../../Osu!/Servers/OsuServer';
-import AbstractUser from '../../../../Osu!/Users/AbstractUser';
+import OsuServer from "@furude-osu/Servers/OsuServer";
+import AbstractUser from "@furude-osu/Users/AbstractUser";
+
 
 interface IOsuParams {
   osuUser: AbstractUser | undefined;

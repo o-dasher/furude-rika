@@ -1,11 +1,10 @@
-import { CommandInteraction, MessageEmbed } from 'discord.js';
-import i18next from 'i18next';
-import BotEmbed from '../../DiscordClasses/Embed/BotEmbed';
-import InteractionHelper from '../../DiscordClasses/Interactions/InteractionHelper';
-import UserOption from '../../DiscordClasses/SlashCommands/SlashOptions/UserOption';
-import CommandABC from '../CommandABC';
-import Localizer from '../../Localization/Localizer';
-import LocalizeTags from '../../Localization/LocalizeTags';
+import BotEmbed from '@discord-classes/Embed/BotEmbed';
+import InteractionHelper from '@discord-classes/Interactions/InteractionHelper';
+import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
+import CommandABC from '@furude-commands/CommandABC';
+import Localizer from '@furude-localization/Localizer';
+import LocalizeTags from '@furude-localization/LocalizeTags';
+import { CommandInteraction } from 'discord.js';
 
 class Avatar extends CommandABC {
   constructor() {
@@ -33,7 +32,7 @@ class Avatar extends CommandABC {
         ).replace('USER', `[${user}](${user.avatarURL()})`)}
         ** `
       );
-      
+
     const avatar = user.avatarURL({ dynamic: true, size: 1024 });
     if (avatar) {
       embed.setImage(avatar);

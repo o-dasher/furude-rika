@@ -1,7 +1,7 @@
-import OsuServer from '../Osu!/Servers/OsuServer';
-import OsuServers from '../Osu!/Servers/OsuServers';
-import AbstractUser from '../Osu!/Users/AbstractUser';
-import IDBUser from './IDBUser';
+import OsuServer from '@furude-osu/Servers/OsuServer';
+import OsuServers from '@furude-osu/Servers/OsuServers';
+import AbstractUser from '@furude-osu/Users/AbstractUser';
+import IDBUser from '@furude-db/IDBUser';
 
 abstract class DBUserHelper {
   private constructor() {}

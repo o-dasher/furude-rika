@@ -1,6 +1,6 @@
 import { CommandInteraction } from 'discord.js';
 import i18next from 'i18next';
-import { resources } from './Strings.json';
+import { resources } from '@furude-localization/Strings.json';
 
 abstract class Localizer {
   public static init(): void {

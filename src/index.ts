@@ -1,9 +1,11 @@
-import FurudeRika from './Client/FurudeRika';
-import CommandsReader from './IO/CommandsReader';
-import Localizer from './Localization/Localizer';
+import 'module-alias/register';
+
+import FurudeRika from '@furude-client/FurudeRika';
+import CommandsReader from '@furude-io/CommandsReader';
+import Localizer from '@furude-localization/Localizer';
 import * as admin from 'firebase-admin';
 import 'firebase/firestore';
-import DBManager from './DB/DBManager';
+import DBManager from '@furude-db/DBManager';
 import * as dotenv from 'dotenv';
 
 dotenv.config();

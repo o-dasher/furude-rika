@@ -8,13 +8,13 @@ import {
   OsuStarRating,
   Parser
 } from 'osu-droid';
-import ApiManager from '../../../../Osu!/API/ApiManager';
-import Droid from '../../../../Osu!/Servers/Droid';
-import OwnedAPIBeatmap from '../../../../Osu!/Users/beatmaps/OwnedAPIBeatmap';
-import AbstractScore from '../../../../Osu!/Users/score/AbstractScore';
-import ModUtils from '../../../../Osu!/Utils/ModUtils';
-import IOSuWithCalc from './IOsuWithCalc';
-import OsuGameCommand from './OsuGameCommand';
+import ApiManager from '@furude-osu/API/ApiManager';
+import Droid from '@furude-osu/Servers/Droid';
+import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
+import AbstractScore from '@furude-osu/Users/score/AbstractScore';
+import ModUtils from '@furude-osu/Utils/ModUtils';
+import IOSuWithCalc from '@furude-commands/Osu/Sub/Utils/IOsuWithCalc';
+import OsuGameCommand from '@furude-commands/Osu/Sub/Utils/OsuGameCommand';
 
 abstract class OsuWithCalcCommand extends OsuGameCommand {
   async getScores(

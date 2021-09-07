@@ -1,8 +1,8 @@
 import { User } from 'discord.js';
 import { firestore } from 'firebase-admin';
-import OsuServers from '../Osu!/Servers/OsuServers';
-import DBPaths from './DBPaths';
-import IDBUser from './IDBUser';
+import OsuServers from '@furude-osu/Servers/OsuServers';
+import DBPaths from '@furude-db/DBPaths';
+import IDBUser from '@furude-db/IDBUser';
 
 abstract class DBManager {
   private constructor() {}

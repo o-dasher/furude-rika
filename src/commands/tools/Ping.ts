@@ -1,7 +1,8 @@
+import CommandABC from '@furude-commands/CommandABC';
+import Localizer from '@furude-localization/Localizer';
+import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';
-import CommandABC from '../CommandABC';
-import Localizer from '../../Localization/Localizer';
-import LocalizeTags from '../../Localization/LocalizeTags';
+
 
 class Ping extends CommandABC {
   constructor() {

@@ -1,11 +1,11 @@
 import { SlashCommandStringOption } from '@discordjs/builders';
+import IDBUser from '@furude-db/IDBUser';
+import OsuServer from '@furude-osu/Servers/OsuServer';
+import OsuServers from '@furude-osu/Servers/OsuServers';
 import { CommandInteraction } from 'discord.js';
-import IDBUser from '../../../../DB/IDBUser';
-import OsuServer from '../../../../Osu!/Servers/OsuServer';
-import OsuServers from '../../../../Osu!/Servers/OsuServers';
-import CommandOption from '../CommandOption';
-import OptionHelper from '../OptionHelper';
-import OptionsTags from '../OptionsTags';
+import CommandOption from '@discord-classes/SlashCommands/SlashOptions/CommandOption';
+import OptionHelper from '@discord-classes/SlashCommands/SlashOptions/OptionHelper';
+import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 
 class OsuServerOption
   extends SlashCommandStringOption
