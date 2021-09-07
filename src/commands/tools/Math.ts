@@ -27,7 +27,7 @@ class Math extends CommandABC {
     }
 
     if (cantSolve) {
-      await interaction.reply(
+      await interaction.editReply(
         ` ** ${Localizer.getLocaleString(
           interaction,
           LocalizeTags.mathEvalError

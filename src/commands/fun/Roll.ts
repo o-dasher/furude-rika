@@ -21,9 +21,10 @@ class Roll extends CommandABC {
     );
   }
   async run(interaction: CommandInteraction) {
+    await interaction.deferReply();
     const bound = interaction.options.getNumber(this.boundTag, true);
     const random = RandomHelper.getRandomInt(0, bound);
-    await interaction.reply(
+    await interaction.editReply(
       `** ${Localizer.getLocaleString(
         interaction,
         LocalizeTags.rollReply
