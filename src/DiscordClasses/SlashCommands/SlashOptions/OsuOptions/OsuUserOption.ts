@@ -35,6 +35,12 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
 
     if (!usernameOrID) {
       usernameOrID = DBUserHelper.getUserName(userData, server);
+      if (!usernameOrID) {
+        await interaction.editReply(
+          `You or the specified user does not have a linked osu account on ${server.name}`
+        );
+        return;
+      }
     }
 
     if (server instanceof Bancho) {

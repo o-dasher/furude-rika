@@ -6,14 +6,21 @@ import IDBUser from '@furude-db/IDBUser';
 abstract class DBUserHelper {
   private constructor() {}
 
-  public static getUserName(userData: IDBUser, server: OsuServer) {
-    let usernameOrID = userData.osu.bancho.toString();
-    switch (server) {
-      case OsuServers.droid:
-        usernameOrID = userData.osu.droid.toString();
-        break;
+  public static getUserName(
+    userData: IDBUser,
+    server: OsuServer
+  ): string | null {
+    if (userData.osu) {
+      let usernameOrID = userData.osu.bancho.toString() ?? null;
+      switch (server) {
+        case OsuServers.droid:
+          usernameOrID = userData.osu.droid.toString() ?? null;
+          break;
+      }
+      return usernameOrID;
+    } else {
+      return null;
     }
-    return usernameOrID;
   }
 
   public static changeUserName(

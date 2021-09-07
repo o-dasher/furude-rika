@@ -30,9 +30,12 @@ class FurudeRika extends Client {
     });
 
     this.on('interactionCreate', async (interaction) => {
+      console.log('H');
       if (!interaction.isCommand()) {
         return;
       }
+
+      console.log('TUS');
 
       const command = this.commands.get(interaction.commandName);
 
@@ -40,6 +43,11 @@ class FurudeRika extends Client {
         return;
       }
 
+      consola.success(
+        `Running command requested from ${interaction.user.toString()} in channel: ${
+          interaction.channel?.id
+        } on server: ${interaction.guild?.name}`
+      );
       command.run(interaction);
     });
 
