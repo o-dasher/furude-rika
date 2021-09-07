@@ -1,9 +1,10 @@
 import { SlashCommandNumberOption } from '@discordjs/builders';
-import CommandABC from '@furude-commands/CommandABC';
+import CommandABC from '@discord-classes/SlashCommands/CommandABC';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';
 import RandomHelper from '@furude-math/RandomHelper';
+import StringUtils from '@furude-utils/StringUtils';
 
 class Roll extends CommandABC {
   public boundTag = 'bound';
@@ -21,13 +22,16 @@ class Roll extends CommandABC {
     );
   }
   async run(interaction: CommandInteraction) {
+    await interaction.deferReply();
     const bound = interaction.options.getNumber(this.boundTag, true);
     const random = RandomHelper.getRandomInt(0, bound);
-    await interaction.reply(
-      `** ${Localizer.getLocaleString(
-        interaction,
-        LocalizeTags.rollReply
-      ).replace('RANDOM', random.toString())} ** `
+    await interaction.editReply(
+      StringUtils.successString(
+        Localizer.getLocaleString(interaction, LocalizeTags.rollReply).replace(
+          'RANDOM',
+          random.toString()
+        )
+      )
     );
   }
 }

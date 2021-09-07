@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import CommandABC from '@furude-commands/CommandABC';
+import CommandABC from '@discord-classes/SlashCommands/CommandABC';
 import IOPaths from '@furude-io/IOPaths';
 
 class CommandsReader {
@@ -10,17 +10,16 @@ class CommandsReader {
     IOPaths.commandsPath
   );
 
-  public static funPath = '/fun/';
-  public static moderationPath = '/moderation/';
-  public static toolsPath = '/tools/';
-  public static osuPath = '/osu/';
-  public static ownerPath = '/owner/';
+  public static funPath = 'fun/';
+  public static moderationPath = 'moderation/';
+  public static toolsPath = 'tools/';
+  public static osuPath = 'osu/';
+  public static ownerPath = 'owner/';
   public static paths = [
     CommandsReader.funPath,
     CommandsReader.moderationPath,
     CommandsReader.toolsPath,
-    CommandsReader.osuPath,
-    CommandsReader.ownerPath
+    CommandsReader.osuPath
   ];
 
   public static getAllCommands(): CommandABC[] {

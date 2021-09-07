@@ -1,6 +1,6 @@
 import { Client, Collection, Intents } from 'discord.js';
 import consola from 'consola';
-import ICommand from '@furude-commands/ICommand';
+import ICommand from '@discord-classes/SlashCommands/ICommand';
 import CommandsReader from '@furude-io/CommandsReader';
 
 class FurudeRika extends Client {
@@ -10,7 +10,9 @@ class FurudeRika extends Client {
     super({
       intents: [Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILDS]
     });
+
     const allCommands = CommandsReader.getAllCommands();
+
     for (const command of allCommands) {
       this.commands.set(command.name, command);
     }
@@ -38,6 +40,11 @@ class FurudeRika extends Client {
         return;
       }
 
+      consola.success(
+        `Running command requested from ${interaction.user.toString()} in channel: ${
+          interaction.channel?.id
+        } on server: ${interaction.guild?.name}`
+      );
       command.run(interaction);
     });
 

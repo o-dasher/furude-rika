@@ -2,12 +2,13 @@ import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 import OsuServerOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
 import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
-import SubCommandABC from '@furude-commands/SubCommandABC';
+import SubCommandABC from '@discord-classes/SlashCommands/SubCommandABC';
 import DBManager from '@furude-db/DBManager';
 import DBPaths from '@furude-db/DBPaths';
 import DBUserHelper from '@furude-db/DBUserHelper';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
+import StringUtils from '@furude-utils/StringUtils';
 import { CommandInteraction } from 'discord.js';
 
 class OsuSet extends SubCommandABC {
@@ -65,7 +66,11 @@ class OsuSet extends SubCommandABC {
         Localizer.getLocaleString(interaction, LocalizeTags.osuSetTitle)
       )
       .setDescription(
-        `>>> **Default Server: ${userData.osu.defaultServer}\nBancho: ${userData.osu.bancho}\nDroid: ${userData.osu.droid}**`
+        StringUtils.blockQuote(
+          StringUtils.boldString(
+            `Default Server: ${userData.osu.defaultServer}\nBancho: ${userData.osu.bancho}\nDroid: ${userData.osu.droid}`
+          )
+        )
       );
 
     await interaction.editReply({ embeds: [embed] });

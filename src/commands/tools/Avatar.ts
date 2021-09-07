@@ -1,10 +1,11 @@
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import InteractionHelper from '@discord-classes/Interactions/InteractionHelper';
 import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
-import CommandABC from '@furude-commands/CommandABC';
+import CommandABC from '@discord-classes/SlashCommands/CommandABC';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';
+import StringUtils from '@furude-utils/StringUtils';
 
 class Avatar extends CommandABC {
   constructor() {
@@ -25,12 +26,12 @@ class Avatar extends CommandABC {
         Localizer.getLocaleString(interaction, LocalizeTags.avatarTitle)
       )
       .setDescription(
-        ` ** 
-        ${Localizer.getLocaleString(
-          interaction,
-          LocalizeTags.avatarDescription
-        ).replace('USER', `[${user}](${user.avatarURL()})`)}
-        ** `
+        StringUtils.boldString(
+          Localizer.getLocaleString(
+            interaction,
+            LocalizeTags.avatarDescription
+          ).replace('USER', `[${user}](${user.avatarURL()})`)
+        )
       );
 
     const avatar = user.avatarURL({ dynamic: true, size: 1024 });

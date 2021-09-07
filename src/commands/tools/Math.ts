@@ -1,9 +1,10 @@
 import ExpressionOption from '@discord-classes/SlashCommands/SlashOptions/ExpressionOption';
-import CommandABC from '@furude-commands/CommandABC';
+import CommandABC from '@discord-classes/SlashCommands/CommandABC';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';
 import { evaluate, MathExpression } from 'mathjs';
+import StringUtils from '@furude-utils/StringUtils';
 
 class Math extends CommandABC {
   constructor() {
@@ -27,21 +28,23 @@ class Math extends CommandABC {
     }
 
     if (cantSolve) {
-      await interaction.reply(
-        ` ** ${Localizer.getLocaleString(
-          interaction,
-          LocalizeTags.mathEvalError
-        ).replace('EXPRESSION', expression)} **
-        `
+      await interaction.editReply(
+        StringUtils.errorString(
+          Localizer.getLocaleString(
+            interaction,
+            LocalizeTags.mathEvalError
+          ).replace('EXPRESSION', expression)
+        )
       );
       return;
     }
 
     await interaction.editReply(
-      `** ${Localizer.getLocaleString(interaction, LocalizeTags.mathReply)
-        .replace('EXPRESSION', expression)
-        .replace('RESULT', result.toString())} **
-      `
+      StringUtils.successString(
+        Localizer.getLocaleString(interaction, LocalizeTags.mathReply)
+          .replace('EXPRESSION', expression)
+          .replace('RESULT', result.toString())
+      )
     );
   }
 }

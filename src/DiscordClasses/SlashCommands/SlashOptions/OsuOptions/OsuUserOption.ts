@@ -14,6 +14,7 @@ import { CommandInteraction } from 'discord.js';
 import CommandOption from '@discord-classes/SlashCommands/SlashOptions/CommandOption';
 import OptionHelper from '@discord-classes/SlashCommands/SlashOptions/OptionHelper';
 import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
+import StringUtils from '@furude-utils/StringUtils';
 
 class OsuUserOption extends SlashCommandStringOption implements CommandOption {
   tag: string = OptionsTags.osuUser;
@@ -35,6 +36,14 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
 
     if (!usernameOrID) {
       usernameOrID = DBUserHelper.getUserName(userData, server);
+      if (!usernameOrID) {
+        await interaction.editReply(
+          StringUtils.errorString(
+            `You or the specified user does not have a linked osu account on ${server.name}`
+          )
+        );
+        return;
+      }
     }
 
     if (server instanceof Bancho) {
@@ -45,10 +54,12 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
       const id = parseInt(usernameOrID);
       if (!id) {
         await interaction.editReply(
-          `**${Localizer.getLocaleString(
-            interaction,
-            LocalizeTags.droidUserMustBeID
-          )}**`
+          StringUtils.errorString(
+            Localizer.getLocaleString(
+              interaction,
+              LocalizeTags.droidUserMustBeID
+            )
+          )
         );
         return;
       } else {
@@ -59,12 +70,11 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
     if (!osuUser || !OsuUserHelper.userExists(osuUser)) {
       osuUser = null;
       await interaction.editReply(
-        `**${Localizer.getLocaleString(
-          interaction,
-          LocalizeTags.osuUserFetchError
+        StringUtils.errorString(
+          Localizer.getLocaleString(interaction, LocalizeTags.osuUserFetchError)
+            .replace('USER', usernameOrID)
+            .replace('SERVER', server.name)
         )
-          .replace('USER', usernameOrID)
-          .replace('SERVER', server.name)}**`
       );
       return;
     }

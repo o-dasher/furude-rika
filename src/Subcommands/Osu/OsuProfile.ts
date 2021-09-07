@@ -1,9 +1,10 @@
 import { CommandInteraction } from 'discord.js';
-import OsuGameCommand from '@furude-commands/Osu/Sub/Utils/OsuGameCommand';
+import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import Droid from '@furude-osu/Servers/Droid';
+import StringUtils from '@furude-utils/StringUtils';
 
 class OsuProfile extends OsuGameCommand {
   public constructor() {
@@ -20,7 +21,8 @@ class OsuProfile extends OsuGameCommand {
       return;
     }
 
-    let performanceInfo = '>>> **';
+    let performanceInfo = '';
+
     if (!(server instanceof Droid)) {
       performanceInfo = performanceInfo.concat(`PP: ${osuUser!.pp.raw}\n`);
     }
@@ -37,10 +39,13 @@ class OsuProfile extends OsuGameCommand {
     );
     if (interaction.guild) {
       performanceInfo = performanceInfo.concat(
-        `\nTotal Score: ${osuUser!.scores.total.toLocaleString(
-          interaction.guild.preferredLocale
-        )}\nRanked Score: ${osuUser!.scores.ranked.toLocaleString(
-          interaction.guild.preferredLocale
+        `\nTotal Score: ${Localizer.localizeNumber(
+          interaction,
+          osuUser?.scores.total!
+        )}
+        \nRanked Score: ${Localizer.localizeNumber(
+          interaction,
+          osuUser?.scores.ranked!
         )}`
       );
     }
@@ -49,24 +54,33 @@ class OsuProfile extends OsuGameCommand {
         `\nLevel: ${osuUser!.level.toFixed(2)}`
       );
     }
-    performanceInfo = performanceInfo.concat('**');
 
     const embed = new BotEmbed(interaction)
       .setDescription(
-        `**[${Localizer.getLocaleString(
-          interaction,
-          LocalizeTags.osuProfileTitle
-        ).replace('USER', osuUser!.name)}](${osuUser!.profileUrl})**`
+        StringUtils.boldString(
+          `[${Localizer.getLocaleString(
+            interaction,
+            LocalizeTags.osuProfileTitle
+          ).replace('USER', osuUser!.name)}](${osuUser!.profileUrl})`
+        )
       )
-      .addField('---Perfomance', performanceInfo, true)
+      .addField(
+        '---Perfomance',
+        StringUtils.blockQuote(StringUtils.boldString(performanceInfo)),
+        true
+      )
       .setThumbnail(osuUser!.avatarUrl);
 
     if (!(server instanceof Droid)) {
       embed.addField(
         '---Counts',
-        `>>> **SSH: ${osuUser!.counts.SSH}\nSS: ${osuUser!.counts.SS}\nSH: ${
-          osuUser!.counts.SH
-        }\nS: ${osuUser!.counts.S}\nA: ${osuUser!.counts.A}**`,
+        StringUtils.blockQuote(
+          StringUtils.boldString(
+            `SSH: ${osuUser!.counts.SSH}\nSS: ${osuUser!.counts.SS}\nSH: ${
+              osuUser!.counts.SH
+            }\nS: ${osuUser!.counts.S}\nA: ${osuUser!.counts.A}`
+          )
+        ),
         true
       );
     }

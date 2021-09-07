@@ -9,6 +9,9 @@
     "deploy": "ts-node-dev --respawn --transpile-only --poll ./src/rest/deploy-commands.ts",
     "lint": "prettier --write ."
   },
+  "engines": {
+    "node": "16.x"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
@@ -19,7 +22,6 @@
     "@types/node": "^16.7.11",
     "@types/request": "^2.48.7",
     "@types/unzipper": "^0.10.4",
-    "@vercel/node": "^1.12.1",
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2"
@@ -63,6 +65,9 @@
       ]
     }
   },
+  "tus": {
+    "idk": "I am using ts-node and typescript etc as a normal dependency as a workaround for hosting cuz i am lazy idk"
+  },
   "dependencies": {
     "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
@@ -72,7 +77,6 @@
     "consola": "^2.15.3",
     "crypto-js": "^4.0.0",
     "discord-api-types": "^0.22.0",
-    "discord-interactions": "^2.0.2",
     "discord.js": "^13.1.0",
     "dotenv": "^10.0.0",
     "firebase-admin": "^9.11.1",
@@ -81,21 +85,21 @@
     "mathjs": "^9.4.4",
     "module-alias": "^2.2.2",
     "node-osu": "^2.2.1",
+    "ordinal": "^1.0.3",
     "osu-droid": "https://gitpkg.now.sh/o-dasher/Alice/modules/osu-droid?master",
-    "raw-body": "^2.4.1",
     "request": "^2.88.2",
     "strip-ansi": "^7.0.0",
     "ts-node": "^10.2.1",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.2",
-    "unzipper": "^0.10.11",
-    "vercel": "^23.1.2"
+    "unzipper": "^0.10.11"
   },
   "optionalDependencies": {
     "fsevents": "^2.1.2"
   },
   "_moduleAliases": {
     "@furude-commands": "dist/Commands",
+    "@furude-subs": "dist/Subcommands",
     "@discord-classes": "dist/DiscordClasses",
     "@furude-client": "dist/Client",
     "@furude-io": "dist/IO",
@@ -103,6 +107,7 @@
     "@furude-db": "dist/DB",
     "@furude-osu": "dist/Osu!",
     "@furude-json": "dist/JSON",
-    "@furude-math": "dist/Math"
+    "@furude-math": "dist/Math",
+    "@furude-utils": "dist/Utils"
   }
 }

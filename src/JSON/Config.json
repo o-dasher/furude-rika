@@ -1,7 +1,6 @@
 {
-  "debug": false,
-  "defaultPrefixes": ["f!"],
+  "debug": true,
   "clientID": "883077597121110066",
-  "devGuildID": "868577787424952340",
+  "devGuildID": "883075295232553041",
   "ownerID": "750129701129027594"
 }

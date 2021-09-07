@@ -3,7 +3,10 @@ import { CommandInteraction } from 'discord.js';
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import IndexOption from '@discord-classes/SlashCommands/SlashOptions/IndexOption';
 import ModUtils from '@furude-osu/Utils/ModUtils';
-import OsuWithCalcCommand from '@furude-commands/Osu/Sub/Utils/OsuWithCalcCommand';
+import OsuWithCalcCommand from '@furude-subs/Osu/Utils/OsuWithCalcCommand';
+import Localizer from '@furude-localization/Localizer';
+import ordinal from 'ordinal';
+import StringUtils from '@furude-utils/StringUtils';
 
 class OsuRecent extends OsuWithCalcCommand {
   public constructor() {
@@ -29,8 +32,9 @@ class OsuRecent extends OsuWithCalcCommand {
     const score = scores![indexFrom];
     const modstr = ModUtils.getStringRepr(score.processedMods);
 
-    let info = `Score: ${score!.score.toLocaleString(
-      interaction.guild!.preferredLocale
+    let info = `Score: ${Localizer.localizeNumber(
+      interaction,
+      score.score
     )}\nAccuracy: ${score!.accuracy}%\nMiss: ${score.counts.miss}\nCombo: ${
       score!.maxCombo
     }`;
@@ -47,17 +51,19 @@ class OsuRecent extends OsuWithCalcCommand {
     }
 
     const embed = new BotEmbed(interaction)
-      .setTitle(`**${title}**`)
-      .setDescription(`**${info}**`)
+      .setTitle(StringUtils.boldString(title))
+      .setDescription(StringUtils.boldString(info))
       .setThumbnail(
         `https://b.ppy.sh/thumb/${score.beatmap!.beatmapSetId}l.jpg`
       );
 
     await interaction.editReply({
       embeds: [embed],
-      content: `**${indexFrom + 1}th Recent play from ${osuUser?.name} on ${
-        server.name
-      } servers**`
+      content: StringUtils.successString(
+        `${ordinal(indexFrom + 1)} Recent play from ${osuUser?.name} on ${
+          server.name
+        } servers`
+      )
     });
   }
 }

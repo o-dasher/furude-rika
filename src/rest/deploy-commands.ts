@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { clientID, devGuildID, debug } from '@furude-json/Config.json';
