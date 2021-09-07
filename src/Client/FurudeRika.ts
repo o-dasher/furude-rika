@@ -1,6 +1,6 @@
 import { Client, Collection, Intents } from 'discord.js';
 import consola from 'consola';
-import ICommand from '../Interfaces/ICommand';
+import ICommand from '@furude-commands/ICommand';
 
 class FurudeRika extends Client {
   public commands: Collection<string, ICommand> = new Collection();

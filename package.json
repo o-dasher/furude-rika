@@ -91,5 +91,9 @@
   },
   "optionalDependencies": {
     "fsevents": "^2.1.2"
+  },
+  "_moduleAliases": {
+    "@furude-commands": "dist/Commands",
+    "@discord-classes": "dist/DiscordClasses"
   }
 }

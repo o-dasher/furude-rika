@@ -13,6 +13,12 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "baseUrl": "src",
+    "paths": {
+      "@furude-commands/*": ["Commands/*"],
+      "@discord-classes/*": ["DiscordClasses/*"]
+    },
+    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
   "include": ["src"],
