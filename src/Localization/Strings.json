@@ -12,7 +12,10 @@
         "osuProfileTitle": "USER's profile!",
         "osuSetTitle": "Your update DB data!",
         "droidUserMustBeID": "Username must be your osu!droid UID if droid server.",
-        "osuUserFetchError": "Couldn't find USER in SERVER's server."
+        "osuUserFetchError": "Couldn't find USER in SERVER's server.",
+        "guildOnlyCommand": "This command can only be used in servers!",
+        "missingPermissions": "You don't have permissions to use this command!",
+        "wrongChannelType": "This command can't be used in this channel for some reason."
       }
     },
     "pt": {
@@ -27,7 +30,10 @@
         "osuProfileTitle": "Perfil do(a) USER",
         "osuSetTitle": "Seus novos dados...",
         "droidUserMustBeID": "Pro osu!droid o parâmetro username precisa ser uma uid do droid.",
-        "osuUserFetchError": "Não consegui encontrar o USER no SERVER."
+        "osuUserFetchError": "Não consegui encontrar o USER no SERVER.",
+        "guildOnlyCommand": "Esse comando só pode ser usado em servidores.",
+        "missingPermissions": "Você não tem permissões suficientes para usar esse comando.",
+        "wrongChannelType": "Esse comando não pode ser usado nesse canal por algum motivo."
       }
     }
   }

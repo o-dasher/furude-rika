@@ -12,19 +12,23 @@ class Clear extends CommandABC {
     this.addNumberOption(
       new AmountOption().setDescription('Amount of messages to be cleared.')
     );
+    this.permissions.push(Permissions.FLAGS.MANAGE_MESSAGES);
   }
   async run(interaction: CommandInteraction) {
-    if (
-      !interaction.member ||
-      !(interaction.member.permissions instanceof Permissions) ||
-      !interaction.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES) ||
-      !(interaction.channel instanceof TextChannel)
-    ) {
+    await interaction.deferReply();
+
+    if (!(interaction.channel instanceof TextChannel)) {
+      await interaction.editReply(
+        Localizer.getLocaleString(interaction, LocalizeTags.wrongChannelType)
+      );
+      return;
+    }
+
+    if (!this.ensurePermissions) {
       return;
     }
 
     const amount = interaction.options.getNumber(OptionsTags.amount, true);
-
     await interaction.channel.bulkDelete(amount, true);
 
     const reply = await interaction.reply({
