@@ -3,7 +3,7 @@
     "lib": ["ESNext"],
     "strict": true,
     "module": "commonjs",
-    "moduleResolution": "classic",
+    "moduleResolution": "node",
     "target": "ESNext",
     "outDir": "dist",
     "sourceMap": true,
