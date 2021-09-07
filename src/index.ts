@@ -24,7 +24,7 @@ declare global {
   }
 }
 
-consolaGlobalInstance.log(readdirSync('./src/Commands'));
+consolaGlobalInstance.log(readdirSync('./src'));
 
 admin.initializeApp({
   credential: admin.credential.cert({
