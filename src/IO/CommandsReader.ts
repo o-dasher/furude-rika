@@ -10,11 +10,11 @@ class CommandsReader {
     IOPaths.commandsPath
   );
 
-  public static funPath = '/Fun/';
-  public static moderationPath = '/Moderation/';
-  public static toolsPath = '/Tools/';
-  public static osuPath = '/osu/';
-  public static ownerPath = '/owner/';
+  public static funPath = 'Fun/';
+  public static moderationPath = 'Moderation/';
+  public static toolsPath = 'Tools/';
+  public static osuPath = 'Osu/';
+  public static ownerPath = 'Owner/';
   public static paths = [
     CommandsReader.funPath,
     CommandsReader.moderationPath,

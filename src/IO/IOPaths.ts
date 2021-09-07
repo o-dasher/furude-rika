@@ -1,6 +1,6 @@
 class IOPaths {
   public static srcPath = '/src/';
-  public static commandsPath = '/commands/';
+  public static commandsPath = '/Commands/';
 }
 
 export default IOPaths;
