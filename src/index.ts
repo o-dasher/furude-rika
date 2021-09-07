@@ -38,10 +38,4 @@ DBManager.init();
 
 const client = new FurudeRika();
 
-const commands = CommandsReader.getAllCommands();
-
-for (const command of commands) {
-  client.commands.set(command.name, command);
-}
-
 client.start();
