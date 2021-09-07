@@ -1,7 +1,6 @@
 import 'module-alias/register';
 
 import FurudeRika from '@furude-client/FurudeRika';
-import CommandsReader from '@furude-io/CommandsReader';
 import Localizer from '@furude-localization/Localizer';
 import * as admin from 'firebase-admin';
 import 'firebase/firestore';
@@ -33,11 +32,5 @@ Localizer.init();
 DBManager.init();
 
 const client = new FurudeRika();
-
-const commands = CommandsReader.getAllCommands();
-
-for (const command of commands) {
-  client.commands.set(command.name, command);
-}
 
 client.start();

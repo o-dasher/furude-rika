@@ -1,6 +1,7 @@
 import { Client, Collection, Intents } from 'discord.js';
 import consola from 'consola';
 import ICommand from '@furude-commands/ICommand';
+import CommandsReader from '@furude-io/CommandsReader';
 
 class FurudeRika extends Client {
   public commands: Collection<string, ICommand> = new Collection();
@@ -9,6 +10,10 @@ class FurudeRika extends Client {
     super({
       intents: [Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILDS]
     });
+    const allCommands = CommandsReader.getAllCommands();
+    for (const command of allCommands) {
+      this.commands.set(command.name, command);
+    }
   }
 
   private logLogin(client: Client): void {
