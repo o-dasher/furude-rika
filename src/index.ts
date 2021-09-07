@@ -8,6 +8,7 @@ import 'firebase-admin/lib/firestore';
 import DBManager from '@furude-db/DBManager';
 import * as dotenv from 'dotenv';
 import { readdirSync } from 'fs';
+import consolaGlobalInstance from 'consola';
 
 dotenv.config();
 
@@ -23,7 +24,7 @@ declare global {
   }
 }
 
-console.log(`FILES: ${readdirSync('./')}`);
+consolaGlobalInstance.log(readdirSync('./src/Commands'));
 
 admin.initializeApp({
   credential: admin.credential.cert({
