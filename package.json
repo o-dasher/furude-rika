@@ -24,10 +24,8 @@
     "@types/unzipper": "^0.10.4",
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
-    "prettier": "^2.3.2",
-    "ts-node": "^10.2.1",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.4.2"
+    "prettier": "^2.3.2"
+
   },
   "husky": {
     "hooks": {
@@ -88,7 +86,10 @@
     "osu-droid": "https://gitpkg.now.sh/o-dasher/Alice/modules/osu-droid?master",
     "request": "^2.88.2",
     "strip-ansi": "^7.0.0",
-    "unzipper": "^0.10.11"
+    "unzipper": "^0.10.11",
+    "ts-node": "^10.2.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.2"
   },
   "optionalDependencies": {
     "fsevents": "^2.1.2"
