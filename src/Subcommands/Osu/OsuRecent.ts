@@ -5,6 +5,7 @@ import IndexOption from '@discord-classes/SlashCommands/SlashOptions/IndexOption
 import ModUtils from '@furude-osu/Utils/ModUtils';
 import OsuWithCalcCommand from '@furude-subs/Osu/Utils/OsuWithCalcCommand';
 import Localizer from '@furude-localization/Localizer';
+import ordinal from 'ordinal';
 
 class OsuRecent extends OsuWithCalcCommand {
   public constructor() {
@@ -57,9 +58,9 @@ class OsuRecent extends OsuWithCalcCommand {
 
     await interaction.editReply({
       embeds: [embed],
-      content: `**${indexFrom + 1}th Recent play from ${osuUser?.name} on ${
-        server.name
-      } servers**`
+      content: `**${ordinal(indexFrom + 1)} Recent play from ${
+        osuUser?.name
+      } on ${server.name} servers**`
     });
   }
 }

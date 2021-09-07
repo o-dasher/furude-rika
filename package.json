@@ -69,9 +69,6 @@
     "idk": "I am using ts-node and typescript etc as a normal dependency as a workaround for hosting cuz i am lazy idk"
   },
   "dependencies": {
-    "ts-node": "^10.2.1",
-    "ts-node-dev": "^1.1.8",
-    "typescript": "^4.4.2",
     "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "axios": "^0.21.2",
@@ -88,9 +85,13 @@
     "mathjs": "^9.4.4",
     "module-alias": "^2.2.2",
     "node-osu": "^2.2.1",
+    "ordinal": "^1.0.3",
     "osu-droid": "https://gitpkg.now.sh/o-dasher/Alice/modules/osu-droid?master",
     "request": "^2.88.2",
     "strip-ansi": "^7.0.0",
+    "ts-node": "^10.2.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.2",
     "unzipper": "^0.10.11"
   },
   "optionalDependencies": {
