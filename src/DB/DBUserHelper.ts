@@ -7,7 +7,7 @@ abstract class DBUserHelper {
   private constructor() {}
 
   private static getIDAsStringIfExists(id: number): string | null {
-    return id ? id.toString() : null;
+    return id ? (id == -1 ? null : id.toString()) : null;
   }
 
   public static getUserName(
