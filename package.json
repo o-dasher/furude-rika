@@ -107,6 +107,7 @@
     "@furude-db": "dist/DB",
     "@furude-osu": "dist/Osu!",
     "@furude-json": "dist/JSON",
-    "@furude-math": "dist/Math"
+    "@furude-math": "dist/Math",
+    "@furude-utils": "dist/Utils"
   }
 }

@@ -15,6 +15,7 @@ import AbstractScore from '@furude-osu/Users/score/AbstractScore';
 import ModUtils from '@furude-osu/Utils/ModUtils';
 import IOSuWithCalc from '@furude-subs/Osu/Utils/IOsuWithCalc';
 import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
+import StringUtils from '@furude-utils/StringUtils';
 
 abstract class OsuWithCalcCommand extends OsuGameCommand {
   async getScores(
@@ -47,7 +48,9 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
 
       if (!hasRecent) {
         await interaction.editReply(
-          `**${osuUser.name} doesn't have any recent plays!**`
+          StringUtils.boldString(
+            `${osuUser.name} doesn't have any recent plays!`
+          )
         );
         error = true;
       }

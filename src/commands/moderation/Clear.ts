@@ -3,7 +3,8 @@ import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags
 import CommandABC from '@discord-classes/SlashCommands/CommandABC';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
-import { CommandInteraction, Permissions, TextChannel } from 'discord.js';
+import { CommandInteraction, GuildChannel, Permissions } from 'discord.js';
+import StringUtils from '@furude-utils/StringUtils';
 
 class Clear extends CommandABC {
   constructor() {
@@ -15,11 +16,13 @@ class Clear extends CommandABC {
     this.permissions.push(Permissions.FLAGS.MANAGE_MESSAGES);
   }
   async run(interaction: CommandInteraction) {
-    await interaction.deferReply();
+    const reply = await interaction.deferReply({ fetchReply: true });
 
-    if (!(interaction.channel instanceof TextChannel)) {
+    if (!(interaction.channel instanceof GuildChannel)) {
       await interaction.editReply(
-        Localizer.getLocaleString(interaction, LocalizeTags.wrongChannelType)
+        StringUtils.errorString(
+          Localizer.getLocaleString(interaction, LocalizeTags.wrongChannelType)
+        )
       );
       return;
     }
@@ -31,12 +34,13 @@ class Clear extends CommandABC {
     const amount = interaction.options.getNumber(OptionsTags.amount, true);
     await interaction.channel.bulkDelete(amount, true);
 
-    const reply = await interaction.reply({
-      content: `** ${Localizer.getLocaleString(
-        interaction,
-        LocalizeTags.clearReply
-      ).replace('AMOUNT', amount.toString())} **`,
-      fetchReply: true
+    await interaction.editReply({
+      content: StringUtils.successString(
+        Localizer.getLocaleString(interaction, LocalizeTags.clearReply).replace(
+          'AMOUNT',
+          amount.toString()
+        )
+      )
     });
 
     setTimeout(async () => {

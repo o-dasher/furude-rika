@@ -6,6 +6,7 @@ import ModUtils from '@furude-osu/Utils/ModUtils';
 import OsuWithCalcCommand from '@furude-subs/Osu/Utils/OsuWithCalcCommand';
 import Localizer from '@furude-localization/Localizer';
 import ordinal from 'ordinal';
+import StringUtils from '@furude-utils/StringUtils';
 
 class OsuRecent extends OsuWithCalcCommand {
   public constructor() {
@@ -50,17 +51,19 @@ class OsuRecent extends OsuWithCalcCommand {
     }
 
     const embed = new BotEmbed(interaction)
-      .setTitle(`**${title}**`)
-      .setDescription(`**${info}**`)
+      .setTitle(StringUtils.boldString(title))
+      .setDescription(StringUtils.boldString(info))
       .setThumbnail(
         `https://b.ppy.sh/thumb/${score.beatmap!.beatmapSetId}l.jpg`
       );
 
     await interaction.editReply({
       embeds: [embed],
-      content: `**${ordinal(indexFrom + 1)} Recent play from ${
-        osuUser?.name
-      } on ${server.name} servers**`
+      content: StringUtils.boldString(
+        `${ordinal(indexFrom + 1)} Recent play from ${osuUser?.name} on ${
+          server.name
+        } servers`
+      )
     });
   }
 }

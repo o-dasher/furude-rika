@@ -4,6 +4,7 @@ import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';
 import { evaluate, MathExpression } from 'mathjs';
+import StringUtils from '@furude-utils/StringUtils';
 
 class Math extends CommandABC {
   constructor() {
@@ -28,20 +29,22 @@ class Math extends CommandABC {
 
     if (cantSolve) {
       await interaction.editReply(
-        ` ** ${Localizer.getLocaleString(
-          interaction,
-          LocalizeTags.mathEvalError
-        ).replace('EXPRESSION', expression)} **
-        `
+        StringUtils.errorString(
+          Localizer.getLocaleString(
+            interaction,
+            LocalizeTags.mathEvalError
+          ).replace('EXPRESSION', expression)
+        )
       );
       return;
     }
 
     await interaction.editReply(
-      `** ${Localizer.getLocaleString(interaction, LocalizeTags.mathReply)
-        .replace('EXPRESSION', expression)
-        .replace('RESULT', result.toString())} **
-      `
+      StringUtils.successString(
+        Localizer.getLocaleString(interaction, LocalizeTags.mathReply)
+          .replace('EXPRESSION', expression)
+          .replace('RESULT', result.toString())
+      )
     );
   }
 }
