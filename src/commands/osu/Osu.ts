@@ -1,8 +1,8 @@
 import { CommandInteraction } from 'discord.js';
 import CommandABC from '@discord-classes/SlashCommands/CommandABC';
-import OsuProfile from '@furude-commands/Osu/Sub/OsuProfile';
-import OsuRecent from '@furude-commands/Osu/Sub/OsuRecent';
-import OsuSet from '@furude-commands/Osu/Sub/OsuSet';
+import OsuProfile from './Sub/OsuProfile';
+import OsuRecent from './Sub/OsuRecent';
+import OsuSet from './Sub/OsuSet';
 
 class Osu extends CommandABC {
   constructor() {
