@@ -3,6 +3,8 @@ import i18next from 'i18next';
 import { resources } from '@furude-localization/Strings.json';
 
 abstract class Localizer {
+  private constructor() {}
+
   public static init(): void {
     i18next.init({
       lng: 'en',
@@ -35,6 +37,15 @@ abstract class Localizer {
         break;
     }
     return language;
+  }
+
+  public static localizeNumber(
+    interaction: CommandInteraction,
+    number: number
+  ): string {
+    return interaction.guild
+      ? number.toLocaleString(interaction.guild.preferredLocale)
+      : number.toString();
   }
 }
 

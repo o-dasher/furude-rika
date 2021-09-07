@@ -37,10 +37,13 @@ class OsuProfile extends OsuGameCommand {
     );
     if (interaction.guild) {
       performanceInfo = performanceInfo.concat(
-        `\nTotal Score: ${osuUser!.scores.total.toLocaleString(
-          interaction.guild.preferredLocale
-        )}\nRanked Score: ${osuUser!.scores.ranked.toLocaleString(
-          interaction.guild.preferredLocale
+        `\nTotal Score: ${Localizer.localizeNumber(
+          interaction,
+          osuUser?.scores.total!
+        )}
+        )}\nRanked Score: ${Localizer.localizeNumber(
+          interaction,
+          osuUser?.scores.ranked!
         )}`
       );
     }

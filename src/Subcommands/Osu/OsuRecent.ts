@@ -4,6 +4,7 @@ import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import IndexOption from '@discord-classes/SlashCommands/SlashOptions/IndexOption';
 import ModUtils from '@furude-osu/Utils/ModUtils';
 import OsuWithCalcCommand from '@furude-subs/Osu/Utils/OsuWithCalcCommand';
+import Localizer from '@furude-localization/Localizer';
 
 class OsuRecent extends OsuWithCalcCommand {
   public constructor() {
@@ -29,8 +30,9 @@ class OsuRecent extends OsuWithCalcCommand {
     const score = scores![indexFrom];
     const modstr = ModUtils.getStringRepr(score.processedMods);
 
-    let info = `Score: ${score!.score.toLocaleString(
-      interaction.guild!.preferredLocale
+    let info = `Score: ${Localizer.localizeNumber(
+      interaction,
+      score.score
     )}\nAccuracy: ${score!.accuracy}%\nMiss: ${score.counts.miss}\nCombo: ${
       score!.maxCombo
     }`;
