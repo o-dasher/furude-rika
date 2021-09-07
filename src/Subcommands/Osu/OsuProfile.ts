@@ -43,7 +43,7 @@ class OsuProfile extends OsuGameCommand {
           interaction,
           osuUser?.scores.total!
         )}
-        \nRanked Score: ${Localizer.localizeNumber(
+        )}\nRanked Score: ${Localizer.localizeNumber(
           interaction,
           osuUser?.scores.ranked!
         )}`
