@@ -3,7 +3,7 @@
     "lib": ["ESNext"],
     "strict": true,
     "module": "commonjs",
-    "moduleResolution": "node",
+    "moduleResolution": "classic",
     "target": "ESNext",
     "outDir": "dist",
     "sourceMap": true,
@@ -29,5 +29,6 @@
     "resolveJsonModule": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules", "**/*.spec.ts"],
+  "typeAcquisition": { "enable": true }
 }
