@@ -17,6 +17,7 @@ class BanchoUser extends AbstractUser {
       u: this.id.toString(),
       limit: params.limit
     });
+    
     const banchoScores: BanchoScore[] = [];
 
     for (const score of scores) {

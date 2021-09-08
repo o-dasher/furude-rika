@@ -2,6 +2,7 @@ import axios from 'axios';
 import consolaGlobalInstance from 'consola';
 import { CommandInteraction } from 'discord.js';
 import {
+  Accuracy,
   DroidPerformanceCalculator,
   DroidStarRating,
   OsuPerformanceCalculator,
@@ -103,6 +104,21 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
               mods: score.processedMods
             });
 
+            const accuracy = new Accuracy(
+              server instanceof Droid
+                ? {
+                    nobjects: map.objects.length,
+                    percent: score.accuracy
+                  }
+                : {
+                    nobjects: map.objects.length,
+                    n300: score.counts[300],
+                    n100: score.counts[100],
+                    n50: score.counts[50],
+                    nmiss: score.counts.miss
+                  }
+            );
+
             if (
               stars instanceof DroidStarRating &&
               calculator instanceof DroidPerformanceCalculator
@@ -110,7 +126,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
               calculator.calculate({
                 stars,
                 combo: score.maxCombo,
-                accPercent: score.accuracy,
+                accPercent: accuracy,
                 miss: score.counts.miss
               });
             } else if (
@@ -120,7 +136,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
               calculator.calculate({
                 stars,
                 combo: score.maxCombo,
-                accPercent: score.accuracy,
+                accPercent: accuracy,
                 miss: score.counts.miss
               });
             }
