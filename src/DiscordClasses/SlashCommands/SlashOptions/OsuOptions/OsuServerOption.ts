@@ -15,7 +15,7 @@ class OsuServerOption
 
   public constructor() {
     super();
-    OptionHelper.build(this).setDescription('Your preffered osu! server');
+    OptionHelper.build(this).setDescription('Your prefered osu! server');
     for (const server of OsuServers.servers) {
       this.addChoice(server.name, server.name);
     }
