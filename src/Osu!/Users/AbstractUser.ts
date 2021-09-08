@@ -53,7 +53,9 @@ abstract class AbstractUser implements User {
   public avatarUrl: string = this.defaultString;
 
   public abstract buildUser(username: string | number): Promise<AbstractUser>;
-  public abstract getScores(): Promise<AbstractScore[]>;
+  public abstract getScores(params: {
+    limit?: number;
+  }): Promise<AbstractScore[]>;
 }
 
 export default AbstractUser;

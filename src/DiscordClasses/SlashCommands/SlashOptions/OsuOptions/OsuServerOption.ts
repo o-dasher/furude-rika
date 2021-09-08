@@ -17,7 +17,7 @@ class OsuServerOption
     super();
     OptionHelper.build(this).setDescription('Your preffered osu! server');
     for (const server of OsuServers.servers) {
-      this.addChoice('server', server.name);
+      this.addChoice(server.name, server.name);
     }
   }
 
@@ -34,9 +34,7 @@ class OsuServerOption
     userData: IDBUser
   ): OsuServer {
     const serverString = interaction.options.getString(tag);
-    return serverString
-      ? OsuServers.getFromString(serverString)
-      : OsuServers.getFromString(userData.osu.defaultServer);
+    return OsuServers.getFromString(serverString ?? userData.osu.defaultServer);
   }
 }
 

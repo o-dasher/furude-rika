@@ -12,8 +12,11 @@ class BanchoUser extends AbstractUser {
     this.avatarUrl = `http://s.ppy.sh/a/${this.id}`;
     return this;
   }
-  public async getScores(): Promise<AbstractScore[]> {
-    const scores = await ApiManager.banchoApi.getScores({ u: this.name });
+  public async getScores(params: { limit?: number }): Promise<AbstractScore[]> {
+    const scores = await ApiManager.banchoApi.getUserRecent({
+      u: this.id.toString(),
+      limit: params.limit
+    });
     const banchoScores: BanchoScore[] = [];
 
     for (const score of scores) {

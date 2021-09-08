@@ -11,7 +11,9 @@ class OsuDroidUser extends AbstractUser {
     return this;
   }
 
-  public async getScores(): Promise<AbstractScore[]> {
+  public async getScores(_params: {
+    limit?: number;
+  }): Promise<AbstractScore[]> {
     return this.droidScores;
   }
 }

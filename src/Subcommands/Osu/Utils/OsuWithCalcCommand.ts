@@ -38,7 +38,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
 
     if (osuUser) {
       try {
-        scores = await osuUser.getScores();
+        scores = await osuUser.getScores({ limit: indexTo });
       } catch (err) {
         error = true;
         consolaGlobalInstance.error(err);

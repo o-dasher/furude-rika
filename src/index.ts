@@ -7,8 +7,6 @@ import * as admin from 'firebase-admin';
 import 'firebase-admin/lib/firestore';
 import DBManager from '@furude-db/DBManager';
 import * as dotenv from 'dotenv';
-import { readdirSync } from 'fs';
-import consolaGlobalInstance from 'consola';
 
 dotenv.config();
 
@@ -24,8 +22,6 @@ declare global {
   }
 }
 
-consolaGlobalInstance.log(readdirSync('./src'));
-
 admin.initializeApp({
   credential: admin.credential.cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
@@ -33,9 +29,9 @@ admin.initializeApp({
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL
   })
 });
+
 Localizer.init();
 DBManager.init();
 
 const client = new FurudeRika();
-
 client.start();
