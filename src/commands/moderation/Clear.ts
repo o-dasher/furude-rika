@@ -18,7 +18,7 @@ class Clear extends CommandABC {
     this.permissions.push(Permissions.FLAGS.MANAGE_MESSAGES);
   }
   async run(interaction: CommandInteraction) {
-    const reply = await interaction.deferReply({
+    await interaction.deferReply({
       ephemeral: true
     });
 
