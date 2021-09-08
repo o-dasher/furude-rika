@@ -11,12 +11,16 @@ class Clear extends CommandABC {
     super();
     this.setName('clear').setDescription('Clear messages in a certain channel');
     this.addNumberOption(
-      new AmountOption().setDescription('Amount of messages to be cleared.')
+      new AmountOption()
+        .setDescription('Amount of messages to be cleared.')
+        .setRequired(true)
     );
     this.permissions.push(Permissions.FLAGS.MANAGE_MESSAGES);
   }
   async run(interaction: CommandInteraction) {
-    const reply = await interaction.deferReply({ fetchReply: true });
+    const reply = await interaction.deferReply({
+      ephemeral: true
+    });
 
     if (!(interaction.channel instanceof GuildChannel)) {
       await interaction.editReply(
@@ -42,16 +46,6 @@ class Clear extends CommandABC {
         )
       )
     });
-
-    setTimeout(async () => {
-      if (!interaction.channel) {
-        return;
-      }
-      const message = await interaction.channel.messages.fetch(reply.id);
-      if (message.deletable) {
-        await message.delete();
-      }
-    }, 2500);
   }
 }
 
