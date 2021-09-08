@@ -36,12 +36,10 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
         : new OsuPerformanceCalculator();
 
     let scores: AbstractScore[] = [];
-    indexFrom = Math.max(0, Math.min(indexFrom, scores.length - 1));
-    indexTo = indexFrom + indexTo + 1;
 
     if (osuUser) {
       try {
-        scores = await osuUser.getScores({ limit: indexTo });
+        scores = await osuUser.getScores({ limit: indexTo + 1 });
       } catch (err) {
         error = true;
         consolaGlobalInstance.error(err);
@@ -59,6 +57,8 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
       }
 
       if (!error) {
+        indexFrom = Math.max(0, Math.min(indexFrom, scores.length - 1));
+        indexTo = indexFrom + indexTo + 1;
         for (let i = 0; i < indexTo; i++) {
           if (i < indexFrom) {
             continue;
