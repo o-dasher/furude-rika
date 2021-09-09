@@ -17,6 +17,7 @@ import ModUtils from '@furude-osu/Utils/ModUtils';
 import IOSuWithCalc from '@furude-subs/Osu/Utils/IOsuWithCalc';
 import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import StringUtils from '@furude-utils/StringUtils';
+import MapUtils from '@furude-osu/Utils/MapUtils';
 
 abstract class OsuWithCalcCommand extends OsuGameCommand {
   async getScores(
@@ -96,9 +97,8 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
           }
 
           if (score.beatmap.exists) {
-            const mapDownloadUrl = `https://osu.ppy.sh/osu/${score.beatmap.id}`;
-            const osu = await axios.get(mapDownloadUrl);
-            const map = osuParser.parse(osu.data, score.processedMods).map;
+            const osu = await MapUtils.getBeatmapOsu(score.beatmap.id);
+            const map = osuParser.parse(osu, score.processedMods).map;
             const stars = calculator.stars.calculate({
               map,
               mods: score.processedMods

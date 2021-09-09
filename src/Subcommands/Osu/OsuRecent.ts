@@ -7,6 +7,7 @@ import OsuWithCalcCommand from '@furude-subs/Osu/Utils/OsuWithCalcCommand';
 import Localizer from '@furude-localization/Localizer';
 import ordinal from 'ordinal';
 import StringUtils from '@furude-utils/StringUtils';
+import MapUtils from '@furude-osu/Utils/MapUtils';
 
 class OsuRecent extends OsuWithCalcCommand {
   public constructor() {
@@ -53,9 +54,7 @@ class OsuRecent extends OsuWithCalcCommand {
     const embed = new BotEmbed(interaction)
       .setTitle(StringUtils.boldString(title))
       .setDescription(StringUtils.boldString(info))
-      .setThumbnail(
-        `https://b.ppy.sh/thumb/${score.beatmap!.beatmapSetId}l.jpg`
-      );
+      .setThumbnail(MapUtils.getThumbnailUrl(score.beatmap.beatmapSetId));
 
     await interaction.editReply({
       embeds: [embed],

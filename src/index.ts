@@ -1,7 +1,6 @@
 import 'module-alias/register';
 
 import FurudeRika from '@furude-client/FurudeRika';
-import CommandsReader from '@furude-io/CommandsReader';
 import Localizer from '@furude-localization/Localizer';
 import * as admin from 'firebase-admin';
 import 'firebase-admin/lib/firestore';

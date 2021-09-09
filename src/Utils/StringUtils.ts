@@ -20,6 +20,9 @@ abstract class StringUtils {
   public static blockQuote(value: string): string {
     return `>>> ${value}`;
   }
+  public static hyperLink(value: string, url: string): string {
+    return `[${value}](${url})`;
+  }
 }
 
 export default StringUtils;

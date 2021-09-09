@@ -30,7 +30,10 @@ class Avatar extends CommandABC {
           Localizer.getLocaleString(
             interaction,
             LocalizeTags.avatarDescription
-          ).replace('USER', `[${user}](${user.avatarURL()})`)
+          ).replace(
+            'USER',
+            StringUtils.hyperLink(user.username, user.avatarURL() ?? '')
+          )
         )
       );
 
