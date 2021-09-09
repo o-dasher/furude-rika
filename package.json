@@ -87,7 +87,7 @@
     "module-alias": "^2.2.2",
     "node-osu": "^2.2.1",
     "ordinal": "^1.0.3",
-    "osu-droid": "https://gitpkg.now.sh/o-dasher/Alice/modules/osu-droid?master",
+    "osu-droid": "https://gitpkg.now.sh/o-dasher/Alice/modules/osu-droid?rian's_new_rebal",
     "request": "^2.88.2",
     "strip-ansi": "^7.0.0",
     "ts-node": "^10.2.1",
