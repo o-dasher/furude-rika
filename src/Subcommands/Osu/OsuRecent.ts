@@ -46,7 +46,7 @@ class OsuRecent extends OsuWithCalcCommand {
       info = info.concat(`\nPP: ${score.calcs?.total.toFixed(2)}`);
     }
 
-    let title = `${score.beatmap.title} - [${score.beatmap.version}] +${modstr}`;
+    let title = `${score.beatmap.title} - [${score.beatmap.version}] ${modstr}`;
     if (score.beatmap.exists && score.calcs) {
       title = title.concat(` [${score.calcs.stars.total.toFixed(2)}★]`);
     }

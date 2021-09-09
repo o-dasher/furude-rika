@@ -10,7 +10,7 @@ abstract class ModUtils extends ModUtil {
     for (const mod of mods) {
       str = str.concat(mod.acronym);
     }
-    return str;
+    return str.length == 0 ? '' : `+${str}`;
   }
 }
 

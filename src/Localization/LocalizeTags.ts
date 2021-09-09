@@ -13,6 +13,7 @@ class LocalizeTags {
   public static readonly guildOnlyCommand = 'guildOnlyCommand';
   public static readonly missingPermissions = 'missingPermissions';
   public static readonly wrongChannelType = 'wrongChannelType';
+  public static readonly mapNotFound = 'mapNotFound';
 }
 
 export default LocalizeTags;

@@ -21,6 +21,8 @@ import { Beatmap as ApiBeatmap } from 'node-osu';
 import { StarRatingCalculationParameters } from '@furude-utils/dpp/StarRatingCalculationParameters';
 import { PerformanceCalculationParameters } from '@furude-utils/dpp/PerformanceCalculationParameters';
 import ModUtils from '@furude-osu/Utils/ModUtils';
+import Localizer from '@furude-localization/Localizer';
+import LocalizeTags from '@furude-localization/LocalizeTags';
 
 class OsuCalc extends SubCommandABC {
   private urlOption: SlashCommandStringOption;
@@ -65,10 +67,20 @@ class OsuCalc extends SubCommandABC {
     const parser = new Parser();
 
     const beatmapID = url?.split('/').at(-1);
+
+    let apiMap: ApiBeatmap;
+    try {
+      apiMap = (await ApiManager.banchoApi.getBeatmaps({ b: beatmapID }))[0];
+    } catch (err) {
+      await interaction.editReply(
+        StringUtils.errorString(
+          Localizer.getLocaleString(interaction, LocalizeTags.mapNotFound)
+        )
+      );
+      return;
+    }
+
     const osu = await MapUtils.getBeatmapOsu(beatmapID!);
-    const apiMap = (
-      await ApiManager.banchoApi.getBeatmaps({ b: beatmapID })
-    )[0];
 
     const map = parser.parse(osu, calcParams.mods).map;
     calcParams.accuracy = new Accuracy({
@@ -123,7 +135,7 @@ class OsuCalc extends SubCommandABC {
 
     const title = `${apiMap.artist} - ${apiMap.title} (${apiMap.creator}) [${
       apiMap.version
-    }] +${ModUtils.getStringRepr(calcParams.mods)}`;
+    }] ${ModUtils.getStringRepr(calcParams.mods)}`;
 
     const info = `Circles: ${map.circles} - Sliders: ${
       map.sliders
@@ -133,9 +145,9 @@ class OsuCalc extends SubCommandABC {
       apiMap.bpm
     } - Max Combo: ${map.maxCombo()}x\nResult: ${
       calcParams.combo ?? map.maxCombo()
-    }/${map.maxCombo()}x | ${acc.value() * 100}% | [${acc.n300}/${acc.n100}/${
-      acc.n50
-    }/${acc.nmiss}]\nStars: ${calculator.stars.total.toFixed(
+    }/${map.maxCombo()}x | ${(acc.value() * 100).toFixed(2)}% | [${acc.n300}/${
+      acc.n100
+    }/${acc.n50}/${acc.nmiss}]\nStars: ${calculator.stars.total.toFixed(
       2
     )}\nPP: ${calculator.total.toFixed(2)}
     `;
@@ -149,7 +161,12 @@ class OsuCalc extends SubCommandABC {
           )}\n${info}`
         )
       )
-      .setThumbnail(MapUtils.getThumbnailUrl(apiMap.beatmapSetId));
+      .setThumbnail(MapUtils.getThumbnailUrl(apiMap.beatmapSetId))
+      .setAuthor(
+        calculator instanceof OsuPerformanceCalculator
+          ? 'STD CALC'
+          : 'DROID CALC'
+      );
   }
 }
 
