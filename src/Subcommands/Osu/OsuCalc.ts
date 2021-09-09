@@ -23,6 +23,7 @@ import { PerformanceCalculationParameters } from '@furude-utils/dpp/PerformanceC
 import ModUtils from '@furude-osu/Utils/ModUtils';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
+import consolaGlobalInstance from 'consola';
 
 class OsuCalc extends SubCommandABC {
   private urlOption: SlashCommandStringOption;
@@ -72,6 +73,7 @@ class OsuCalc extends SubCommandABC {
     try {
       apiMap = (await ApiManager.banchoApi.getBeatmaps({ b: beatmapID }))[0];
     } catch (err) {
+      consolaGlobalInstance.error(err)
       await interaction.editReply(
         StringUtils.errorString(
           Localizer.getLocaleString(interaction, LocalizeTags.mapNotFound)
