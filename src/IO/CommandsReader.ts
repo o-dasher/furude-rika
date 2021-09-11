@@ -24,10 +24,9 @@ class CommandsReader {
 
   public static getAllCommands(): Command[] {
     const commands: Command[] = [];
-
-    for (const pathname of CommandsReader.paths) {
+    CommandsReader.paths.forEach((pathname) => {
       commands.push.apply(commands, CommandsReader.getCommands(pathname));
-    }
+    });
 
     return commands;
   }
@@ -39,11 +38,10 @@ class CommandsReader {
       .filter((file) => file.endsWith('.ts'));
 
     const commands: Command[] = [];
-
-    for (const file of commandsStrings) {
+    commandsStrings.forEach((file) => {
       const command: Command = require(`${fullpath}${file}`).default.data;
       commands.push(command);
-    }
+    });
 
     return commands;
   }

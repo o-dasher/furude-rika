@@ -14,10 +14,9 @@ class FurudeRika extends Client {
     });
 
     const allCommands = CommandsReader.getAllCommands();
-
-    for (const command of allCommands) {
+    allCommands.forEach((command) => {
       this.commands.set(command.name, command);
-    }
+    });
   }
 
   private logLogin(client: Client): void {

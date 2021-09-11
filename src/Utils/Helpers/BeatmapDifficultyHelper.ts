@@ -22,7 +22,7 @@ export abstract class BeatmapDifficultyHelper {
     let count100: number = 0;
     let count50: number = 0;
 
-    for (const input of message.split(/\s+/g)) {
+    message.split(/\s+/g).forEach((input) => {
       if (input.endsWith('%')) {
         const newAccPercent = parseFloat(input);
         accPercent = Math.max(0, Math.min(newAccPercent || 0, 100));
@@ -60,7 +60,7 @@ export abstract class BeatmapDifficultyHelper {
       if (input.endsWith('x100')) {
         count100 = Math.max(0, parseInt(input) || 0);
       }
-    }
+    });
 
     const stats: MapStats = new MapStats({
       ar: forceAR,

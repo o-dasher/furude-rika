@@ -19,10 +19,10 @@ class BanchoUser extends OsuUser {
     });
 
     const banchoScores: BanchoScore[] = [];
-
-    for (const score of scores) {
+    
+    scores.forEach((score) => {
       banchoScores.push(new BanchoScore(score));
-    }
+    });
 
     return banchoScores;
   }

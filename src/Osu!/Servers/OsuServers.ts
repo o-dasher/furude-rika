@@ -8,14 +8,9 @@ class OsuServers {
   public static servers: OsuServer[] = [this.bancho, this.droid];
 
   public static getFromString(serverName: string): OsuServer {
-    let getServer: OsuServer = OsuServers.bancho;
-    for (const osuServer of OsuServers.servers) {
-      if (osuServer.name === serverName) {
-        getServer = osuServer;
-        break;
-      }
-    }
-    return getServer;
+    return (
+      this.servers.filter((s) => s.name === serverName)[0] ?? OsuServers.bancho
+    );
   }
 }
 
