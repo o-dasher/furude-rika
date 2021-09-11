@@ -98,7 +98,6 @@ class DroidSubmit extends OsuGameCommand {
     );
 
     for await (const play of plays) {
-      
       const parser = new Parser();
       const calculator = new DroidPerformanceCalculator();
 

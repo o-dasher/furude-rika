@@ -51,11 +51,12 @@ abstract class PPHelper {
     try {
       if (server instanceof Droid) {
         let newBeatmap = new OwnedAPIBeatmap();
+        Object.assign(newBeatmap, score.beatmap);
         Object.assign(
           newBeatmap,
           (
             await ApiManager.banchoApi.getBeatmaps({
-              h: score.beatmap.hash
+              h: newBeatmap.hash
             })
           )[0]
         );
@@ -120,8 +121,8 @@ abstract class PPHelper {
           miss: score.counts.miss
         });
       }
-      score.calcs = Object.assign({}, calculator);
     }
+    score.calcs = calculator;
     return score;
   }
 }

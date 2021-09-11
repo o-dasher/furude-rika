@@ -61,7 +61,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
           }
 
           const score = scores[i];
-          PPHelper.calculateScore(score, server);
+          await PPHelper.calculateScore(score, server);
           scores.push(score);
         }
       }
