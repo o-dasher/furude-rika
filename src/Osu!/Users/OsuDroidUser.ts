@@ -7,10 +7,14 @@ import DBUser from '@furude-db/DBUser';
 class OsuDroidUser extends OsuUser {
   public droidScores: OsuDroidScore[] = [];
 
-  public async buildUser(username: string | number, userData?: DBUser) {
+  public async buildUser(
+    username: string | number,
+    userData?: DBUser,
+    limit?: number
+  ) {
     Object.assign(
       this,
-      await ApiManager.droidApi.getUser(username.toString(), userData)
+      await ApiManager.droidApi.getUser(username.toString(), userData, limit)
     );
     return this;
   }

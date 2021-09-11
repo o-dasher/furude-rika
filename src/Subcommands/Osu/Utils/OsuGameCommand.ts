@@ -37,13 +37,16 @@ abstract class OsuGameCommand extends SubCommand {
     interaction: CommandInteraction,
     options?: {
       server?: OsuServer;
+      limit?: number;
     }
   ): Promise<IOsuParams> {
     let error = false;
     let server: OsuServer | undefined;
+    let limit: number | undefined;
 
     if (options) {
       server = options.server ?? undefined;
+      limit = options.limit ?? undefined;
     }
 
     const runnerData = await DBManager.getUserData(interaction.user);
@@ -53,7 +56,12 @@ abstract class OsuGameCommand extends SubCommand {
       ? await DBManager.getUserData(discordUser)
       : runnerData;
 
-    const osuUser = await OsuUserOption.getTag(interaction, server, userData);
+    const osuUser = await OsuUserOption.getTag(
+      interaction,
+      server,
+      userData,
+      limit
+    );
     error = !osuUser;
 
     return {

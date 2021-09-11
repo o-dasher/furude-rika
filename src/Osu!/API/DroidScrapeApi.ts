@@ -13,7 +13,8 @@ class DroidScrapeApi extends BaseApi {
 
   public async getUser(
     username: string,
-    userData?: DBUser
+    userData?: DBUser,
+    limit?: number
   ): Promise<OsuDroidUser> {
     let user: OsuDroidUser = new OsuDroidUser();
     let finalEndpoint = new ParamString(this.profileEndPoint.toString());
@@ -81,7 +82,8 @@ class DroidScrapeApi extends BaseApi {
     }
 
     const liListGroupItem = $('li.list-group-item');
-    for (let i = 0; i < liListGroupItem.length; i++) {
+    limit = Math.min(liListGroupItem.length, limit ?? liListGroupItem.length);
+    for (let i = 0; i < limit; i++) {
       if (i > liListGroupItem.length - 9) {
         break;
       }

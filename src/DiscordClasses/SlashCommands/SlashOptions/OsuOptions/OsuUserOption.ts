@@ -16,6 +16,7 @@ import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags
 import StringUtils from '@furude-utils/StringUtils';
 import DBUser from '@furude-db/DBUser';
 
+
 class OsuUserOption extends SlashCommandStringOption implements CommandOption {
   tag: string = OptionsTags.osuUser;
 
@@ -27,7 +28,8 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
   public static async getTag(
     interaction: CommandInteraction,
     server: OsuServer,
-    userData: DBUser
+    userData: DBUser,
+    limit?: number
   ) {
     let osuUser: OsuUser | null = null;
     let usernameOrID: string | null = interaction.options.getString(
@@ -66,7 +68,7 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
         );
         return;
       } else {
-        osuUser = await new OsuDroidUser().buildUser(id, userData);
+        osuUser = await new OsuDroidUser().buildUser(id, userData, limit);
       }
     }
 

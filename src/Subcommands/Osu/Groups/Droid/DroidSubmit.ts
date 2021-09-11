@@ -34,7 +34,7 @@ class DroidSubmit extends OsuGameCommand {
       if (interaction.user.id === ownerID) {
         discordID = optionalUser.id;
       } else {
-        await interaction.reply(
+        await interaction.editReply(
           StringUtils.errorString(
             Localizer.getLocaleString(
               interaction,
