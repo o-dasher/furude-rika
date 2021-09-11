@@ -108,16 +108,22 @@ class DroidScrapeApi extends BaseApi {
 
       score.raw_date = small[0].slice(0, -1);
       score.date = new Date(score.raw_date);
+      score.date.setHours(
+        score.date.getHours() - (score.date.getTimezoneOffset() / 60 + 2)
+      );
+      score.raw_date = score.date.toTimeString();
+
       score.score = parseInt(small[1].replaceAll(',', '').replaceAll(' ', ''));
       score.mods = small[2]
-        .replaceAll('DoubleTime', 'DT')
-        .replaceAll('HardRock', 'HR')
-        .replaceAll('Precise', 'PR')
-        .replaceAll('NightCore', 'NC')
-        .replaceAll('Hidden', 'HD')
-        .replaceAll('NoFail', 'NF')
-        .replaceAll('HalfTime', 'HT')
-        .replaceAll('Easy', 'EZ')
+
+        .replace('DoubleTime', 'DT')
+        .replace('HardRock', 'HR')
+        .replace('Precise', 'PR')
+        .replace('NightCore', 'NC')
+        .replace('Hidden', 'HD')
+        .replace('NoFail', 'NF')
+        .replace('HalfTime', 'HT')
+        .replace('Easy', 'EZ')
         .replaceAll(',', '')
         .replaceAll(' ', '');
       if (score.mods === '') {
