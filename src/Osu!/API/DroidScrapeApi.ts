@@ -88,25 +88,26 @@ class DroidScrapeApi extends BaseApi {
 
       const score = new OsuDroidScore();
       score.beatmap = new OwnedAPIBeatmap();
+      const html = liListGroupItem[i];
+      const el = $.load(html);
+      const head = el('strong.block').text();
 
-      const el = $.load(liListGroupItem[i]);
+      let splitHead = head.split('-');
+      score.beatmap.creator = splitHead[0];
+      splitHead.shift();
+      splitHead = splitHead.join().split('[');
 
-      let idk = el.text().replaceAll('\n', '').replaceAll('  ', '').split(']');
-      while (idk.length !== 2) {
-        idk.splice(1, 1);
-      }
+      score.beatmap.title = splitHead[0].replaceAll('  ', '');
+      score.beatmap.version = splitHead[1]
+        ? splitHead[1].substr(0, splitHead[1].length - 1)
+        : '';
 
-      const headData = idk[0].split('[');
-      score.beatmap.title = headData[0].slice(0, -1);
-      score.beatmap.version = headData[1];
+      const small = el('small').text().split('/');
 
-      idk = idk.slice(1).join('').split('%');
-      const stats = idk[0].split('/');
-
-      score.raw_date = stats[0].slice(0, -1);
+      score.raw_date = small[0].slice(0, -1);
       score.date = new Date(score.raw_date);
-      score.score = parseInt(stats[1].replaceAll(',', '').replaceAll(' ', ''));
-      score.mods = stats[2]
+      score.score = parseInt(small[1].replaceAll(',', '').replaceAll(' ', ''));
+      score.mods = small[2]
         .replaceAll('DoubleTime', 'DT')
         .replaceAll('HardRock', 'HR')
         .replaceAll('Precise', 'PR')
@@ -121,11 +122,19 @@ class DroidScrapeApi extends BaseApi {
         score.mods = 'NM';
       }
 
-      score.maxCombo = parseInt(stats[3].replace('x', ''));
-      score.accuracy = parseFloat(stats[4]);
+      score.maxCombo = parseInt(small[3].replace('x', ''));
+      score.accuracy = parseFloat(small[4]);
 
-      idk = idk.slice(1);
-      const hiddenSep = idk.join().split(':');
+      const hiddenStats = el('span.hidden')
+        .text()
+        .replaceAll('"', '')
+        .replaceAll(':', '')
+        .replaceAll('{', '')
+        .replaceAll('}', '')
+        .replaceAll('miss', '')
+        .replaceAll('hash', '')
+        .replaceAll(' ', '')
+        .split(',');
 
       score.counts = {
         '300': 0,
@@ -136,8 +145,8 @@ class DroidScrapeApi extends BaseApi {
         miss: 0
       };
 
-      score.counts.miss = parseInt(hiddenSep[1].split(',')[0]);
-      score.beatmap.hash = hiddenSep[2].replace('}', '').replaceAll(' ', '');
+      score.counts.miss = parseInt(hiddenStats[0]);
+      score.beatmap.hash = hiddenStats[1];
 
       score.user = {
         name: user.name,

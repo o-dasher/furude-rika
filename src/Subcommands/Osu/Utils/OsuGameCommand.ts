@@ -8,7 +8,6 @@ import OsuServer from '@furude-osu/Servers/OsuServer';
 import IOsuParams from '@furude-subs/Osu/Utils/IOsuParams';
 
 abstract class OsuGameCommand extends SubCommand {
-  
   protected constructor(params: {
     osuUser?: boolean;
     user?: boolean;
@@ -55,7 +54,6 @@ abstract class OsuGameCommand extends SubCommand {
       : runnerData;
 
     const osuUser = await OsuUserOption.getTag(interaction, server, userData);
-
     error = !osuUser;
 
     return {

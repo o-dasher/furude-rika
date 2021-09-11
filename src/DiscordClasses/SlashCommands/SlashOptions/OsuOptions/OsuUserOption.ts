@@ -66,7 +66,7 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
         );
         return;
       } else {
-        osuUser = await new OsuDroidUser().buildUser(usernameOrID, userData);
+        osuUser = await new OsuDroidUser().buildUser(id, userData);
       }
     }
 
