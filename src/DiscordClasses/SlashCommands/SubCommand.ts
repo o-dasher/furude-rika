@@ -1,9 +1,9 @@
 import { SlashCommandSubcommandBuilder } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
 import ICommand from '@discord-classes/SlashCommands/ICommand';
-import CommandHelper from './CommandHelper';
+import CommandHelper from '@discord-classes/SlashCommands/CommandHelper';
 
-abstract class SubCommandABC
+abstract class SubCommand
   extends SlashCommandSubcommandBuilder
   implements ICommand
 {
@@ -14,4 +14,4 @@ abstract class SubCommandABC
   abstract run(interaction: CommandInteraction): Promise<void>;
 }
 
-export default SubCommandABC;
+export default SubCommand;

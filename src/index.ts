@@ -14,6 +14,7 @@ declare global {
     interface ProcessEnv {
       BOT_TOKEN: string;
       OSU_API_KEY: string;
+      DROID_PP_BOARD_API_KEY: string;
       FIREBASE_PROJECT_ID: string;
       FIREBASE_PRIVATE_KEY: string;
       FIREBASE_CLIENT_EMAIL: string;

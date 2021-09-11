@@ -1,7 +1,8 @@
 import osu from 'node-osu';
 import DroidScrapeApi from '@furude-osu/API/DroidScrapeApi';
+import DroidPPBoardAPI from './DroidPPBoardAPI';
 
-const { OSU_API_KEY } = process.env;
+const { OSU_API_KEY, DROID_PP_BOARD_API_KEY } = process.env;
 
 class ApiManager {
   private constructor() {}
@@ -12,6 +13,10 @@ class ApiManager {
   });
 
   public static droidApi = new DroidScrapeApi();
+  
+  public static droidPPBoardAPI = new DroidPPBoardAPI({
+    apiKey: DROID_PP_BOARD_API_KEY
+  });
 }
 
 export default ApiManager;

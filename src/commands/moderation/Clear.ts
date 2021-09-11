@@ -1,12 +1,12 @@
 import AmountOption from '@discord-classes/SlashCommands/SlashOptions/AmountOption';
 import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
-import CommandABC from '@discord-classes/SlashCommands/CommandABC';
+import Command from '@discord-classes/SlashCommands/Command';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction, GuildChannel, Permissions } from 'discord.js';
 import StringUtils from '@furude-utils/StringUtils';
 
-class Clear extends CommandABC {
+class Clear extends Command {
   constructor() {
     super();
     this.setName('clear').setDescription('Clear messages in a certain channel');

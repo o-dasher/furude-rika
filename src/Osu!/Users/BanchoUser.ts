@@ -1,23 +1,23 @@
 import ApiManager from '@furude-osu/API/ApiManager';
-import AbstractUser from '@furude-osu/Users/AbstractUser';
-import AbstractScore from '@furude-osu/Users/score/AbstractScore';
+import OsuUser from '@furude-osu/Users/OsuUser';
+import OsuScore from '@furude-osu/Users/score/OsuScore';
 import BanchoScore from '@furude-osu/Users/score/BanchoScore';
 
-class BanchoUser extends AbstractUser {
+class BanchoUser extends OsuUser {
   public async buildUser(username: string | number) {
     const u = username.toString();
     Object.assign(this, await ApiManager.banchoApi.getUser({ u }));
-    this.accuracyFormatted = `${this.accuracy.toFixed(2)}%`;
+    this.accuracyFormatted = `${this.accuracy!.toFixed(2)}%`;
     this.profileUrl = `https://osu.ppy.sh/users/${this.id}`;
     this.avatarUrl = `http://s.ppy.sh/a/${this.id}`;
     return this;
   }
-  public async getScores(params: { limit?: number }): Promise<AbstractScore[]> {
+  public async getScores(params: { limit?: number }): Promise<OsuScore[]> {
     const scores = await ApiManager.banchoApi.getUserRecent({
-      u: this.id.toString(),
+      u: this.id!.toString(),
       limit: params.limit
     });
-    
+
     const banchoScores: BanchoScore[] = [];
 
     for (const score of scores) {

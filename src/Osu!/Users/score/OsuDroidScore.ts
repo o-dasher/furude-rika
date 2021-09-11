@@ -1,6 +1,6 @@
-import AbstractScore from '@furude-osu/Users/score/AbstractScore';
+import OsuScore from '@furude-osu/Users/score/OsuScore';
 
-class OsuDroidScore extends AbstractScore {
+class OsuDroidScore extends OsuScore {
   public constructor() {
     super();
   }

@@ -1,6 +1,7 @@
 import { CommandInteraction } from 'discord.js';
 import i18next from 'i18next';
 import { resources } from '@furude-localization/Strings.json';
+import LocalizeTags from '@furude-localization/LocalizeTags';
 
 abstract class Localizer {
   public static defaultLocale = 'en';
@@ -17,7 +18,7 @@ abstract class Localizer {
 
   public static getLocaleString(
     interaction: CommandInteraction,
-    tag: string
+    tag: LocalizeTags
   ): string {
     return i18next.t(tag, { lng: this.getlanguage(interaction) });
   }

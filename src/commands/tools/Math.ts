@@ -1,12 +1,12 @@
 import ExpressionOption from '@discord-classes/SlashCommands/SlashOptions/ExpressionOption';
-import CommandABC from '@discord-classes/SlashCommands/CommandABC';
+import Command from '@discord-classes/SlashCommands/Command';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';
 import { evaluate, MathExpression } from 'mathjs';
 import StringUtils from '@furude-utils/StringUtils';
 
-class Math extends CommandABC {
+class Math extends Command {
   constructor() {
     super();
     this.setName('math').setDescription('Evaluates a mathematical expression');

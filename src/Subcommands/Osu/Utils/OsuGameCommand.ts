@@ -3,11 +3,11 @@ import DBManager from '@furude-db/DBManager';
 import OsuServerOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
 import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
 import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
-import SubCommandABC from '@discord-classes/SlashCommands/SubCommandABC';
+import SubCommand from '@discord-classes/SlashCommands/SubCommand';
 import IOsuParams from '@furude-subs/Osu/Utils/IOsuParams';
 
-abstract class OsuGameCommand extends SubCommandABC {
-  protected constructor() {
+abstract class OsuGameCommand extends SubCommand {
+  protected constructor(server?: boolean) {
     super();
     this.addStringOption(new OsuUserOption());
     this.addUserOption(new UserOption());
@@ -22,22 +22,18 @@ abstract class OsuGameCommand extends SubCommandABC {
     const runnerData = await DBManager.getUserData(interaction.user);
     const server = OsuServerOption.getTag(interaction, runnerData);
     const discordUser = UserOption.getTag(interaction);
-
-    let pickedUserData = discordUser
+    const userData = discordUser
       ? await DBManager.getUserData(discordUser)
       : runnerData;
 
-    const osuUser = await OsuUserOption.getTag(
-      interaction,
-      server,
-      pickedUserData
-    );
+    const osuUser = await OsuUserOption.getTag(interaction, server, userData);
 
     error = !osuUser;
 
     return {
       osuUser,
       server,
+      userData,
       error
     };
   }

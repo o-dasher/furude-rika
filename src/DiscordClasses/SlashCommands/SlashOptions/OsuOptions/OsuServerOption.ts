@@ -1,5 +1,5 @@
 import { SlashCommandStringOption } from '@discordjs/builders';
-import IDBUser from '@furude-db/IDBUser';
+import DBUser from '@furude-db/DBUser';
 import OsuServer from '@furude-osu/Servers/OsuServer';
 import OsuServers from '@furude-osu/Servers/OsuServers';
 import { CommandInteraction } from 'discord.js';
@@ -23,7 +23,7 @@ class OsuServerOption
 
   public static getTag(
     interaction: CommandInteraction,
-    userData: IDBUser
+    userData: DBUser
   ): OsuServer {
     return this.getTagFromString(interaction, OptionsTags.osuServer, userData);
   }
@@ -31,10 +31,16 @@ class OsuServerOption
   public static getTagFromString(
     interaction: CommandInteraction,
     tag: string,
-    userData: IDBUser
+    userData?: DBUser
   ): OsuServer {
     const serverString = interaction.options.getString(tag);
-    return OsuServers.getFromString(serverString ?? userData.osu.defaultServer);
+    return OsuServers.getFromString(
+      serverString
+        ? serverString
+        : userData && userData.osu && userData.osu.defaultServer
+        ? userData.osu.defaultServer
+        : OsuServers.bancho.name
+    );
   }
 }
 

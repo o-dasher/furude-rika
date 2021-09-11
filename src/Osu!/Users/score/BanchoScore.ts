@@ -1,7 +1,7 @@
 import { Score } from 'node-osu';
-import AbstractScore from '@furude-osu/Users/score/AbstractScore';
+import OsuScore from '@furude-osu/Users/score/OsuScore';
 
-class BanchoScore extends AbstractScore {
+class BanchoScore extends OsuScore {
   public constructor(score: Score) {
     super();
     Object.assign(this, score);

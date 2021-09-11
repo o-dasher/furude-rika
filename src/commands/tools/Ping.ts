@@ -1,10 +1,10 @@
-import CommandABC from '@discord-classes/SlashCommands/CommandABC';
+import Command from '@discord-classes/SlashCommands/Command';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import StringUtils from '@furude-utils/StringUtils';
 import { CommandInteraction } from 'discord.js';
 
-class Ping extends CommandABC {
+class Ping extends Command {
   constructor() {
     super();
     this.setName('ping').setDescription('Replies with pong!');

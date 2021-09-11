@@ -23,34 +23,36 @@ class OsuProfile extends OsuGameCommand {
 
     let performanceInfo = '';
 
-    if (!(server instanceof Droid)) {
-      performanceInfo = performanceInfo.concat(`PP: ${osuUser!.pp.raw}\n`);
+    if (osuUser?.pp) {
+      performanceInfo = performanceInfo.concat(
+        `PP: ${Math.round(osuUser!.pp!.raw?.valueOf() ?? 0)}\n`
+      );
     }
-    performanceInfo = performanceInfo.concat(`Rank: #${osuUser!.pp.rank} `);
+    performanceInfo = performanceInfo.concat(`Rank: #${osuUser!.pp!.rank} `);
     if (!(server instanceof Droid)) {
       performanceInfo = performanceInfo.concat(
-        ` (#${osuUser!.pp.countryRank})`
+        ` (#${osuUser!.pp!.countryRank})`
       );
     }
     performanceInfo = performanceInfo.concat(
       `\nAccuracy: ${osuUser!.accuracyFormatted}\nPlayCount: ${
-        osuUser!.counts.plays
+        osuUser!.counts!.plays
       }`
     );
     if (interaction.guild) {
       performanceInfo = performanceInfo.concat(
         `\nTotal Score: ${Localizer.localizeNumber(
           interaction,
-          osuUser?.scores.total!
+          osuUser?.scores!.total!
         )}\nRanked Score: ${Localizer.localizeNumber(
           interaction,
-          osuUser?.scores.ranked!
+          osuUser?.scores!.ranked!
         )}`
       );
     }
     if (!(server instanceof Droid)) {
       performanceInfo = performanceInfo.concat(
-        `\nLevel: ${osuUser!.level.toFixed(2)}`
+        `\nLevel: ${osuUser!.level!.toFixed(2)}`
       );
     }
 
@@ -60,7 +62,7 @@ class OsuProfile extends OsuGameCommand {
           `[${Localizer.getLocaleString(
             interaction,
             LocalizeTags.osuProfileTitle
-          ).replace('USER', osuUser!.name)}](${osuUser!.profileUrl})`
+          ).replace('USER', osuUser!.name!)}](${osuUser!.profileUrl})`
         )
       )
       .addField(
@@ -68,16 +70,16 @@ class OsuProfile extends OsuGameCommand {
         StringUtils.blockQuote(StringUtils.boldString(performanceInfo)),
         true
       )
-      .setThumbnail(osuUser!.avatarUrl);
+      .setThumbnail(osuUser!.avatarUrl!);
 
     if (!(server instanceof Droid)) {
       embed.addField(
         '---Counts',
         StringUtils.blockQuote(
           StringUtils.boldString(
-            `SSH: ${osuUser!.counts.SSH}\nSS: ${osuUser!.counts.SS}\nSH: ${
-              osuUser!.counts.SH
-            }\nS: ${osuUser!.counts.S}\nA: ${osuUser!.counts.A}`
+            `SSH: ${osuUser!.counts!.SSH}\nSS: ${osuUser!.counts!.SS}\nSH: ${
+              osuUser!.counts!.SH
+            }\nS: ${osuUser!.counts!.S}\nA: ${osuUser!.counts!.A}`
           )
         ),
         true

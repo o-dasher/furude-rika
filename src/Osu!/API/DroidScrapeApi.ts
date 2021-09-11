@@ -4,12 +4,18 @@ import cheerio from 'cheerio';
 import axios from 'axios';
 import OsuDroidScore from '@furude-osu/Users/score/OsuDroidScore';
 import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
+import BaseApi from '@furude-osu/API/BaseApi';
+import consolaGlobalInstance from 'consola';
+import DBUser from '@furude-db/DBUser';
 
-class DroidScrapeApi {
-  private baseUrl = 'http://ops.dgsrz.com/';
+class DroidScrapeApi extends BaseApi {
+  public override baseUrl = 'http://ops.dgsrz.com/';
   private profileEndPoint = new ParamString(this.baseUrl.concat('profile.php'));
 
-  public async getUser(username: string): Promise<OsuDroidUser> {
+  public async getUser(
+    username: string,
+    userData?: DBUser
+  ): Promise<OsuDroidUser> {
     let user: OsuDroidUser = new OsuDroidUser();
     let finalEndpoint = new ParamString(this.profileEndPoint.toString());
     finalEndpoint.addParam('uid', username);
@@ -32,7 +38,7 @@ class DroidScrapeApi {
       plays: 0
     };
     user.level = 0;
-    user.pp = { raw: 0, rank: 0, countryRank: 0 };
+    user.pp = { raw: userData?.osu.dpp?.total ?? 0, rank: 0, countryRank: 0 };
     user.scores = { ranked: 0, total: 0 };
     user.pp.rank = parseInt($('span.m-b-xs.h4.block').first().text());
     user.pp.countryRank = user.pp.rank;
@@ -95,16 +101,13 @@ class DroidScrapeApi {
 
       const stats = idk[0].split('/');
       for (const stat of stats) {
-        if (
-          score.raw_date === score.defaultString &&
-          score.date === score.defaultString
-        ) {
+        if (score.raw_date === '' && score.date === '') {
           const date = stat.slice(0, -1);
           score.date = date;
           score.raw_date = date;
         } else if (score.score === -1) {
           score.score = parseInt(stat.replaceAll(',', ''));
-        } else if (score.mods === score.defaultString) {
+        } else if (score.mods === '') {
           score.mods = stat;
           score.mods = score.mods
             .replaceAll('DoubleTime', 'DT')
@@ -117,6 +120,10 @@ class DroidScrapeApi {
             .replaceAll('Easy', 'EZ')
             .replaceAll(',', '')
             .replaceAll(' ', '');
+          if (score.mods == '') {
+            score.mods = 'NM';
+          }
+          score.mods += 'TD';
         } else if (score.maxCombo === -1) {
           score.maxCombo = parseInt(stat.replace('x', ''));
         } else if (score.accuracy === -1) {
@@ -124,11 +131,14 @@ class DroidScrapeApi {
         }
       }
 
-      if (score.mods == '') {
-        score.mods = 'NM';
+      if (idk.length != 2) {
+        consolaGlobalInstance.log(
+          `Ignoring malformed osu!droid play on uid: ${username} at play ${
+            i + 1
+          }`
+        );
+        continue;
       }
-
-      score.mods += 'TD';
 
       idk = idk.slice(1);
       const hiddenSep = idk.join().split(':');

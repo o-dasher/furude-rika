@@ -1,12 +1,12 @@
 import { SlashCommandNumberOption } from '@discordjs/builders';
-import CommandABC from '@discord-classes/SlashCommands/CommandABC';
+import Command from '@discord-classes/SlashCommands/Command';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';
 import RandomHelper from '@furude-math/RandomHelper';
 import StringUtils from '@furude-utils/StringUtils';
 
-class Roll extends CommandABC {
+class Roll extends Command {
   public boundTag = 'bound';
 
   constructor() {

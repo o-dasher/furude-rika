@@ -13,7 +13,7 @@ class ParamString {
   }
 
   public toString(): string {
-    return this.string;
+    return this.string.slice(0, -1);
   }
 }
 

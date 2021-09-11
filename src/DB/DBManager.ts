@@ -1,8 +1,7 @@
 import { User } from 'discord.js';
 import { firestore } from 'firebase-admin';
-import OsuServers from '@furude-osu/Servers/OsuServers';
 import DBPaths from '@furude-db/DBPaths';
-import IDBUser from '@furude-db/IDBUser';
+import DBUser from '@furude-db/DBUser';
 
 abstract class DBManager {
   private constructor() {}
@@ -13,22 +12,15 @@ abstract class DBManager {
     this.furudeDB = firestore();
   }
 
-  public static async getUserData(discordUser: User): Promise<IDBUser> {
-    const user: IDBUser = {
-      osu: {
-        defaultServer: OsuServers.bancho.name,
-        bancho: -1,
-        droid: -1
-      }
-    };
-    const currentData = (
-      await DBManager.furudeDB
-        .collection(DBPaths.users)
-        .doc(discordUser.id)
-        .get()
-    ).data();
-    Object.assign(user, currentData);
-    return user;
+  public static getUserDoc(id: string) {
+    return DBManager.furudeDB.collection(DBPaths.users).doc(id);
+  }
+
+  public static async getUserData(discordUser: User): Promise<DBUser> {
+    return Object.assign(
+      new DBUser(),
+      (await this.getUserDoc(discordUser.id).get()).data()
+    );
   }
 }
 

@@ -1,13 +1,13 @@
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import InteractionHelper from '@discord-classes/Interactions/InteractionHelper';
 import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
-import CommandABC from '@discord-classes/SlashCommands/CommandABC';
+import Command from '@discord-classes/SlashCommands/Command';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import { CommandInteraction } from 'discord.js';
 import StringUtils from '@furude-utils/StringUtils';
 
-class Avatar extends CommandABC {
+class Avatar extends Command {
   constructor() {
     super();
     this.setName('avatar').setDescription('Get yours or another user avatar.');

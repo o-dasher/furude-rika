@@ -12,7 +12,7 @@ import {
 import ApiManager from '@furude-osu/API/ApiManager';
 import Droid from '@furude-osu/Servers/Droid';
 import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
-import AbstractScore from '@furude-osu/Users/score/AbstractScore';
+import OsuScore from '@furude-osu/Users/score/OsuScore';
 import ModUtils from '@furude-osu/Utils/ModUtils';
 import IOSuWithCalc from '@furude-subs/Osu/Utils/IOsuWithCalc';
 import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
@@ -27,7 +27,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
   ): Promise<IOSuWithCalc> {
     const params = await super.getOsuParams(interaction);
 
-    const { osuUser, server } = params;
+    const { osuUser, server, userData } = params;
     let { error } = params;
 
     const osuParser = new Parser();
@@ -36,7 +36,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
         ? new DroidPerformanceCalculator()
         : new OsuPerformanceCalculator();
 
-    let scores: AbstractScore[] = [];
+    let scores: OsuScore[] = [];
 
     if (osuUser) {
       try {
@@ -155,6 +155,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
       server,
       scores,
       error,
+      userData,
       indexFrom,
       indexTo
     };

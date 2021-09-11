@@ -1,12 +1,11 @@
 import { SlashCommandStringOption } from '@discordjs/builders';
-import DBUserHelper from '@furude-db/DBUserHelper';
-import IDBUser from '@furude-db/IDBUser';
+
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import Bancho from '@furude-osu/Servers/Bancho';
 import Droid from '@furude-osu/Servers/Droid';
 import OsuServer from '@furude-osu/Servers/OsuServer';
-import AbstractUser from '@furude-osu/Users/AbstractUser';
+import OsuUser from '@furude-osu/Users/OsuUser';
 import BanchoUser from '@furude-osu/Users/BanchoUser';
 import OsuDroidUser from '@furude-osu/Users/OsuDroidUser';
 import OsuUserHelper from '@furude-osu/Users/OsuUserHelper';
@@ -15,6 +14,7 @@ import CommandOption from '@discord-classes/SlashCommands/SlashOptions/CommandOp
 import OptionHelper from '@discord-classes/SlashCommands/SlashOptions/OptionHelper';
 import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 import StringUtils from '@furude-utils/StringUtils';
+import DBUser from '@furude-db/DBUser';
 
 class OsuUserOption extends SlashCommandStringOption implements CommandOption {
   tag: string = OptionsTags.osuUser;
@@ -27,19 +27,22 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
   public static async getTag(
     interaction: CommandInteraction,
     server: OsuServer,
-    userData: IDBUser
+    userData: DBUser
   ) {
-    let osuUser: AbstractUser | null = null;
+    let osuUser: OsuUser | null = null;
     let usernameOrID: string | null = interaction.options.getString(
       OptionsTags.osuUser
     );
 
     if (!usernameOrID) {
-      usernameOrID = DBUserHelper.getUserName(userData, server);
+      usernameOrID = userData.getUserName(server);
       if (!usernameOrID) {
         await interaction.editReply(
           StringUtils.errorString(
-            `You or the specified user does not have a linked osu account on ${server.name}`
+            Localizer.getLocaleString(
+              interaction,
+              LocalizeTags.osuSetRequired
+            ).replace('SERVER', server.name)
           )
         );
         return;
@@ -63,7 +66,7 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
         );
         return;
       } else {
-        osuUser = await new OsuDroidUser().buildUser(usernameOrID);
+        osuUser = await new OsuDroidUser().buildUser(usernameOrID, userData);
       }
     }
 

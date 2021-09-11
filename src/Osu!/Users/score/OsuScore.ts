@@ -6,13 +6,11 @@ import {
 } from 'osu-droid';
 import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
 
-abstract class AbstractScore implements Score {
-  defaultString = 'NULL';
-
+abstract class OsuScore implements Score {
   score: number = -1;
   user: { name: string; id: string } = {
-    name: this.defaultString,
-    id: this.defaultString
+    name: '',
+    id: ''
   };
   beatmapId: string | Beatmap = '';
   counts: {
@@ -32,17 +30,17 @@ abstract class AbstractScore implements Score {
   };
   maxCombo: number = -1;
   perfect: boolean = false;
-  raw_date: string = this.defaultString;
-  rank: string = this.defaultString;
+  raw_date: string = '';
+  rank: string = '';
   pp: number = -1;
   hasReplay: boolean = false;
   raw_mods: number = -1;
   beatmap: OwnedAPIBeatmap = new OwnedAPIBeatmap();
-  date: string | Date = this.defaultString;
-  mods: string | string[] = this.defaultString;
+  date: string | Date = '';
+  mods: string | string[] = '';
   accuracy: number = -1;
   processedMods: Mod[] = [];
   calcs: OsuPerformanceCalculator | DroidPerformanceCalculator | null = null;
 }
 
-export default AbstractScore;
+export default OsuScore;

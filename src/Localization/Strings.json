@@ -16,7 +16,9 @@
         "guildOnlyCommand": "This command can only be used in servers!",
         "missingPermissions": "You don't have permissions to use this command!",
         "wrongChannelType": "This command can't be used in this channel for some reason.",
-        "mapNotFound": "Could not fetch the beatmap required for this command."
+        "mapNotFound": "Could not fetch the beatmap required for this command.",
+        "onCooldown": "You are being rate-limited!",
+        "osuSetRequired": "You or the specified user does not have a linked osu account on SERVER"
       }
     },
     "pt": {
@@ -35,7 +37,9 @@
         "guildOnlyCommand": "Esse comando só pode ser usado em servidores.",
         "missingPermissions": "Você não tem permissões suficientes para usar esse comando.",
         "wrongChannelType": "Esse comando não pode ser usado nesse canal por algum motivo.",
-        "mapNotFound": "Não consegui encontrar o mapa necessário para o uso desse comando."
+        "mapNotFound": "Não consegui encontrar o mapa necessário para o uso desse comando.",
+        "onCooldown": "Você não pode sair spammando esse comando assim não.",
+        "osuSetRequired": "Você ou usuário especificado não possui uma conta linkada no SERVER"
       }
     }
   }

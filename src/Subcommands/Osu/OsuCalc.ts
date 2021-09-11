@@ -1,4 +1,4 @@
-import SubCommandABC from '@discord-classes/SlashCommands/SubCommandABC';
+import SubCommand from '@discord-classes/SlashCommands/SubCommand';
 import {
   SlashCommandBooleanOption,
   SlashCommandStringOption
@@ -18,14 +18,13 @@ import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import StringUtils from '@furude-utils/StringUtils';
 import ApiManager from '@furude-osu/API/ApiManager';
 import { Beatmap as ApiBeatmap } from 'node-osu';
-import { StarRatingCalculationParameters } from '@furude-utils/dpp/StarRatingCalculationParameters';
 import { PerformanceCalculationParameters } from '@furude-utils/dpp/PerformanceCalculationParameters';
 import ModUtils from '@furude-osu/Utils/ModUtils';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import consolaGlobalInstance from 'consola';
 
-class OsuCalc extends SubCommandABC {
+class OsuCalc extends SubCommand {
   private urlOption: SlashCommandStringOption;
   private calcParams: SlashCommandStringOption;
   private isDroidOption: SlashCommandBooleanOption;
@@ -73,7 +72,7 @@ class OsuCalc extends SubCommandABC {
     try {
       apiMap = (await ApiManager.banchoApi.getBeatmaps({ b: beatmapID }))[0];
     } catch (err) {
-      consolaGlobalInstance.error(err)
+      consolaGlobalInstance.error(err);
       await interaction.editReply(
         StringUtils.errorString(
           Localizer.getLocaleString(interaction, LocalizeTags.mapNotFound)
@@ -83,8 +82,11 @@ class OsuCalc extends SubCommandABC {
     }
 
     const osu = await MapUtils.getBeatmapOsu(beatmapID!);
-
     const map = parser.parse(osu, calcParams.mods).map;
+    if (map.objects.length === 0) {
+      await interaction.reply('Could not parse this beatmap properly');
+      return;
+    }
     calcParams.accuracy = new Accuracy({
       nobjects: map.objects.length,
       ...calcParams.accuracy,

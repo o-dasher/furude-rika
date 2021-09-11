@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import CommandABC from '@discord-classes/SlashCommands/CommandABC';
+import Command from '@discord-classes/SlashCommands/Command';
 import IOPaths from '@furude-io/IOPaths';
 
 class CommandsReader {
@@ -22,8 +22,8 @@ class CommandsReader {
     CommandsReader.osuPath
   ];
 
-  public static getAllCommands(): CommandABC[] {
-    const commands: CommandABC[] = [];
+  public static getAllCommands(): Command[] {
+    const commands: Command[] = [];
 
     for (const pathname of CommandsReader.paths) {
       commands.push.apply(commands, CommandsReader.getCommands(pathname));
@@ -32,16 +32,16 @@ class CommandsReader {
     return commands;
   }
 
-  private static getCommands(subpath?: string): CommandABC[] {
+  private static getCommands(subpath?: string): Command[] {
     const fullpath = this.commandsPath.concat(subpath ?? '');
     const commandsStrings = fs
       .readdirSync(fullpath)
       .filter((file) => file.endsWith('.ts'));
 
-    const commands: CommandABC[] = [];
+    const commands: Command[] = [];
 
     for (const file of commandsStrings) {
-      const command: CommandABC = require(`${fullpath}${file}`).default.data;
+      const command: Command = require(`${fullpath}${file}`).default.data;
       commands.push(command);
     }
 

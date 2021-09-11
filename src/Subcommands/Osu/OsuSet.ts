@@ -2,16 +2,15 @@ import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 import OsuServerOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
 import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
-import SubCommandABC from '@discord-classes/SlashCommands/SubCommandABC';
+import SubCommand from '@discord-classes/SlashCommands/SubCommand';
 import DBManager from '@furude-db/DBManager';
-import DBPaths from '@furude-db/DBPaths';
-import DBUserHelper from '@furude-db/DBUserHelper';
+
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import StringUtils from '@furude-utils/StringUtils';
 import { CommandInteraction } from 'discord.js';
 
-class OsuSet extends SubCommandABC {
+class OsuSet extends SubCommand {
   private defaultServerOption = 'default-server';
 
   public constructor() {
@@ -53,13 +52,15 @@ class OsuSet extends SubCommandABC {
 
     if (interaction.options.getString(OptionsTags.osuUser)) {
       const user = await OsuUserOption.getTag(interaction, server, userData);
-      DBUserHelper.changeUserName(user, userData, server);
+      userData.changeUserName(user, server);
     }
 
-    await DBManager.furudeDB
-      .collection(DBPaths.users)
-      .doc(interaction.user.id)
-      .set(userData, { merge: true });
+    await DBManager.getUserDoc(interaction.user.id).set(
+      JSON.parse(JSON.stringify(userData)),
+      {
+        merge: true
+      }
+    );
 
     const embed = new BotEmbed(interaction)
       .setTitle(
