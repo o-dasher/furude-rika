@@ -1,4 +1,3 @@
-import SubCommand from '@discord-classes/SlashCommands/SubCommand';
 import DBManager from '@furude-db/DBManager';
 import ApiManager from '@furude-osu/API/ApiManager';
 import { CommandInteraction } from 'discord.js';
@@ -12,23 +11,42 @@ import StringUtils from '@furude-utils/StringUtils';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import OsuServers from '@furude-osu/Servers/OsuServers';
+import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
+import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
 
 const cooldown: string[] = [];
 
-class Submit extends SubCommand {
+class DroidSubmit extends OsuGameCommand {
   public constructor() {
-    super();
+    super({ server: false, osuUser: false });
     this.setName('submit').setDescription(
       'Submits all your pp data! 1 day cooldown'
     );
+    2;
   }
   async run(interaction: CommandInteraction): Promise<void> {
     await interaction.deferReply();
 
-    if (
-      cooldown.includes(interaction.user.id) &&
-      !(interaction.user.id == ownerID)
-    ) {
+    let discordID = interaction.user.id;
+    const optionalUser = UserOption.getTag(interaction);
+
+    if (optionalUser) {
+      if (interaction.user.id === ownerID) {
+        discordID = optionalUser.id;
+      } else {
+        await interaction.reply(
+          StringUtils.errorString(
+            Localizer.getLocaleString(
+              interaction,
+              LocalizeTags.missingPermissions
+            )
+          )
+        );
+        return;
+      }
+    }
+
+    if (cooldown.includes(discordID) && !(interaction.user.id === ownerID)) {
       await interaction.editReply(
         StringUtils.errorString(
           Localizer.getLocaleString(interaction, LocalizeTags.onCooldown)
@@ -36,16 +54,18 @@ class Submit extends SubCommand {
       );
       return;
     } else {
-      cooldown.push(interaction.user.id);
+      cooldown.push(discordID);
       setTimeout(() => {
         cooldown.splice(
-          cooldown.findIndex((id) => id === interaction.user.id),
+          cooldown.findIndex((id) => id === discordID),
           1
         );
       }, 1000 * 60 * 60 * 24);
     }
 
-    const userData = await DBManager.getUserData(interaction.user);
+    const { userData } = await this.getOsuParams(interaction, {
+      server: OsuServers.droid
+    });
 
     if (!userData.osu || !userData.osu.droid) {
       await interaction.editReply(
@@ -73,13 +93,12 @@ class Submit extends SubCommand {
     const plays = user.pp.list;
     await interaction.editReply(
       StringUtils.successString(
-        'Trying to calculate your top plays it may take a while...'
+        `Trying to calculate ${user.username} top plays it may take a while...`
       )
     );
 
-    for (let i = 0; i < plays.length; i++) {
-      const play = plays[i];
-
+    for await (const play of plays) {
+      
       const parser = new Parser();
       const calculator = new DroidPerformanceCalculator();
 
@@ -103,7 +122,7 @@ class Submit extends SubCommand {
     user.pp.total = PPHelper.calculateFinalPerformancePoints(plays);
     user.pp.list = user.pp.list.sort((a, b) => b.pp - a.pp);
 
-    await DBManager.getUserDoc(interaction.user.id).set(
+    await DBManager.getUserDoc(discordID).set(
       {
         osu: {
           dpp: user.pp
@@ -114,12 +133,12 @@ class Submit extends SubCommand {
 
     await interaction.followUp(
       StringUtils.successString(
-        `OK! Submitted all your top plays, you ended up with ${user.pp.total.toFixed(
-          2
-        )}pp`
+        `OK! Submitted all ${
+          user.username
+        } top plays, you ended up with ${user.pp.total.toFixed(2)}pp`
       )
     );
   }
 }
 
-export default Submit;
+export default DroidSubmit;

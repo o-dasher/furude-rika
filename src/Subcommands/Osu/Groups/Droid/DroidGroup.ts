@@ -1,11 +1,11 @@
 import SubCommandGroup from '@discord-classes/SlashCommands/SubCommandGroup';
-import Submit from '@furude-subs/Osu/Groups/Droid/Submit';
+import DroidSubmit from '@furude-subs/Osu/Groups/Droid/DroidSubmit';
 
 class DroidGroup extends SubCommandGroup {
   public constructor() {
     super();
     this.setName('droid').setDescription('Osu!Droid specific commands');
-    this.addSelfSubCommand(new Submit());
+    this.addSelfSubCommand(new DroidSubmit());
   }
 }
 

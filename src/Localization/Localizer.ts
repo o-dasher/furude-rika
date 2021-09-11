@@ -43,11 +43,15 @@ abstract class Localizer {
   }
 
   public static localizeNumber(
-    interaction: CommandInteraction,
-    number: number
+    number: number,
+    interaction?: CommandInteraction
   ): string {
     return number.toLocaleString(
-      interaction.guild ? interaction.guild.preferredLocale : this.defaultLocale
+      interaction
+        ? interaction.guild
+          ? interaction.guild.preferredLocale
+          : this.defaultLocale
+        : this.defaultLocale
     );
   }
 }

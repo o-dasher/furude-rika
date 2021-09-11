@@ -1,13 +1,13 @@
 import 'module-alias/register';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 import FurudeRika from '@furude-client/FurudeRika';
 import Localizer from '@furude-localization/Localizer';
 import * as admin from 'firebase-admin';
 import 'firebase-admin/lib/firestore';
 import DBManager from '@furude-db/DBManager';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
 
 declare global {
   namespace NodeJS {

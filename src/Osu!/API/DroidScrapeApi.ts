@@ -7,6 +7,7 @@ import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
 import BaseApi from '@furude-osu/API/BaseApi';
 import consolaGlobalInstance from 'consola';
 import DBUser from '@furude-db/DBUser';
+import { slice } from 'cheerio/lib/api/traversing';
 
 class DroidScrapeApi extends BaseApi {
   public override baseUrl = 'http://ops.dgsrz.com/';
@@ -100,10 +101,13 @@ class DroidScrapeApi extends BaseApi {
       idk = idk.slice(1).join('').split('%');
 
       const stats = idk[0].split('/');
+
       for (const stat of stats) {
         if (score.raw_date === '' && score.date === '') {
-          const date = stat.slice(0, -1);
-          score.date = date;
+          const dp = stat.slice(0, -1).split(' ');
+          dp[0] = `${dp[0].slice(-10, -1)}${dp[0].slice(-1)}`;
+          const date = `${dp[0]} ${dp[1]}`;
+          score.date = new Date(date);
           score.raw_date = date;
         } else if (score.score === -1) {
           score.score = parseInt(stat.replaceAll(',', ''));
@@ -120,7 +124,7 @@ class DroidScrapeApi extends BaseApi {
             .replaceAll('Easy', 'EZ')
             .replaceAll(',', '')
             .replaceAll(' ', '');
-          if (score.mods == '') {
+          if (score.mods === '') {
             score.mods = 'NM';
           }
           score.mods += 'TD';

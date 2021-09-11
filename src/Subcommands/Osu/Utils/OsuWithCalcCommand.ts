@@ -18,6 +18,7 @@ import IOSuWithCalc from '@furude-subs/Osu/Utils/IOsuWithCalc';
 import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import StringUtils from '@furude-utils/StringUtils';
 import MapUtils from '@furude-osu/Utils/MapUtils';
+import PPHelper from '@furude-utils/pp/PPHelper';
 
 abstract class OsuWithCalcCommand extends OsuGameCommand {
   async getScores(
@@ -29,12 +30,6 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
 
     const { osuUser, server, userData } = params;
     let { error } = params;
-
-    const osuParser = new Parser();
-    const calculator =
-      server instanceof Droid
-        ? new DroidPerformanceCalculator()
-        : new OsuPerformanceCalculator();
 
     let scores: OsuScore[] = [];
 
@@ -66,85 +61,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
           }
 
           const score = scores[i];
-
-          try {
-            if (server instanceof Droid) {
-              let newBeatmap = new OwnedAPIBeatmap();
-              Object.assign(
-                newBeatmap,
-                (
-                  await ApiManager.banchoApi.getBeatmaps({
-                    h: score.beatmap.hash
-                  })
-                )[0]
-              );
-              score.beatmap = newBeatmap;
-            }
-          } catch (err) {
-            consolaGlobalInstance.error(
-              `Map: ${score.beatmap.hash}  not found!`
-            );
-            score.beatmap.exists = false;
-          }
-
-          if (server instanceof Droid) {
-            const modString = [score.mods].join();
-            score.processedMods = ModUtils.pcStringToMods(modString);
-          } else {
-            score.processedMods = ModUtils.pcModbitsToMods(
-              parseInt(score.mods.toString())
-            );
-          }
-
-          if (score.beatmap.exists) {
-            const osu = await MapUtils.getBeatmapOsu(score.beatmap.id);
-            const map = osuParser.parse(osu, score.processedMods).map;
-            const stars = calculator.stars.calculate({
-              map,
-              mods: score.processedMods
-            });
-
-            const accuracy = new Accuracy(
-              server instanceof Droid
-                ? {
-                    nobjects: map.objects.length,
-                    percent: score.accuracy,
-                    nmiss: score.counts.miss
-                  }
-                : {
-                    nobjects: map.objects.length,
-                    n300: score.counts[300],
-                    n100: score.counts[100],
-                    n50: score.counts[50],
-                    nmiss: score.counts.miss
-                  }
-            );
-
-            if (
-              stars instanceof DroidStarRating &&
-              calculator instanceof DroidPerformanceCalculator
-            ) {
-              calculator.calculate({
-                stars,
-                combo: score.maxCombo,
-                accPercent: accuracy,
-                miss: score.counts.miss
-              });
-            } else if (
-              stars instanceof OsuStarRating &&
-              calculator instanceof OsuPerformanceCalculator
-            ) {
-              calculator.calculate({
-                stars,
-                combo: score.maxCombo,
-                accPercent: accuracy,
-                miss: score.counts.miss
-              });
-            }
-
-            score.calcs = Object.assign({}, calculator);
-          }
-
+          PPHelper.calculateScore(score, server);
           scores.push(score);
         }
       }

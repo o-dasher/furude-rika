@@ -8,7 +8,7 @@ import StringUtils from '@furude-utils/StringUtils';
 
 class OsuProfile extends OsuGameCommand {
   public constructor() {
-    super();
+    super({});
     this.setName('profile').setDescription(
       "Views yours or someone's osu! profile"
     );
@@ -42,11 +42,11 @@ class OsuProfile extends OsuGameCommand {
     if (interaction.guild) {
       performanceInfo = performanceInfo.concat(
         `\nTotal Score: ${Localizer.localizeNumber(
-          interaction,
-          osuUser?.scores!.total!
+          osuUser?.scores!.total!,
+          interaction
         )}\nRanked Score: ${Localizer.localizeNumber(
-          interaction,
-          osuUser?.scores!.ranked!
+          osuUser?.scores!.ranked!,
+          interaction
         )}`
       );
     }

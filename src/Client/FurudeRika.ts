@@ -2,8 +2,10 @@ import { Client, Collection, Intents } from 'discord.js';
 import consola from 'consola';
 import ICommand from '@discord-classes/SlashCommands/ICommand';
 import CommandsReader from '@furude-io/CommandsReader';
+import DroidTracker from '@furude-utils/handler/DroidTracker';
 
 class FurudeRika extends Client {
+  private droidTracker: DroidTracker = new DroidTracker(this);
   public commands: Collection<string, ICommand> = new Collection();
 
   public constructor() {
@@ -25,8 +27,9 @@ class FurudeRika extends Client {
   public start(): void {
     this.login(process.env.BOT_TOKEN);
 
-    this.once('ready', (client) => {
+    this.once('ready', async (client) => {
       this.logLogin(client);
+      await this.droidTracker.startTracking();
     });
 
     this.on('interactionCreate', async (interaction) => {
