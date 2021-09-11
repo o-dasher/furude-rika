@@ -5,9 +5,7 @@ import axios from 'axios';
 import OsuDroidScore from '@furude-osu/Users/score/OsuDroidScore';
 import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
 import BaseApi from '@furude-osu/API/BaseApi';
-import consolaGlobalInstance from 'consola';
 import DBUser from '@furude-db/DBUser';
-import { slice } from 'cheerio/lib/api/traversing';
 
 class DroidScrapeApi extends BaseApi {
   public override baseUrl = 'http://ops.dgsrz.com/';
@@ -92,57 +90,39 @@ class DroidScrapeApi extends BaseApi {
       score.beatmap = new OwnedAPIBeatmap();
 
       const el = $.load(liListGroupItem[i]);
+
       let idk = el.text().replaceAll('\n', '').replaceAll('  ', '').split(']');
+      while (idk.length !== 2) {
+        idk.splice(1, 1);
+      }
 
       const headData = idk[0].split('[');
       score.beatmap.title = headData[0].slice(0, -1);
       score.beatmap.version = headData[1];
 
       idk = idk.slice(1).join('').split('%');
-
       const stats = idk[0].split('/');
 
-      for (const stat of stats) {
-        if (score.raw_date === '' && score.date === '') {
-          const dp = stat.slice(0, -1).split(' ');
-          dp[0] = `${dp[0].slice(-10, -1)}${dp[0].slice(-1)}`;
-          const date = `${dp[0]} ${dp[1]}`;
-          score.date = new Date(date);
-          score.raw_date = date;
-        } else if (score.score === -1) {
-          score.score = parseInt(stat.replaceAll(',', ''));
-        } else if (score.mods === '') {
-          score.mods = stat;
-          score.mods = score.mods
-            .replaceAll('DoubleTime', 'DT')
-            .replaceAll('HardRock', 'HR')
-            .replaceAll('Precise', 'PR')
-            .replaceAll('NightCore', 'NC')
-            .replaceAll('Hidden', 'HD')
-            .replaceAll('NoFail', 'NF')
-            .replaceAll('HalfTime', 'HT')
-            .replaceAll('Easy', 'EZ')
-            .replaceAll(',', '')
-            .replaceAll(' ', '');
-          if (score.mods === '') {
-            score.mods = 'NM';
-          }
-          score.mods += 'TD';
-        } else if (score.maxCombo === -1) {
-          score.maxCombo = parseInt(stat.replace('x', ''));
-        } else if (score.accuracy === -1) {
-          score.accuracy = parseFloat(stat);
-        }
+      score.raw_date = stats[0].slice(0, -1);
+      score.date = new Date(score.raw_date);
+      score.score = parseInt(stats[1].replaceAll(',', '').replaceAll(' ', ''));
+      score.mods = stats[2]
+        .replaceAll('DoubleTime', 'DT')
+        .replaceAll('HardRock', 'HR')
+        .replaceAll('Precise', 'PR')
+        .replaceAll('NightCore', 'NC')
+        .replaceAll('Hidden', 'HD')
+        .replaceAll('NoFail', 'NF')
+        .replaceAll('HalfTime', 'HT')
+        .replaceAll('Easy', 'EZ')
+        .replaceAll(',', '')
+        .replaceAll(' ', '');
+      if (score.mods === '') {
+        score.mods = 'NM';
       }
 
-      if (idk.length != 2) {
-        consolaGlobalInstance.log(
-          `Ignoring malformed osu!droid play on uid: ${username} at play ${
-            i + 1
-          }`
-        );
-        continue;
-      }
+      score.maxCombo = parseInt(stats[3].replace('x', ''));
+      score.accuracy = parseFloat(stats[4]);
 
       idk = idk.slice(1);
       const hiddenSep = idk.join().split(':');

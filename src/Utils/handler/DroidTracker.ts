@@ -30,7 +30,6 @@ class DroidTracker {
     }
 
     const time = 600 * 1000;
-
     setInterval(async () => {
       for await (const uid of this.privilegedUIDS) {
         const user = await ApiManager.droidApi.getUser(uid.toString());
@@ -42,8 +41,9 @@ class DroidTracker {
         const scores = await user.getScores({});
         const currentTime: Date = new Date();
 
-        for (let i = 0; i < scores.length; i++) {
-          const score = scores[i];
+        let i = -1;
+        for await (const score of scores) {
+          i++;
           const date = score.date as Date;
 
           if (currentTime.getTime() - date.getTime() > time) {
