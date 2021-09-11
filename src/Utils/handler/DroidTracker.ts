@@ -31,36 +31,37 @@ class DroidTracker {
 
     const time = 600 * 1000;
 
-    for await (const uid of this.privilegedUIDS) {
-      const user = await ApiManager.droidApi.getUser(uid.toString());
+    setInterval(async () => {
+      for await (const uid of this.privilegedUIDS) {
+        const user = await ApiManager.droidApi.getUser(uid.toString());
 
-      if (!OsuUserHelper.userExists(user)) {
-        continue;
-      }
-
-      const scores = await user.getScores({});
-      const currentTime: Date = new Date();
-
-      for (let i = 0; i < scores.length; i++) {
-        const score = scores[i];
-        const date = score.date as Date;
-
-        if (currentTime.getTime() - date.getTime() > time) {
-          break;
+        if (!OsuUserHelper.userExists(user)) {
+          continue;
         }
 
-        await PPHelper.calculateScore(score, OsuServers.droid);
-        const embed = new RecentScoreEmbed(score, null);
+        const scores = await user.getScores({});
+        const currentTime: Date = new Date();
 
-        await this.trackChannel?.send({
-          content: StringUtils.successString(
-            FastTS.recentScore(user, OsuServers.droid, i)
-          ),
-          embeds: [embed]
-        });
+        for (let i = 0; i < scores.length; i++) {
+          const score = scores[i];
+          const date = score.date as Date;
+
+          if (currentTime.getTime() - date.getTime() > time) {
+            break;
+          }
+
+          await PPHelper.calculateScore(score, OsuServers.droid);
+          const embed = new RecentScoreEmbed(score, null);
+
+          await this.trackChannel?.send({
+            content: StringUtils.successString(
+              FastTS.recentScore(user, OsuServers.droid, i)
+            ),
+            embeds: [embed]
+          });
+        }
       }
-    }
-    setInterval(async () => {}, time);
+    }, time);
   }
 }
 
