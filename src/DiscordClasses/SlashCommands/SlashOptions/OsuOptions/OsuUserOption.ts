@@ -11,6 +11,7 @@ import OptionHelper from '@discord-classes/SlashCommands/SlashOptions/OptionHelp
 import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 import StringUtils from '@furude-utils/StringUtils';
 import DBUser from '@furude-db/DBUser';
+import OsuServers from '@furude-osu/Servers/OsuServers';
 
 class OsuUserOption extends SlashCommandStringOption implements CommandOption {
   tag: string = OptionsTags.osuUser;
@@ -26,7 +27,6 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
     userData: DBUser,
     limit?: number
   ) {
-    let osuUser: OsuUser | null = null;
     let usernameOrID: string | null = interaction.options.getString(
       OptionsTags.osuUser
     );
@@ -46,13 +46,18 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
       }
     }
 
-    osuUser = await OsuUserHelper.getUserFromServer(
+    const osuUserRes = await OsuUserHelper.getUserFromServer(
       usernameOrID,
       server,
       interaction,
       userData,
       limit
     );
+
+    let { osuUser, err } = osuUserRes;
+    if (err) {
+      return;
+    }
 
     if (!osuUser || !OsuUserHelper.userExists(osuUser)) {
       osuUser = null;

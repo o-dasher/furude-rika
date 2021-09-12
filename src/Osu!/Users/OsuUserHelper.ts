@@ -9,6 +9,11 @@ import { CommandInteraction } from 'discord.js';
 import BanchoUser from './BanchoUser';
 import OsuDroidUser from './OsuDroidUser';
 
+interface UserRes {
+  err: boolean;
+  osuUser: OsuUser | null;
+}
+
 class OsuUserHelper {
   public static userExists(osuUser: OsuUser): boolean {
     return osuUser != null && osuUser.name != '';
@@ -19,11 +24,14 @@ class OsuUserHelper {
     interaction?: CommandInteraction,
     userData?: DBUser,
     limit?: number
-  ): Promise<OsuUser | null> {
-    let osuUser = null;
+  ): Promise<UserRes> {
+    let res: UserRes = {
+      err: false,
+      osuUser: null
+    };
     if (server === OsuServers.bancho) {
       try {
-        osuUser = await new BanchoUser().buildUser(id);
+        res.osuUser = await new BanchoUser().buildUser(id);
       } catch (err) {}
     } else if (server === OsuServers.droid) {
       id = parseInt(id.toString());
@@ -36,12 +44,13 @@ class OsuUserHelper {
             )
           )
         );
-        return null;
+        res.err = true;
+        return res;
       } else {
-        osuUser = await new OsuDroidUser().buildUser(id, userData, limit);
+        res.osuUser = await new OsuDroidUser().buildUser(id, userData, limit);
       }
     }
-    return osuUser;
+    return res;
   }
 }
 

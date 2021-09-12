@@ -1,4 +1,3 @@
-import ApiManager from '@furude-osu/API/ApiManager';
 import { Client, TextChannel } from 'discord.js';
 import OsuUserHelper from '@furude-osu/Users/OsuUserHelper';
 import RecentScoreEmbed from '@discord-classes/Embed/RecentScoreEmbed';
@@ -64,19 +63,23 @@ class OsuTracker {
 
         // BANCHO SCORE FETCHING IS GLITCHED BJIR
         if (server !== OsuServers.droid) {
-          return;
-        }
-
-        const user =
-          cachedUser ??
-          (await OsuUserHelper.getUserFromServer(track.id, server));
-
-        if (!user) {
-          return;
-        }
-        if (!OsuUserHelper.userExists(user)) {
           continue;
         }
+
+        let newUserRes = null;
+        const user =
+          cachedUser ??
+          (newUserRes = await OsuUserHelper.getUserFromServer(track.id, server))
+            .osuUser;
+
+        if (
+          (newUserRes && newUserRes.err) ||
+          !user ||
+          !OsuUserHelper.userExists(user)
+        ) {
+          continue;
+        }
+
         if (!cachedUser) {
           cachedUsers.push(user);
         }
