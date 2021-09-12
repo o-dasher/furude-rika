@@ -10,8 +10,10 @@ import { setIntervalAsync } from 'set-interval-async/dynamic';
 import FurudeDB from '@furude-db/FurudeDB';
 import DBPaths from '@furude-db/DBPaths';
 import DBGuild from '@furude-db/DBGuild';
+import OsuUser from '@furude-osu/Users/OsuUser';
+import consolaGlobalInstance from 'consola';
 
-class DroidTracker {
+class OsuTracker {
   private client: Client;
   private time: number = 1000 * 60 * 15;
   private runnedStart: boolean = false;
@@ -28,14 +30,21 @@ class DroidTracker {
     }
 
     this.runnedStart = true;
+    await this.update();
     setIntervalAsync(async () => await this.update(), this.time);
   }
 
   private async update(): Promise<void> {
+    const currentTime: Date = new Date();
     const guilds = await FurudeDB.db().collection(DBPaths.guilds).get();
+    const cachedUsers: OsuUser[] = [];
+
     for await (const doc of guilds.docs) {
       const dbGuild = { ...new DBGuild(), ...doc.data() } as DBGuild;
       let trackChannel: TextChannel | null = null;
+      if (!dbGuild.osu.trackChannelID || !dbGuild.osu.tracks) {
+        continue;
+      }
       if (parseInt(dbGuild.osu.trackChannelID)) {
         const channel = await this.client.channels.fetch(
           dbGuild.osu.trackChannelID
@@ -47,15 +56,33 @@ class DroidTracker {
       } else {
         continue;
       }
-      for await (const uid of dbGuild.osu.trackIDS) {
-        const user = await ApiManager.droidApi.getUser(uid.toString());
+      consolaGlobalInstance.success(
+        `Started tracking osu! users for ${trackChannel.guild.name}`
+      );
+      for await (const track of dbGuild.osu.tracks) {
+        const cachedUser = cachedUsers.find((u) => u.id == track.id);
+        const server = OsuServers.getFromString(track.server);
 
+        // BANCHO SCORE FETCHING IS GLITCHED BJIR
+        if (server !== OsuServers.droid) {
+          return;
+        }
+
+        const user =
+          cachedUser ??
+          (await OsuUserHelper.getUserFromServer(track.id, server));
+
+        if (!user) {
+          return;
+        }
         if (!OsuUserHelper.userExists(user)) {
           continue;
         }
+        if (!cachedUser) {
+          cachedUsers.push(user);
+        }
 
         const scores = await user.getScores({});
-        const currentTime: Date = new Date();
 
         for await (const [i, score] of scores.entries()) {
           score.date = score.date as Date;
@@ -84,4 +111,4 @@ class DroidTracker {
   }
 }
 
-export default DroidTracker;
+export default OsuTracker;

@@ -1,4 +1,13 @@
 import OsuScore from '@furude-osu/Users/score/OsuScore';
+import OsuServer from '@furude-osu/Servers/OsuServer';
+import OsuServers from '@furude-osu/Servers/OsuServers';
+import Localizer from '@furude-localization/Localizer';
+import LocalizeTags from '@furude-localization/LocalizeTags';
+import StringUtils from '@furude-utils/StringUtils';
+import BanchoUser from './BanchoUser';
+import OsuDroidUser from './OsuDroidUser';
+import { CommandInteraction } from 'discord.js';
+import DBUser from '@furude-db/DBUser';
 
 abstract class OsuUser {
   id: number | null = null;
@@ -34,9 +43,7 @@ abstract class OsuUser {
   profileUrl: string | null = null;
   avatarUrl: string | null = null;
   public abstract buildUser(username: string | number): Promise<OsuUser>;
-  public abstract getScores(params: {
-    limit?: number;
-  }): Promise<OsuScore[]>;
+  public abstract getScores(params: { limit?: number }): Promise<OsuScore[]>;
 }
 
 export default OsuUser;

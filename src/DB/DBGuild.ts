@@ -1,11 +1,19 @@
+interface DBGUildOsu {
+  tracks?: DBGuildOsuTrack[];
+  trackChannelID?: string;
+}
+
+interface DBGuildOsuTrack {
+  id: number;
+  server: string;
+}
+
 class DBGuild {
-  osu: {
-    trackIDS: number[];
-    trackChannelID: string;
-  } = {
-    trackIDS: [],
+  osu: DBGUildOsu = {
+    tracks: [],
     trackChannelID: ''
   };
 }
 
 export default DBGuild;
+export { DBGUildOsu, DBGuildOsuTrack };

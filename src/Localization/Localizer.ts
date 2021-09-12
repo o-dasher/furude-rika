@@ -25,9 +25,11 @@ abstract class Localizer {
 
   private static getlanguage(interaction: CommandInteraction): string {
     let language = i18next.language;
+    
     if (!interaction.guild) {
       return language;
     }
+
     switch (interaction.guild.preferredLocale) {
       case 'pt-BR':
         language = 'pt';

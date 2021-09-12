@@ -3,6 +3,7 @@
 import ApiManager from '@furude-osu/API/ApiManager';
 import Droid from '@furude-osu/Servers/Droid';
 import OsuServer from '@furude-osu/Servers/OsuServer';
+import OsuServers from '@furude-osu/Servers/OsuServers';
 import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
 import OsuScore from '@furude-osu/Users/score/OsuScore';
 import MapUtils from '@furude-osu/Utils/MapUtils';
@@ -44,12 +45,12 @@ abstract class PPHelper {
   ): Promise<OsuScore> {
     const osuParser = new Parser();
     const calculator =
-      server instanceof Droid
+      server === OsuServers.droid
         ? new DroidPerformanceCalculator()
         : new OsuPerformanceCalculator();
 
     try {
-      if (server instanceof Droid) {
+      if (server === OsuServers.droid) {
         let newBeatmap = new OwnedAPIBeatmap();
         Object.assign(newBeatmap, score.beatmap);
         Object.assign(
@@ -67,7 +68,7 @@ abstract class PPHelper {
       score.beatmap.exists = false;
     }
 
-    if (server instanceof Droid) {
+    if (server === OsuServers.droid) {
       const modString = [score.mods].join();
       score.processedMods = ModUtils.pcStringToMods(modString);
     } else {
@@ -85,7 +86,7 @@ abstract class PPHelper {
       });
 
       const accuracy = new Accuracy(
-        server instanceof Droid
+        server === OsuServers.droid
           ? {
               nobjects: map.objects.length,
               percent: score.accuracy,

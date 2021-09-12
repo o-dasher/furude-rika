@@ -2,10 +2,10 @@ import { Client, Collection, Intents } from 'discord.js';
 import consola from 'consola';
 import ICommand from '@discord-classes/SlashCommands/ICommand';
 import CommandsReader from '@furude-io/CommandsReader';
-import DroidTracker from '@furude-utils/handler/DroidTracker';
+import OsuTracker from '@furude-utils/handler/OsuTracker';
 
 class FurudeRika extends Client {
-  private droidTracker: DroidTracker = new DroidTracker(this);
+  private droidTracker: OsuTracker = new OsuTracker(this);
   public commands: Collection<string, ICommand> = new Collection();
 
   public constructor() {

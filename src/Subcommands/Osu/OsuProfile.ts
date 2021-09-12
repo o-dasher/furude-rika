@@ -5,6 +5,7 @@ import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import Droid from '@furude-osu/Servers/Droid';
 import StringUtils from '@furude-utils/StringUtils';
+import OsuServers from '@furude-osu/Servers/OsuServers';
 
 class OsuProfile extends OsuGameCommand {
   public constructor() {
@@ -29,7 +30,7 @@ class OsuProfile extends OsuGameCommand {
       );
     }
     performanceInfo = performanceInfo.concat(`Rank: #${osuUser!.pp!.rank} `);
-    if (!(server instanceof Droid)) {
+    if (!(server === OsuServers.droid)) {
       performanceInfo = performanceInfo.concat(
         ` (#${osuUser!.pp!.countryRank})`
       );
@@ -50,7 +51,7 @@ class OsuProfile extends OsuGameCommand {
         )}`
       );
     }
-    if (!(server instanceof Droid)) {
+    if (!(server === OsuServers.droid)) {
       performanceInfo = performanceInfo.concat(
         `\nLevel: ${osuUser!.level!.toFixed(2)}`
       );
@@ -72,7 +73,7 @@ class OsuProfile extends OsuGameCommand {
       )
       .setThumbnail(osuUser!.avatarUrl!);
 
-    if (!(server instanceof Droid)) {
+    if (!(server === OsuServers.droid)) {
       embed.addField(
         '---Counts',
         StringUtils.blockQuote(

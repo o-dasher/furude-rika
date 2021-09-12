@@ -40,27 +40,27 @@
         "mapNotFound": "Não consegui encontrar o mapa necessário para o uso desse comando.",
         "onCooldown": "Você não pode sair spammando esse comando assim não.",
         "osuSetRequired": "Você ou usuário especificado não possui uma conta linkada no SERVER"
-      }
-    },
-  "id": {
-    "translation": {
-        "pingReply": "Ping! membutuhkan PINGMSms untuk menjawab mu! dan PINGAPIMSms untuk merespon API!",
-        "avatarTitle": "Itu adalah avatar yang bagus...",
-        "avatarDescription": "Ini adalah avatar USER.",
-        "rollReply": "Saya memilih... RANDOM",
-        "clearReply": "HAI! just cleared AMOUNT messages!",
-        "mathReply": "Pertanyaan dievaluasi! EXPRESSION = RESULT",
-        "mathEvalError": "Aku tidak mengerti ini: `EXPRESSION`",
-        "osuProfileTitle": "Profile USER!",
-        "osuSetTitle": "Update data DB mu!",
-        "droidUserMustBeID": "Username must be your osu!droid UID if droid server.",
-        "osuUserFetchError": "Tidak dapat menemukan USER di server SERVER.",
-        "guildOnlyCommand": "Perintah ini hanya dapat digunakan di server!",
-        "missingPermissions": "Anda tidak memiliki autorits untuk menggunakan perintah ini!",
-        "wrongChannelType": "Perintah ini tidak dapat dipakai di kanal ini untuk beberapa alasan.",
-        "mapNotFound": "Tidak dapat mendapat data untuk beatmap ini untuk beberapa alasan.",
-        "onCooldown": "Kamu sedang dibatasi!",
-        "osuSetRequired": "Kamu atau orang yang di disebutkan tidak menghubungkan akun osu di SERVER."}
+      },
+      "id": {
+        "translation": {
+          "pingReply": "Ping! membutuhkan PINGMSms untuk menjawab mu! dan PINGAPIMSms untuk merespon API!",
+          "avatarTitle": "Itu adalah avatar yang bagus...",
+          "avatarDescription": "Ini adalah avatar USER.",
+          "rollReply": "Saya memilih... RANDOM",
+          "clearReply": "HAI! just cleared AMOUNT messages!",
+          "mathReply": "Pertanyaan dievaluasi! EXPRESSION = RESULT",
+          "mathEvalError": "Aku tidak mengerti ini: `EXPRESSION`",
+          "osuProfileTitle": "Profile USER!",
+          "osuSetTitle": "Update data DB mu!",
+          "droidUserMustBeID": "Username must be your osu!droid UID if droid server.",
+          "osuUserFetchError": "Tidak dapat menemukan USER di server SERVER.",
+          "guildOnlyCommand": "Perintah ini hanya dapat digunakan di server!",
+          "missingPermissions": "Anda tidak memiliki autorits untuk menggunakan perintah ini!",
+          "wrongChannelType": "Perintah ini tidak dapat dipakai di kanal ini untuk beberapa alasan.",
+          "mapNotFound": "Tidak dapat mendapat data untuk beatmap ini untuk beberapa alasan.",
+          "onCooldown": "Kamu sedang dibatasi!",
+          "osuSetRequired": "Kamu atau orang yang di disebutkan tidak menghubungkan akun osu di SERVER."
+        }
       }
     }
   }
