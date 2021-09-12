@@ -30,7 +30,6 @@ class OsuTracker {
     }
 
     this.runnedStart = true;
-    await this.update();
     setIntervalAsync(async () => await this.update(), this.time);
   }
 
