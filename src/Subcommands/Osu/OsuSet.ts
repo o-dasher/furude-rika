@@ -3,7 +3,7 @@ import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags
 import OsuServerOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
 import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
 import SubCommand from '@discord-classes/SlashCommands/SubCommand';
-import DBManager from '@furude-db/DBManager';
+import FurudeDB from '@furude-db/FurudeDB';
 
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
@@ -38,7 +38,7 @@ class OsuSet extends SubCommand {
   async run(interaction: CommandInteraction): Promise<void> {
     await interaction.deferReply();
 
-    const userData = await DBManager.getUserData(interaction.user);
+    const userData = await FurudeDB.getUserData(interaction.user);
     let server = OsuServerOption.getTag(interaction, userData);
 
     if (interaction.options.getString(this.defaultServerOption)) {
@@ -55,7 +55,7 @@ class OsuSet extends SubCommand {
       userData.changeUserName(user, server);
     }
 
-    await DBManager.getUserDoc(interaction.user.id).set(
+    await FurudeDB.getUserDoc(interaction.user.id).set(
       JSON.parse(JSON.stringify(userData)),
       {
         merge: true

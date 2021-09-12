@@ -1,7 +1,6 @@
-abstract class DBPaths {
-  private constructor() {}
-
-  public static readonly users: string = 'users';
+enum DBPaths {
+  users = 'users',
+  guilds = 'guilds'
 }
 
 export default DBPaths;

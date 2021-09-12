@@ -1,5 +1,5 @@
 import { CommandInteraction } from 'discord.js';
-import DBManager from '@furude-db/DBManager';
+import FurudeDB from '@furude-db/FurudeDB';
 import OsuServerOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuServerOption';
 import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
 import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
@@ -49,11 +49,11 @@ abstract class OsuGameCommand extends SubCommand {
       limit = options.limit ?? undefined;
     }
 
-    const runnerData = await DBManager.getUserData(interaction.user);
+    const runnerData = await FurudeDB.getUserData(interaction.user);
     server = server ?? OsuServerOption.getTag(interaction, runnerData);
     const discordUser = UserOption.getTag(interaction);
     const userData = discordUser
-      ? await DBManager.getUserData(discordUser)
+      ? await FurudeDB.getUserData(discordUser)
       : runnerData;
 
     const osuUser = await OsuUserOption.getTag(

@@ -1,4 +1,4 @@
-import DBManager from '@furude-db/DBManager';
+import FurudeDB from '@furude-db/FurudeDB';
 import ApiManager from '@furude-osu/API/ApiManager';
 import { CommandInteraction } from 'discord.js';
 import { ownerID } from '@furude-json/Config.json';
@@ -121,7 +121,7 @@ class DroidSubmit extends OsuGameCommand {
     user.pp.total = PPHelper.calculateFinalPerformancePoints(plays);
     user.pp.list = user.pp.list.sort((a, b) => b.pp - a.pp);
 
-    await DBManager.getUserDoc(discordID).set(
+    await FurudeDB.getUserDoc(discordID).set(
       {
         osu: {
           dpp: user.pp

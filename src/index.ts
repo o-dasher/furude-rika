@@ -7,7 +7,7 @@ import FurudeRika from '@furude-client/FurudeRika';
 import Localizer from '@furude-localization/Localizer';
 import * as admin from 'firebase-admin';
 import 'firebase-admin/lib/firestore';
-import DBManager from '@furude-db/DBManager';
+import FurudeDB from '@furude-db/FurudeDB';
 
 declare global {
   namespace NodeJS {
@@ -31,7 +31,7 @@ admin.initializeApp({
 });
 
 Localizer.init();
-DBManager.init();
+FurudeDB.init();
 
 const client = new FurudeRika();
 client.start();

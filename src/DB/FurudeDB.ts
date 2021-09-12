@@ -3,17 +3,21 @@ import { firestore } from 'firebase-admin';
 import DBPaths from '@furude-db/DBPaths';
 import DBUser from '@furude-db/DBUser';
 
-abstract class DBManager {
+abstract class FurudeDB {
   private constructor() {}
 
-  public static furudeDB: firestore.Firestore;
+  private static _db: firestore.Firestore;
 
   public static init() {
-    this.furudeDB = firestore();
+    this._db = firestore();
+  }
+
+  public static db(): firestore.Firestore {
+    return this._db;
   }
 
   public static getUserDoc(id: string) {
-    return DBManager.furudeDB.collection(DBPaths.users).doc(id);
+    return this.db().collection(DBPaths.users).doc(id);
   }
 
   public static async getUserData(discordUser: User): Promise<DBUser> {
@@ -24,4 +28,4 @@ abstract class DBManager {
   }
 }
 
-export default DBManager;
+export default FurudeDB;
