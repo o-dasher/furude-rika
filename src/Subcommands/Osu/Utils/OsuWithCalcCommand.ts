@@ -10,7 +10,7 @@ import {
   Parser
 } from 'osu-droid';
 import ApiManager from '@furude-osu/API/ApiManager';
-import Droid from '@furude-osu/Servers/Droid';
+import DroidServer from '@furude-osu/Servers/DroidServer';
 import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
 import OsuScore from '@furude-osu/Users/score/OsuScore';
 import ModUtils from '@furude-osu/Utils/ModUtils';

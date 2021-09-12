@@ -3,7 +3,6 @@ import { SlashCommandStringOption } from '@discordjs/builders';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import OsuServer from '@furude-osu/Servers/OsuServer';
-import OsuUser from '@furude-osu/Users/OsuUser';
 import OsuUserHelper from '@furude-osu/Users/OsuUserHelper';
 import { CommandInteraction } from 'discord.js';
 import CommandOption from '@discord-classes/SlashCommands/SlashOptions/CommandOption';
@@ -11,7 +10,6 @@ import OptionHelper from '@discord-classes/SlashCommands/SlashOptions/OptionHelp
 import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 import StringUtils from '@furude-utils/StringUtils';
 import DBUser from '@furude-db/DBUser';
-import OsuServers from '@furude-osu/Servers/OsuServers';
 
 class OsuUserOption extends SlashCommandStringOption implements CommandOption {
   tag: string = OptionsTags.osuUser;

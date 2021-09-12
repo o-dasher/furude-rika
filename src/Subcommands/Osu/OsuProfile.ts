@@ -3,7 +3,7 @@ import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
-import Droid from '@furude-osu/Servers/Droid';
+import DroidServer from '@furude-osu/Servers/DroidServer';
 import StringUtils from '@furude-utils/StringUtils';
 import OsuServers from '@furude-osu/Servers/OsuServers';
 

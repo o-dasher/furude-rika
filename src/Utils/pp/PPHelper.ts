@@ -1,7 +1,7 @@
 // SEE: https://github.com/Rian8337/Alice/blob/master/src/utils/helpers/DPPHelper.ts
 
 import ApiManager from '@furude-osu/API/ApiManager';
-import Droid from '@furude-osu/Servers/Droid';
+import DroidServer from '@furude-osu/Servers/DroidServer';
 import OsuServer from '@furude-osu/Servers/OsuServer';
 import OsuServers from '@furude-osu/Servers/OsuServers';
 import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
@@ -123,7 +123,13 @@ abstract class PPHelper {
         });
       }
     }
+
     score.calcs = calculator;
+    score.pp = calculator.total;
+    score.counts[300] = calculator.computedAccuracy.n300;
+    score.counts[100] = calculator.computedAccuracy.n100;
+    score.counts[50] = calculator.computedAccuracy.n50;
+
     return score;
   }
 }

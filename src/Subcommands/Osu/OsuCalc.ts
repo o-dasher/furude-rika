@@ -161,7 +161,7 @@ class OsuCalc extends SubCommand {
         StringUtils.boldString(
           `${StringUtils.hyperLink(
             title,
-            MapUtils.getBeatmapUrl(apiMap.id)
+            MapUtils.getBeatmapOsuUrl(apiMap.id)
           )}\n${info}`
         )
       )

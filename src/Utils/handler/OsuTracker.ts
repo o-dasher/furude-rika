@@ -95,7 +95,7 @@ class OsuTracker {
           }
 
           await PPHelper.calculateScore(score, OsuServers.droid);
-          const embed = new RecentScoreEmbed(score, null, {
+          const embed = new RecentScoreEmbed(score, server, undefined, {
             color: trackChannel.guild.me?.displayColor
           });
 

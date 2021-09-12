@@ -28,7 +28,7 @@ class OsuRecent extends OsuWithCalcCommand {
     }
 
     const score = scores![indexFrom];
-    const embed = new RecentScoreEmbed(score, interaction);
+    const embed = new RecentScoreEmbed(score, server, interaction);
 
     await interaction.editReply({
       embeds: [embed],
