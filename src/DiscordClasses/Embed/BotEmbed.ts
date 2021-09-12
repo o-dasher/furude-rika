@@ -1,18 +1,23 @@
 import {
+  ColorResolvable,
   CommandInteraction,
   MessageEmbed,
   MessageEmbedOptions
 } from 'discord.js';
 
 class BotEmbed extends MessageEmbed {
+  private defaultColor: ColorResolvable = 'PURPLE';
+
   public constructor(
     interaction?: CommandInteraction | null,
-    data?: MessageEmbed | MessageEmbedOptions
+    data?: MessageEmbed | MessageEmbedOptions,
   ) {
     super(data);
-    if (interaction && interaction.guild && interaction.guild.me) {
-      this.setColor(interaction.guild.me.displayColor);
-    }
+    this.setColor(
+      data?.color??
+        interaction?.guild?.me?.displayColor ??
+        this.defaultColor
+    );
   }
 }
 

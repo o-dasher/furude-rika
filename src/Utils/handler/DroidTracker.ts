@@ -13,7 +13,7 @@ import DBGuild from '@furude-db/DBGuild';
 
 class DroidTracker {
   private client: Client;
-  private time: number = 1000 * 60 * 30;
+  private time: number = 1000 * 60 * 15;
   private runnedStart: boolean = false;
 
   public constructor(client: Client) {
@@ -28,7 +28,6 @@ class DroidTracker {
     }
 
     this.runnedStart = true;
-
     setIntervalAsync(async () => await this.update(), this.time);
   }
 
@@ -61,13 +60,15 @@ class DroidTracker {
         for await (const [i, score] of scores.entries()) {
           score.date = score.date as Date;
           const delta = currentTime.getTime() - score.date.getTime();
-          
+
           if (delta > this.time) {
             break;
           }
 
           await PPHelper.calculateScore(score, OsuServers.droid);
-          const embed = new RecentScoreEmbed(score, null);
+          const embed = new RecentScoreEmbed(score, null, {
+            color: trackChannel.guild.me?.displayColor
+          });
 
           if (trackChannel) {
             await trackChannel.send({

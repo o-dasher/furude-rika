@@ -4,6 +4,7 @@ import MapUtils from '@furude-osu/Utils/MapUtils';
 import ModUtils from '@furude-osu/Utils/ModUtils';
 import StringUtils from '@furude-utils/StringUtils';
 import {
+  ColorResolvable,
   CommandInteraction,
   MessageEmbed,
   MessageEmbedOptions
