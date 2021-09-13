@@ -1,12 +1,12 @@
 import ChannelOption from '@discord-classes/SlashCommands/SlashOptions/ChannelOption';
 import SubCommand from '@discord-classes/SlashCommands/SubCommand';
+import DBGuild from '@furude-db/DBGuild';
 import DBPaths from '@furude-db/DBPaths';
 import FurudeDB from '@furude-db/FurudeDB';
 import Localizer from '@furude-localization/Localizer';
+import LocalizeTags from '@furude-localization/LocalizeTags';
 import StringUtils from '@furude-utils/StringUtils';
 import { CommandInteraction, Permissions } from 'discord.js';
-import LocalizeTags from '@furude-localization/LocalizeTags';
-import DBGuild, { DBGUildOsu } from '@furude-db/DBGuild';
 
 class SetChannel extends SubCommand {
   public constructor() {

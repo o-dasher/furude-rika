@@ -1,4 +1,5 @@
-import BaseTrackEditor from '@furude-subs/Osu/Groups/Track/BaseTrackEditor';
+import BaseTrackEditor from "./BaseTrackEditor";
+
 
 class TrackRemove extends BaseTrackEditor {
   public constructor() {

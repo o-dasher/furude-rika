@@ -1,4 +1,3 @@
-import { CommandInteraction, Permissions } from 'discord.js';
 import DBGuild from '@furude-db/DBGuild';
 import DBPaths from '@furude-db/DBPaths';
 import FurudeDB from '@furude-db/FurudeDB';
@@ -6,6 +5,8 @@ import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import StringUtils from '@furude-utils/StringUtils';
+import { CommandInteraction, Permissions } from 'discord.js';
+
 
 
 class BaseTrackEditor extends OsuGameCommand {
