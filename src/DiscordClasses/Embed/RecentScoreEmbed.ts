@@ -25,9 +25,9 @@ class RecentScoreEmbed extends BotEmbed {
 
     const info = `▸ ${StringUtils.boldString(`${pp.toFixed(2)}PP`)} ▸ ${
       score.accuracy
-    }%\n▸ ${Localizer.localizeNumber(score.score, interaction)} ▸ ${
+    }%\n▸ ${Localizer.localizeNumber(score.score, interaction)} ▸ x${
       score.maxCombo
-    }x${beatmap.exists ? `/ ${beatmap.maxCombo}` : ''} ▸ [${counts[300]}/${
+    }${beatmap.exists ? `/${beatmap.maxCombo}` : ''} ▸ [${counts[300]}/${
       counts[100]
     }/${counts[50]}/${counts.miss}]`;
 
