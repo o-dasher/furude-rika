@@ -19,9 +19,7 @@ class TrackOptions extends SubCommand {
       .addIntegerOption(
         (this.minPP = new SlashCommandIntegerOption()
           .setName('min_pp')
-          .setDescription(
-            'Minimum pp required for score to be tracked.'
-          )).setRequired(true)
+          .setDescription('Minimum pp required for score to be tracked.'))
       );
 
     this.permissions.push(Permissions.FLAGS.ADMINISTRATOR);
@@ -34,7 +32,7 @@ class TrackOptions extends SubCommand {
       return;
     }
 
-    const minPP = interaction.options.getInteger(this.minPP.name, true);
+    const minPP = interaction.options.getInteger(this.minPP.name);
 
     if (!interaction.guildId) {
       await interaction.editReply(
@@ -45,25 +43,24 @@ class TrackOptions extends SubCommand {
       return;
     }
 
-    const data: DBGUildOsu = {
-      minPP
-    };
-
-    await FurudeDB.db()
+    const doc = FurudeDB.db()
       .collection(DBPaths.guilds)
-      .doc(interaction.guildId)
-      .set(data, { merge: true });
+      .doc(interaction.guildId);
 
-    const options = {
-      minPP
+    const data: DBGUildOsu = {
+      ...{
+        minPP: minPP ?? 0
+      },
+      ...(await doc.get())
     };
 
+    await doc.set(data, { merge: true });
     const embed = new BotEmbed(interaction);
 
     let description = '';
-    for (const option in options) {
+    for (const option in data) {
       description = description.concat(
-        `${option}: ${(options as Record<string, any>)[option]}`
+        `${option}: ${(data as Record<string, any>)[option]}`
       );
     }
 

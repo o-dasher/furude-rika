@@ -38,11 +38,13 @@ class RecentScoreEmbed extends BotEmbed {
     }`;
 
     score.date = score.date as Date;
+    if (score.beatmap.exists) {
+      this.setURL(MapUtils.getBeatmapPageUrl(score.beatmap));
+    }
 
     this.setTitle(StringUtils.boldString(title))
       .setDescription(info)
       .setThumbnail(MapUtils.getThumbnailUrl(score.beatmap.beatmapSetId))
-      .setURL(MapUtils.getBeatmapPageUrl(score.beatmap))
       .setFooter('Score was achieved', server.iconURL)
       .setTimestamp(score.date);
   }

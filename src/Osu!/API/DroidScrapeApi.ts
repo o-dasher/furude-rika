@@ -49,17 +49,13 @@ class DroidScrapeApi extends BaseApi {
     user.profileUrl = `http://ops.dgsrz.com/profile.php?uid=${user.id}`;
 
     if (needsExtraInfo) {
-      user.pp.raw =
-        (
-          (await FurudeDB.db().collection(DBPaths.users).get()).docs
-            .filter((doc) => user?.id === (doc.data() as DBUser).osu.droid)
-            .sort(
-              (a, b) =>
-                ((b.data() as DBUser).osu.dpp?.total ?? 0) -
-                ((a.data() as DBUser).osu.dpp?.total ?? 0)
-            )[0]
-            .data() as DBUser
-        ).osu.dpp?.total ?? 0;
+      const dpps: number[] = [];
+      (await FurudeDB.db().collection(DBPaths.users).get()).docs
+        .filter((doc) => user?.id === (doc.data() as DBUser).osu.droid)
+        .map((doc) => {
+          dpps.push((doc.data() as DBUser).osu.dpp?.total ?? 0);
+        });
+      user.pp.rank = Math.max(...dpps);
     }
 
     const images = $('img');

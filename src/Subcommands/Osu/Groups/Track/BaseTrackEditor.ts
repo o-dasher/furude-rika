@@ -32,7 +32,9 @@ class BaseTrackEditor extends OsuGameCommand {
       return;
     }
 
-    const osuParams = await this.getOsuParams(interaction, {needsExtraInfo: false});
+    const osuParams = await this.getOsuParams(interaction, {
+      needsExtraInfo: false
+    });
     if (osuParams.error) {
       return;
     }
@@ -62,7 +64,9 @@ class BaseTrackEditor extends OsuGameCommand {
     await trackChannelDB.set(guildInfo, { merge: true });
     await interaction.editReply(
       StringUtils.successString(
-        `Started tracking ${osuUser?.name} in this guild!`
+        this.isAdd
+          ? `Started tracking ${osuUser?.name} in this guild!`
+          : `Removed ${osuUser?.name} from being tracked in this guild!`
       )
     );
   }
