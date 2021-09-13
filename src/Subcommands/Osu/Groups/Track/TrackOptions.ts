@@ -1,7 +1,7 @@
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import SubCommand from '@discord-classes/SlashCommands/SubCommand';
 import { SlashCommandIntegerOption } from '@discordjs/builders';
-import { DBGUildOsu } from '@furude-db/DBGuild';
+import DBGuild from '@furude-db/DBGuild';
 import DBPaths from '@furude-db/DBPaths';
 import FurudeDB from '@furude-db/FurudeDB';
 import Localizer from '@furude-localization/Localizer';
@@ -47,13 +47,7 @@ class TrackOptions extends SubCommand {
       .collection(DBPaths.guilds)
       .doc(interaction.guildId);
 
-    const data: DBGUildOsu = {
-      ...{
-        minPP: minPP ?? 0
-      },
-      ...(await doc.get())
-    };
-
+    const data: DBGuild = { ...new DBGuild(), ...(await doc.get()) };
     await doc.set(data, { merge: true });
     const embed = new BotEmbed(interaction);
 
