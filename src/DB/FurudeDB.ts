@@ -1,8 +1,6 @@
-import { User } from 'discord.js';
 import { firestore } from 'firebase-admin';
 import DBPaths from '@furude-db/DBPaths';
 import DBUser from '@furude-db/DBUser';
-import { number } from 'mathjs';
 
 abstract class FurudeDB {
   private constructor() {}

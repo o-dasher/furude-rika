@@ -15,26 +15,29 @@ import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
 import DBPaths from '@furude-db/DBPaths';
 import DBDroidUser from '@furude-db/DBDroidUser';
+import OsuUser from '@furude-osu/Users/OsuUser';
+import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
+import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 
 const cooldown: string[] = [];
 
 class DroidSubmit extends OsuGameCommand {
   public constructor() {
-    super({ server: false, osuUser: false });
+    super({ server: false });
     this.setName('submit').setDescription(
       'Submits all your pp data! 1 day cooldown'
     );
-    2;
   }
   async run(interaction: CommandInteraction): Promise<void> {
     await interaction.deferReply();
 
     let discordID = interaction.user.id;
     const optionalUser = UserOption.getTag(interaction);
+    const osuTag = interaction.options.getString(OptionsTags.osuUser);
 
-    if (optionalUser) {
+    if (optionalUser || osuTag) {
       if (interaction.user.id === ownerID) {
-        discordID = optionalUser.id;
+        discordID = optionalUser?.id ?? discordID;
       } else {
         await interaction.editReply(
           StringUtils.errorString(
@@ -65,10 +68,14 @@ class DroidSubmit extends OsuGameCommand {
       }, 1000 * 60 * 60 * 24);
     }
 
-    const { userData } = await this.getOsuParams(interaction, {
+    const { userData, osuUser, error } = await this.getOsuParams(interaction, {
       server: OsuServers.droid,
       needsExtraInfo: false
     });
+
+    if (error) {
+      return;
+    }
 
     if (!userData.osu || !userData.osu.droid) {
       await interaction.editReply(
@@ -82,10 +89,7 @@ class DroidSubmit extends OsuGameCommand {
       return;
     }
 
-    const user = await ApiManager.droidPPBoardAPI.getPlayerTop(
-      userData.osu.droid
-    );
-
+    const user = await ApiManager.droidPPBoardAPI.getPlayerTop(osuUser!.id!);
     if (!user.pp) {
       await interaction.editReply(
         StringUtils.errorString("You don't have an account binded to alice!")
