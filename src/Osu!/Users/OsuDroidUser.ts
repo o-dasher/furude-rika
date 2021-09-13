@@ -10,11 +10,17 @@ class OsuDroidUser extends OsuUser {
   public async buildUser(
     username: string | number,
     userData?: DBUser,
-    limit?: number
+    limit?: number,
+    needsExtraInfo?: boolean
   ) {
     Object.assign(
       this,
-      await ApiManager.droidApi.getUser(username.toString(), userData, limit)
+      await ApiManager.droidApi.getUser(
+        username.toString(),
+        userData,
+        limit,
+        needsExtraInfo
+      )
     );
     return this;
   }

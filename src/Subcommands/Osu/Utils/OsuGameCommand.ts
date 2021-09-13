@@ -6,6 +6,9 @@ import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
 import SubCommand from '@discord-classes/SlashCommands/SubCommand';
 import OsuServer from '@furude-osu/Servers/OsuServer';
 import IOsuParams from '@furude-subs/Osu/Utils/IOsuParams';
+import DBPaths from '@furude-db/DBPaths';
+import DBUser from '@furude-db/DBUser';
+import OsuServers from '@furude-osu/Servers/OsuServers';
 
 abstract class OsuGameCommand extends SubCommand {
   protected constructor(params: {
@@ -38,6 +41,7 @@ abstract class OsuGameCommand extends SubCommand {
     options?: {
       server?: OsuServer;
       limit?: number;
+      needsExtraInfo?: boolean;
     }
   ): Promise<IOsuParams> {
     let error = false;
@@ -49,19 +53,21 @@ abstract class OsuGameCommand extends SubCommand {
       limit = options.limit ?? undefined;
     }
 
-    const runnerData = await FurudeDB.getUserData(interaction.user);
+    const runnerData = await FurudeDB.getUserData(interaction.user.id);
     server = server ?? OsuServerOption.getTag(interaction, runnerData);
     const discordUser = UserOption.getTag(interaction);
     const userData = discordUser
-      ? await FurudeDB.getUserData(discordUser)
+      ? await FurudeDB.getUserData(discordUser.id)
       : runnerData;
 
     const osuUser = await OsuUserOption.getTag(
       interaction,
       server,
       userData,
-      limit
+      limit,
+      options?.needsExtraInfo
     );
+
     error = !osuUser;
 
     return {

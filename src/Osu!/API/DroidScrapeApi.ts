@@ -6,6 +6,8 @@ import OsuDroidScore from '@furude-osu/Users/score/OsuDroidScore';
 import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
 import BaseApi from '@furude-osu/API/BaseApi';
 import DBUser from '@furude-db/DBUser';
+import DBPaths from '@furude-db/DBPaths';
+import FurudeDB from '@furude-db/FurudeDB';
 
 class DroidScrapeApi extends BaseApi {
   public override baseUrl = 'http://ops.dgsrz.com/';
@@ -14,14 +16,15 @@ class DroidScrapeApi extends BaseApi {
   public async getUser(
     username: string,
     userData?: DBUser,
-    limit?: number
+    limit?: number,
+    needsExtraInfo?: boolean
   ): Promise<OsuDroidUser> {
+    needsExtraInfo = needsExtraInfo ?? true;
     let user: OsuDroidUser = new OsuDroidUser();
     let finalEndpoint = new ParamString(this.profileEndPoint.toString());
     finalEndpoint.addParam('uid', username);
 
     const res = await axios.get(finalEndpoint.toString());
-
     const $ = cheerio.load(res.data);
 
     user.name = $('div.h3.m-t-xs.m-b-xs').text();
@@ -44,6 +47,20 @@ class DroidScrapeApi extends BaseApi {
     user.pp.countryRank = user.pp.rank;
     user.id = parseInt(username);
     user.profileUrl = `http://ops.dgsrz.com/profile.php?uid=${user.id}`;
+
+    if (needsExtraInfo) {
+      user.pp.raw =
+        (
+          (await FurudeDB.db().collection(DBPaths.users).get()).docs
+            .filter((doc) => user?.id === (doc.data() as DBUser).osu.droid)
+            .sort(
+              (a, b) =>
+                ((b.data() as DBUser).osu.dpp?.total ?? 0) -
+                ((a.data() as DBUser).osu.dpp?.total ?? 0)
+            )[0]
+            .data() as DBUser
+        ).osu.dpp?.total ?? 0;
+    }
 
     const images = $('img');
 

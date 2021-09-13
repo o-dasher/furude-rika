@@ -23,7 +23,8 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
     interaction: CommandInteraction,
     server: OsuServer,
     userData: DBUser,
-    limit?: number
+    limit?: number,
+    needsExtraInfo?: boolean
   ) {
     let usernameOrID: string | null = interaction.options.getString(
       OptionsTags.osuUser
@@ -49,7 +50,8 @@ class OsuUserOption extends SlashCommandStringOption implements CommandOption {
       server,
       interaction,
       userData,
-      limit
+      limit,
+      needsExtraInfo
     );
 
     let { osuUser, err } = osuUserRes;

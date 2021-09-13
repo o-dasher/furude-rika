@@ -64,7 +64,8 @@ class DroidSubmit extends OsuGameCommand {
     }
 
     const { userData } = await this.getOsuParams(interaction, {
-      server: OsuServers.droid
+      server: OsuServers.droid,
+      needsExtraInfo: false
     });
 
     if (!userData.osu || !userData.osu.droid) {

@@ -23,7 +23,8 @@ class OsuUserHelper {
     server: OsuServer,
     interaction?: CommandInteraction,
     userData?: DBUser,
-    limit?: number
+    limit?: number,
+    needsExtraInfo?: boolean
   ): Promise<UserRes> {
     let res: UserRes = {
       err: false,
@@ -47,7 +48,12 @@ class OsuUserHelper {
         res.err = true;
         return res;
       } else {
-        res.osuUser = await new OsuDroidUser().buildUser(id, userData, limit);
+        res.osuUser = await new OsuDroidUser().buildUser(
+          id,
+          userData,
+          limit,
+          needsExtraInfo
+        );
       }
     }
     return res;

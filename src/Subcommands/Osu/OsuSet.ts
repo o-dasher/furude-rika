@@ -38,7 +38,7 @@ class OsuSet extends SubCommand {
   async run(interaction: CommandInteraction): Promise<void> {
     await interaction.deferReply();
 
-    const userData = await FurudeDB.getUserData(interaction.user);
+    const userData = await FurudeDB.getUserData(interaction.user.id);
     let server = OsuServerOption.getTag(interaction, userData);
 
     if (interaction.options.getString(this.defaultServerOption)) {
@@ -51,7 +51,13 @@ class OsuSet extends SubCommand {
     }
 
     if (interaction.options.getString(OptionsTags.osuUser)) {
-      const user = await OsuUserOption.getTag(interaction, server, userData);
+      const user = await OsuUserOption.getTag(
+        interaction,
+        server,
+        userData,
+        undefined,
+        false
+      );
       userData.changeUserName(user, server);
     }
 

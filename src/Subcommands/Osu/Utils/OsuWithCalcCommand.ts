@@ -1,23 +1,9 @@
-import axios from 'axios';
 import consolaGlobalInstance from 'consola';
 import { CommandInteraction } from 'discord.js';
-import {
-  Accuracy,
-  DroidPerformanceCalculator,
-  DroidStarRating,
-  OsuPerformanceCalculator,
-  OsuStarRating,
-  Parser
-} from 'osu-droid';
-import ApiManager from '@furude-osu/API/ApiManager';
-import DroidServer from '@furude-osu/Servers/DroidServer';
-import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
 import OsuScore from '@furude-osu/Users/score/OsuScore';
-import ModUtils from '@furude-osu/Utils/ModUtils';
 import IOSuWithCalc from '@furude-subs/Osu/Utils/IOsuWithCalc';
 import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import StringUtils from '@furude-utils/StringUtils';
-import MapUtils from '@furude-osu/Utils/MapUtils';
 import PPHelper from '@furude-utils/pp/PPHelper';
 
 abstract class OsuWithCalcCommand extends OsuGameCommand {
@@ -26,7 +12,9 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
     indexFrom: number,
     indexTo: number
   ): Promise<IOSuWithCalc> {
-    const params = await super.getOsuParams(interaction);
+    const params = await super.getOsuParams(interaction, {
+      needsExtraInfo: false
+    });
 
     const { osuUser, server, userData } = params;
     let { error } = params;

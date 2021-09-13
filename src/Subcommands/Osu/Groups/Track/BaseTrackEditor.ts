@@ -7,8 +7,6 @@ import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import StringUtils from '@furude-utils/StringUtils';
 import { CommandInteraction, Permissions } from 'discord.js';
 
-
-
 class BaseTrackEditor extends OsuGameCommand {
   private isAdd: Boolean;
 
@@ -34,7 +32,7 @@ class BaseTrackEditor extends OsuGameCommand {
       return;
     }
 
-    const osuParams = await this.getOsuParams(interaction);
+    const osuParams = await this.getOsuParams(interaction, {needsExtraInfo: false});
     if (osuParams.error) {
       return;
     }
@@ -45,17 +43,9 @@ class BaseTrackEditor extends OsuGameCommand {
       .doc(interaction.guildId);
 
     const guildInfo = (await trackChannelDB.get()).data() as DBGuild;
-
-    if (!(guildInfo && guildInfo.osu && guildInfo.osu.trackChannelID)) {
-      await interaction.editReply(
-        StringUtils.errorString(
-          'You first need to setup a channel for osu! tracking, to use this command'
-        )
-      );
-      return;
-    }
-
+    guildInfo.osu = guildInfo.osu ?? {};
     guildInfo.osu.tracks = guildInfo.osu.tracks ?? [];
+
     if (this.isAdd) {
       if (!guildInfo.osu.tracks?.find((t) => t.id === osuUser?.id)) {
         guildInfo.osu.tracks?.push({

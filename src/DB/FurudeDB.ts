@@ -2,6 +2,7 @@ import { User } from 'discord.js';
 import { firestore } from 'firebase-admin';
 import DBPaths from '@furude-db/DBPaths';
 import DBUser from '@furude-db/DBUser';
+import { number } from 'mathjs';
 
 abstract class FurudeDB {
   private constructor() {}
@@ -20,10 +21,10 @@ abstract class FurudeDB {
     return this.db().collection(DBPaths.users).doc(id);
   }
 
-  public static async getUserData(discordUser: User): Promise<DBUser> {
+  public static async getUserData(id: string): Promise<DBUser> {
     return Object.assign(
       new DBUser(),
-      (await this.getUserDoc(discordUser.id).get()).data()
+      (await this.getUserDoc(id).get()).data()
     );
   }
 }

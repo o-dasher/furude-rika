@@ -69,8 +69,14 @@ class OsuTracker {
         let newUserRes = null;
         const user =
           cachedUser ??
-          (newUserRes = await OsuUserHelper.getUserFromServer(track.id, server))
-            .osuUser;
+          (newUserRes = await OsuUserHelper.getUserFromServer(
+            track.id,
+            server,
+            undefined,
+            undefined,
+            undefined,
+            false
+          )).osuUser;
 
         if (
           (newUserRes && newUserRes.err) ||
@@ -95,6 +101,9 @@ class OsuTracker {
           }
 
           await PPHelper.calculateScore(score, OsuServers.droid);
+          if (score.pp < dbGuild.osu!.minPP!) {
+            continue;
+          }
           const embed = new RecentScoreEmbed(score, server, undefined, {
             color: trackChannel.guild.me?.displayColor
           });
