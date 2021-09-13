@@ -4,7 +4,6 @@ import OsuServers from '@furude-osu/Servers/OsuServers';
 import OsuUser from '@furude-osu/Users/OsuUser';
 
 interface Osu {
-  dpp: DroidPPBoardPP | null;
   defaultServer: string | null;
   bancho: number | null;
   droid: number | null;
@@ -12,7 +11,6 @@ interface Osu {
 
 class DBUser {
   osu: Osu = {
-    dpp: null,
     defaultServer: OsuServers.bancho.name,
     bancho: null,
     droid: null

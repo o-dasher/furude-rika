@@ -8,6 +8,7 @@ import BaseApi from '@furude-osu/API/BaseApi';
 import DBUser from '@furude-db/DBUser';
 import DBPaths from '@furude-db/DBPaths';
 import FurudeDB from '@furude-db/FurudeDB';
+import DBDroidUser from '@furude-db/DBDroidUser';
 
 class DroidScrapeApi extends BaseApi {
   public override baseUrl = 'http://ops.dgsrz.com/';
@@ -41,21 +42,23 @@ class DroidScrapeApi extends BaseApi {
       plays: 0
     };
     user.level = 0;
-    user.pp = { raw: userData?.osu.dpp?.total ?? 0, rank: 0, countryRank: 0 };
+    user.pp = { raw: 0, rank: 0, countryRank: 0 };
     user.scores = { ranked: 0, total: 0 };
     user.pp.rank = parseInt($('span.m-b-xs.h4.block').first().text());
     user.pp.countryRank = user.pp.rank;
     user.id = parseInt(username);
     user.profileUrl = `http://ops.dgsrz.com/profile.php?uid=${user.id}`;
-
     if (needsExtraInfo) {
-      const dpps: number[] = [];
-      (await FurudeDB.db().collection(DBPaths.users).get()).docs
-        .filter((doc) => user?.id === (doc.data() as DBUser).osu.droid)
-        .map((doc) => {
-          dpps.push((doc.data() as DBUser).osu.dpp?.total ?? 0);
-        });
-      user.pp.rank = Math.max(...dpps);
+      const data: DBDroidUser = {
+        ...new DBDroidUser(),
+        ...(
+          await FurudeDB.db()
+            .collection(DBPaths.droid_users)
+            .doc(user.id.toString())
+            .get()
+        ).data()
+      };
+      user.pp.raw = data.dpp.total;
     }
 
     const images = $('img');

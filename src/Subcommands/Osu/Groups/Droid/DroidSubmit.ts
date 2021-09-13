@@ -13,6 +13,8 @@ import LocalizeTags from '@furude-localization/LocalizeTags';
 import OsuServers from '@furude-osu/Servers/OsuServers';
 import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
+import DBPaths from '@furude-db/DBPaths';
+import DBDroidUser from '@furude-db/DBDroidUser';
 
 const cooldown: string[] = [];
 
@@ -122,14 +124,13 @@ class DroidSubmit extends OsuGameCommand {
     user.pp.total = PPHelper.calculateFinalPerformancePoints(plays);
     user.pp.list = user.pp.list.sort((a, b) => b.pp - a.pp);
 
-    await FurudeDB.getUserDoc(discordID).set(
-      {
-        osu: {
-          dpp: user.pp
-        }
-      },
-      { merge: true }
-    );
+    const data: DBDroidUser = new DBDroidUser();
+    data.dpp = user.pp;
+
+    await FurudeDB.db()
+      .collection(DBPaths.droid_users)
+      .doc(user.uid.toString())
+      .set(JSON.parse(JSON.stringify(data)), { merge: true });
 
     await interaction.followUp(
       StringUtils.successString(
