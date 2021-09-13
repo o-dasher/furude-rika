@@ -14,7 +14,7 @@ import consolaGlobalInstance from 'consola';
 
 class OsuTracker {
   private client: Client;
-  private time: number = 1000 * 60 * 15;
+  private time: number = 1000 * 60 * 1;
   private runnedStart: boolean = false;
 
   public constructor(client: Client) {
