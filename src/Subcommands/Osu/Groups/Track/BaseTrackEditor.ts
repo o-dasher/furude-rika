@@ -6,23 +6,14 @@ import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import StringUtils from '@furude-utils/StringUtils';
-import { SlashCommandBooleanOption } from '@discordjs/builders';
 
-class TrackAdd extends OsuGameCommand {
-  public addOption: SlashCommandBooleanOption;
 
-  public constructor() {
+class BaseTrackEditor extends OsuGameCommand {
+  private isAdd: Boolean;
+
+  public constructor(isAdd: boolean) {
     super({});
-    this.setName('modify')
-      .setDescription('Adds a user to be tracked to this guild trackchannel')
-      .addBooleanOption(
-        (this.addOption = new SlashCommandBooleanOption()
-          .setName('is_add')
-          .setDescription(
-            '(True & default) adds a tracked user, (False) removes a tracked user'
-          ))
-      );
-
+    this.isAdd = isAdd;
     this.permissions.push(Permissions.FLAGS.ADMINISTRATOR);
   }
 
@@ -41,9 +32,6 @@ class TrackAdd extends OsuGameCommand {
       );
       return;
     }
-
-    const isAdd: boolean =
-      interaction.options.getBoolean(this.addOption.name) ?? true;
 
     const osuParams = await this.getOsuParams(interaction);
     if (osuParams.error) {
@@ -67,7 +55,7 @@ class TrackAdd extends OsuGameCommand {
     }
 
     guildInfo.osu.tracks = guildInfo.osu.tracks ?? [];
-    if (isAdd) {
+    if (this.isAdd) {
       if (!guildInfo.osu.tracks?.find((t) => t.id === osuUser?.id)) {
         guildInfo.osu.tracks?.push({
           id: osuUser!.id!,
@@ -89,4 +77,4 @@ class TrackAdd extends OsuGameCommand {
   }
 }
 
-export default TrackAdd;
+export default BaseTrackEditor;
