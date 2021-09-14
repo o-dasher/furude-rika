@@ -47,14 +47,24 @@ class TrackOptions extends SubCommand {
       .collection(DBPaths.guilds)
       .doc(interaction.guildId);
 
-    const data: DBGuild = { ...new DBGuild(), ...(await doc.get()) };
-    await doc.set(data, { merge: true });
+    const guild: DBGuild = {
+      ...new DBGuild(),
+      ...(await doc.get()).data()
+    };
+
+    guild.osu.minPP = minPP ?? guild.osu.minPP;
+
+    await doc.set(guild, { merge: true });
     const embed = new BotEmbed(interaction);
 
+    const options = {
+      minPP: guild.osu.minPP
+    };
+
     let description = '';
-    for (const option in data) {
+    for (const option in options) {
       description = description.concat(
-        `${option}: ${(data as Record<string, any>)[option]}`
+        `${option}: ${(options as Record<string, any>)[option]}`
       );
     }
 
