@@ -45,13 +45,14 @@ class BaseTrackEditor extends OsuGameCommand {
       .collection(DBPaths.guilds)
       .doc(interaction.guildId);
 
-    const guildInfo = (await trackChannelDB.get()).data() as DBGuild;
-    guildInfo.osu = guildInfo.osu ?? {};
-    guildInfo.osu.tracks = guildInfo.osu.tracks ?? [];
+    const guildInfo = {
+      ...new DBGuild(),
+      ...(await trackChannelDB.get()).data()
+    };
 
     if (this.isAdd) {
-      if (!guildInfo.osu.tracks?.find((t) => t.id === osuUser?.id)) {
-        if (guildInfo.osu.tracks.length >= this.trackLimit) {
+      if (!guildInfo.osu!.tracks!.find((t) => t.id === osuUser?.id)) {
+        if (guildInfo.osu!.tracks!.length >= this.trackLimit) {
           await interaction.reply(
             StringUtils.errorString(
               `I am sorry but you can track at max ${this.trackLimit} per guild`
@@ -59,14 +60,14 @@ class BaseTrackEditor extends OsuGameCommand {
           );
           return;
         } else {
-          guildInfo.osu.tracks?.push({
+          guildInfo.osu.tracks!.push({
             id: osuUser!.id!,
             server: server.name
           });
         }
       }
     } else {
-      guildInfo.osu.tracks = guildInfo.osu.tracks.filter(
+      guildInfo.osu.tracks = guildInfo.osu!.tracks!.filter(
         (t) => t.id !== osuUser?.id
       );
     }

@@ -1,6 +1,6 @@
 import ChannelOption from '@discord-classes/SlashCommands/SlashOptions/ChannelOption';
 import SubCommand from '@discord-classes/SlashCommands/SubCommand';
-import DBGuild from '@furude-db/DBGuild';
+import DBGuild, { DBGUildOsu } from '@furude-db/DBGuild';
 import DBPaths from '@furude-db/DBPaths';
 import FurudeDB from '@furude-db/FurudeDB';
 import Localizer from '@furude-localization/Localizer';
@@ -43,16 +43,16 @@ class SetChannel extends SubCommand {
       return;
     }
 
-    const data: DBGuild = {
+    const guild: DeepPartial<DBGuild> = {
       osu: {
-        trackChannelID: channel!.id
+        trackChannelID: channel.id
       }
     };
 
     await FurudeDB.db()
       .collection(DBPaths.guilds)
       .doc(interaction.guildId)
-      .set(data, { merge: true });
+      .set(guild, { merge: true });
 
     await interaction.editReply(
       StringUtils.successString(

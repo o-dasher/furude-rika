@@ -9,6 +9,8 @@ import * as admin from 'firebase-admin';
 import 'firebase-admin/lib/firestore';
 import FurudeDB from '@furude-db/FurudeDB';
 
+
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {

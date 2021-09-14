@@ -1,7 +1,7 @@
 interface DBGUildOsu {
-  tracks?: DBGuildOsuTrack[];
-  trackChannelID?: string;
-  minPP?: number;
+  tracks: DBGuildOsuTrack[];
+  trackChannelID: string;
+  minPP: number;
 }
 
 interface DBGuildOsuTrack {
