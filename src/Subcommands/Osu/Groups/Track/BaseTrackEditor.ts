@@ -9,6 +9,7 @@ import { CommandInteraction, Permissions } from 'discord.js';
 
 class BaseTrackEditor extends OsuGameCommand {
   private isAdd: Boolean;
+  private trackLimit: number = 25;
 
   public constructor(isAdd: boolean) {
     super({});
@@ -50,10 +51,19 @@ class BaseTrackEditor extends OsuGameCommand {
 
     if (this.isAdd) {
       if (!guildInfo.osu.tracks?.find((t) => t.id === osuUser?.id)) {
-        guildInfo.osu.tracks?.push({
-          id: osuUser!.id!,
-          server: server.name
-        });
+        if (guildInfo.osu.tracks.length >= this.trackLimit) {
+          await interaction.reply(
+            StringUtils.errorString(
+              `I am sorry but you can track at max ${this.trackLimit} per guild`
+            )
+          );
+          return;
+        } else {
+          guildInfo.osu.tracks?.push({
+            id: osuUser!.id!,
+            server: server.name
+          });
+        }
       }
     } else {
       guildInfo.osu.tracks = guildInfo.osu.tracks.filter(
