@@ -14,6 +14,7 @@ import consolaGlobalInstance from 'consola';
 import Task from './Task';
 
 class OsuTracker extends Task {
+  public override name: string = 'osu_tracker';
   private time: number = 1000 * 60 * 15;
 
   public constructor(client: Client) {

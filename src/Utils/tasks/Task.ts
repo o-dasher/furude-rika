@@ -2,8 +2,9 @@ import StringUtils from '@furude-utils/StringUtils';
 import { Client } from 'discord.js';
 
 abstract class Task {
+  public abstract name: string;
   protected readonly client: Client;
-  protected sleepTime: number = 5000;
+  protected sleepTime: number = 1000;
   private runnedStart: boolean = false;
 
   public constructor(client: Client) {
