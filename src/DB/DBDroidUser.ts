@@ -3,7 +3,7 @@ import DroidPPBoardPP from '@furude-osu/API/DroidPPBoardPP';
 interface Skills {
   speed: number;
   aim: number;
-  rythm: number;
+  extra: number;
 }
 
 class DBDroidUser {
@@ -11,7 +11,7 @@ class DBDroidUser {
   skills: Skills = {
     speed: 0,
     aim: 0,
-    rythm: 0
+    extra: 0
   };
 }
 

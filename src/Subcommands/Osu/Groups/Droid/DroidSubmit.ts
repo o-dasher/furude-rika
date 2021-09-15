@@ -106,7 +106,7 @@ class DroidSubmit extends OsuGameCommand {
     // SKILLS
     const aims: number[] = [];
     const speeds: number[] = [];
-    const rythms: number[] = [];
+    const extras: number[] = [];
 
     for await (const play of plays) {
       const parser = new Parser();
@@ -128,14 +128,17 @@ class DroidSubmit extends OsuGameCommand {
         miss: play.miss
       });
       play.pp = calculator.total;
-      aims.push(calculator.stars.aim);
-      speeds.push(calculator.stars.speed);
-      rythms.push(calculator.stars.rhythm);
+      aims.push(calculator.aim);
+      speeds.push(calculator.speed);
+      extras.push(calculator.total);
     }
 
     dbUser.skills.speed = PPHelper.weightList(speeds);
     dbUser.skills.aim = PPHelper.weightList(aims);
-    dbUser.skills.rythm = PPHelper.weightList(rythms);
+    dbUser.skills.extra =
+      extras.reduce((a, b) => a + b, 0) -
+      (dbUser.skills.speed + dbUser.skills.aim);
+
     user.pp.total = PPHelper.calculateFinalPerformancePoints(plays);
     user.pp.list = user.pp.list.sort((a, b) => b.pp - a.pp);
     dbUser.dpp = user.pp;
