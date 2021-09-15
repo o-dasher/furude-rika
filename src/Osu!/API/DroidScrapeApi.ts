@@ -58,6 +58,7 @@ class DroidScrapeApi extends BaseApi {
             .get()
         ).data()
       );
+      user.skills = data.skills;
       user.bests = data.dpp.list.map((s) => {
         const score = new OsuDroidScore();
         score.accuracy = s.accuracy;

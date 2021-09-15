@@ -8,6 +8,7 @@ import BanchoUser from './BanchoUser';
 import OsuDroidUser from './OsuDroidUser';
 import { CommandInteraction } from 'discord.js';
 import DBUser from '@furude-db/DBUser';
+import { Skills } from '@furude-db/DBDroidUser';
 
 abstract class OsuUser {
   id: number | null = null;
@@ -42,6 +43,10 @@ abstract class OsuUser {
   accuracyFormatted: string | null = null;
   profileUrl: string | null = null;
   avatarUrl: string | null = null;
+  public skills: Skills = {
+    speed: 0,
+    aim: 0
+  };
   public abstract buildUser(username: string | number): Promise<OsuUser>;
   public abstract getScores(params: { limit?: number }): Promise<OsuScore[]>;
   public abstract getBests(): Promise<OsuScore[]>;

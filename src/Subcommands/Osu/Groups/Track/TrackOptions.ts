@@ -51,7 +51,7 @@ class TrackOptions extends SubCommand {
       new DBGuild(),
       (await doc.get()).data()
     );
-    
+
     guild.osu.minPP = minPP ?? guild.osu.minPP;
 
     await doc.set(guild, { merge: true });
@@ -61,13 +61,7 @@ class TrackOptions extends SubCommand {
       minPP: guild.osu.minPP
     };
 
-    let description = '';
-    for (const option in options) {
-      description = description.concat(
-        `${option}: ${(options as Record<string, any>)[option]}`
-      );
-    }
-
+    let description = StringUtils.objectToKeyValueString(options);
     embed.setDescription(
       StringUtils.blockQuote(StringUtils.boldString(description))
     );

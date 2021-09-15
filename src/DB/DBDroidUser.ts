@@ -14,3 +14,4 @@ class DBDroidUser {
 }
 
 export default DBDroidUser;
+export { Skills };

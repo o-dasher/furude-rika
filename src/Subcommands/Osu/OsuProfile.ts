@@ -3,9 +3,9 @@ import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
-import DroidServer from '@furude-osu/Servers/DroidServer';
 import StringUtils from '@furude-utils/StringUtils';
 import OsuServers from '@furude-osu/Servers/OsuServers';
+import OsuServer from '@furude-osu/Servers/OsuServer';
 
 class OsuProfile extends OsuGameCommand {
   public constructor() {
@@ -81,6 +81,20 @@ class OsuProfile extends OsuGameCommand {
             `SSH: ${osuUser!.counts!.SSH}\nSS: ${osuUser!.counts!.SS}\nSH: ${
               osuUser!.counts!.SH
             }\nS: ${osuUser!.counts!.S}\nA: ${osuUser!.counts!.A}`
+          )
+        ),
+        true
+      );
+    }
+
+    if (server === OsuServers.droid) {
+      embed.addField(
+        '---Skills',
+        StringUtils.blockQuote(
+          StringUtils.boldString(
+            StringUtils.objectToKeyValueString(osuUser?.skills, {
+              fixedNumber: 2
+            })
           )
         ),
         true

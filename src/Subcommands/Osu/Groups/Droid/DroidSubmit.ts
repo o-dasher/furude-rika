@@ -101,7 +101,7 @@ class DroidSubmit extends OsuGameCommand {
         `Trying to calculate ${user.username} top plays it may take a while...`
       )
     );
-    const data: DBDroidUser = new DBDroidUser();
+    const dbUser: DBDroidUser = new DBDroidUser();
     const aims: number[] = [];
     const speeds: number[] = [];
     for await (const play of plays) {
@@ -128,16 +128,16 @@ class DroidSubmit extends OsuGameCommand {
       speeds.push(calculator.speed);
     }
  
-    data.skills.speed = PPHelper.weightList(speeds);
-    data.skills.aim = PPHelper.weightList(aims);
+    dbUser.skills.speed = PPHelper.weightList(speeds);
+    dbUser.skills.aim = PPHelper.weightList(aims);
     user.pp.total = PPHelper.calculateFinalPerformancePoints(plays);
     user.pp.list = user.pp.list.sort((a, b) => b.pp - a.pp);
-    data.dpp = user.pp;
+    dbUser.dpp = user.pp;
 
     await FurudeDB.db()
       .collection(DBPaths.droid_users)
       .doc(user.uid.toString())
-      .set(JSON.parse(JSON.stringify(data)), { merge: true });
+      .set(JSON.parse(JSON.stringify(dbUser)), { merge: true });
 
     await interaction.followUp(
       StringUtils.successString(
