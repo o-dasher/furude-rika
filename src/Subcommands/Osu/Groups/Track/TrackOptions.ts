@@ -47,11 +47,11 @@ class TrackOptions extends SubCommand {
       .collection(DBPaths.guilds)
       .doc(interaction.guildId);
 
-    const guild: DBGuild = {
-      ...new DBGuild(),
-      ...(await doc.get()).data()
-    };
-
+    const guild: DBGuild = Object.assign(
+      new DBGuild(),
+      (await doc.get()).data()
+    );
+    
     guild.osu.minPP = minPP ?? guild.osu.minPP;
 
     await doc.set(guild, { merge: true });

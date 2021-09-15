@@ -38,7 +38,7 @@ class OsuTracker {
     const cachedUsers: OsuUser[] = [];
 
     for await (const doc of guilds.docs) {
-      const dbGuild: DBGuild = { ...new DBGuild(), ...doc.data() };
+      const dbGuild: DBGuild = Object.assign(new DBGuild(), doc.data());
       let trackChannel: TextChannel | null = null;
       if (!dbGuild.osu.trackChannelID || !dbGuild.osu.tracks) {
         continue;

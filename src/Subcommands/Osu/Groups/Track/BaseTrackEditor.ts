@@ -45,10 +45,10 @@ class BaseTrackEditor extends OsuGameCommand {
       .collection(DBPaths.guilds)
       .doc(interaction.guildId);
 
-    const guildInfo = {
-      ...new DBGuild(),
-      ...(await trackChannelDB.get()).data()
-    };
+    const guildInfo = Object.assign(
+      new DBGuild(),
+      (await trackChannelDB.get()).data()
+    );
 
     if (this.isAdd) {
       if (!guildInfo.osu!.tracks!.find((t) => t.id === osuUser?.id)) {
@@ -72,7 +72,10 @@ class BaseTrackEditor extends OsuGameCommand {
       );
     }
 
-    await trackChannelDB.set(guildInfo, { merge: true });
+    await trackChannelDB.set(JSON.parse(JSON.stringify(guildInfo)), {
+      merge: true
+    });
+    
     await interaction.editReply(
       StringUtils.successString(
         this.isAdd

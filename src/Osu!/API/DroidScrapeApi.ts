@@ -49,15 +49,15 @@ class DroidScrapeApi extends BaseApi {
     user.id = parseInt(username);
     user.profileUrl = `http://ops.dgsrz.com/profile.php?uid=${user.id}`;
     if (needsExtraInfo) {
-      const data: DBDroidUser = {
-        ...new DBDroidUser(),
-        ...(
+      const data: DBDroidUser = Object.assign(
+        new DBDroidUser(),
+        (
           await FurudeDB.db()
             .collection(DBPaths.droid_users)
             .doc(user.id.toString())
             .get()
         ).data()
-      };
+      );
       user.bests = data.dpp.list.map((s) => {
         const score = new OsuDroidScore();
         score.accuracy = s.accuracy;
