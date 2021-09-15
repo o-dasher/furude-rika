@@ -51,9 +51,16 @@ class BaseTrackEditor extends OsuGameCommand {
     );
 
     if (this.isAdd) {
-      if (!guildInfo.osu!.tracks!.find((t) => t.id === osuUser?.id)) {
+      if (guildInfo.osu!.tracks!.find((t) => t.id === osuUser?.id)) {
+        await interaction.editReply(
+          StringUtils.errorString(
+            `${osuUser?.name} is already being tracked on this guild`
+          )
+        );
+        return;
+      } else {
         if (guildInfo.osu!.tracks!.length >= this.trackLimit) {
-          await interaction.reply(
+          await interaction.editReply(
             StringUtils.errorString(
               `I am sorry but you can track at max ${this.trackLimit} per guild`
             )
@@ -75,7 +82,7 @@ class BaseTrackEditor extends OsuGameCommand {
     await trackChannelDB.set(JSON.parse(JSON.stringify(guildInfo)), {
       merge: true
     });
-    
+
     await interaction.editReply(
       StringUtils.successString(
         this.isAdd
