@@ -20,9 +20,9 @@ class DroidDataDumper extends Task {
     const beforeSessionData: droidDataTask = ((
       await FurudeDB.db().collection(DBPaths.tasks).doc(this.name).get()
     ).data() as droidDataTask) ?? {
-      currentID: 0
+      currentID: this.firstValidUserID
     };
-    let currentID = beforeSessionData.currentID ?? this.firstValidUserID;
+    let currentID = beforeSessionData.currentID;
     while (true) {
       currentID++;
       if (currentID < this.firstValidUserID + 1) {
