@@ -15,8 +15,6 @@ import OsuGameCommand from '@furude-subs/Osu/Utils/OsuGameCommand';
 import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
 import DBPaths from '@furude-db/DBPaths';
 import DBDroidUser from '@furude-db/DBDroidUser';
-import OsuUser from '@furude-osu/Users/OsuUser';
-import OsuUserOption from '@discord-classes/SlashCommands/SlashOptions/OsuOptions/OsuUserOption';
 import OptionsTags from '@discord-classes/SlashCommands/SlashOptions/OptionsTags';
 
 const cooldown: string[] = [];
@@ -103,7 +101,7 @@ class DroidSubmit extends OsuGameCommand {
         `Trying to calculate ${user.username} top plays it may take a while...`
       )
     );
-
+    const data: DBDroidUser = new DBDroidUser();
     for await (const play of plays) {
       const parser = new Parser();
       const calculator = new DroidPerformanceCalculator();
@@ -117,22 +115,24 @@ class DroidSubmit extends OsuGameCommand {
       const mods = ModUtils.pcStringToMods(play.mods);
       const osu = await MapUtils.getBeatmapOsu(apiMap.id);
       const map = parser.parse(osu, mods).map;
-      play.pp = calculator.calculate({
+      calculator.calculate({
         stars: calculator.stars.calculate({ map, mods }),
         accPercent: play.accuracy,
         combo: play.combo,
         miss: play.miss
-      }).total;
+      });
+      play.pp = calculator.total;
+      data.skills.aim += calculator.aim;
+      data.skills.speed += calculator.speed;
     }
 
+    data.skills.speed /= plays.length;
+    data.skills.aim /= plays.length;
     user.pp.total = PPHelper.calculateFinalPerformancePoints(plays);
     user.pp.list = user.pp.list.sort((a, b) => b.pp - a.pp);
-
-    const data: DBDroidUser = new DBDroidUser();
     data.dpp = user.pp;
 
-    await FurudeDB.db()
-      .collection(DBPaths.droid_users)
+    await FurudeDB.db()      .collection(DBPaths.droid_users)
       .doc(user.uid.toString())
       .set(JSON.parse(JSON.stringify(data)), { merge: true });
 

@@ -10,7 +10,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
   async getScores(
     interaction: CommandInteraction,
     indexFrom: number,
-    indexTo: number
+    extraIndexes: number
   ): Promise<IOSuWithCalc> {
     const params = await super.getOsuParams(interaction, {
       needsExtraInfo: false
@@ -19,16 +19,19 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
     const { osuUser, server, userData } = params;
     let { error } = params;
 
+    extraIndexes = indexFrom + extraIndexes + 1;
+
     let scores: OsuScore[] = [];
 
     if (osuUser) {
       try {
-        scores = await osuUser.getScores({ limit: indexTo + 1 });
+        scores = await osuUser.getScores({ limit: extraIndexes });
       } catch (err) {
         error = true;
         consolaGlobalInstance.error(err);
       }
 
+      indexFrom = Math.max(0, Math.min(indexFrom, scores.length - 1));
       const hasRecent = scores.length !== 0;
 
       if (!hasRecent) {
@@ -41,13 +44,10 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
       }
 
       if (!error) {
-        indexFrom = Math.max(0, Math.min(indexFrom, scores.length - 1));
-        indexTo = indexFrom + indexTo + 1;
-        for (let i = 0; i < indexTo; i++) {
+        for (let i = 0; i < extraIndexes; i++) {
           if (i < indexFrom) {
             continue;
           }
-
           const score = scores[i];
           await PPHelper.calculateScore(score, server);
           scores.push(score);
@@ -62,7 +62,7 @@ abstract class OsuWithCalcCommand extends OsuGameCommand {
       error,
       userData,
       indexFrom,
-      indexTo
+      indexTo: extraIndexes
     };
   }
 }
