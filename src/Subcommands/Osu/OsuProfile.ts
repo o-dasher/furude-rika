@@ -6,6 +6,7 @@ import LocalizeTags from '@furude-localization/LocalizeTags';
 import StringUtils from '@furude-utils/StringUtils';
 import OsuServers from '@furude-osu/Servers/OsuServers';
 import OsuServer from '@furude-osu/Servers/OsuServer';
+import { Skills } from '@furude-db/DBDroidUser';
 
 class OsuProfile extends OsuGameCommand {
   public constructor() {
@@ -92,7 +93,7 @@ class OsuProfile extends OsuGameCommand {
         '---Skills',
         StringUtils.blockQuote(
           StringUtils.boldString(
-            StringUtils.objectToKeyValueString(osuUser?.skills, {
+            StringUtils.objectToKeyValueString(osuUser?.skills as Skills, {
               fixedNumber: 2
             })
           )

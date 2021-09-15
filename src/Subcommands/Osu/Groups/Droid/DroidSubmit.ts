@@ -136,8 +136,7 @@ class DroidSubmit extends OsuGameCommand {
     dbUser.skills.speed = PPHelper.weightList(speeds);
     dbUser.skills.aim = PPHelper.weightList(aims);
     dbUser.skills.extra =
-      extras.reduce((a, b) => a + b, 0) -
-      (dbUser.skills.speed + dbUser.skills.aim);
+      PPHelper.weightList(extras) - (dbUser.skills.speed + dbUser.skills.aim);
 
     user.pp.total = PPHelper.calculateFinalPerformancePoints(plays);
     user.pp.list = user.pp.list.sort((a, b) => b.pp - a.pp);
