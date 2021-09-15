@@ -22,6 +22,13 @@ import PPEntry from './PPEntry';
 abstract class PPHelper {
   private constructor() {}
 
+  public static weightList(list: number[]) {
+    list.sort((a, b) => {
+      return b - a;
+    });
+    return [...list.values()].reduce((a, v, i) => a + v * Math.pow(0.95, i), 0);
+  }
+
   /**
    * Calculates the final performance points from a list of pp entries.
    *
@@ -29,14 +36,7 @@ abstract class PPHelper {
    * @returns The final performance points.
    */
   public static calculateFinalPerformancePoints(list: PPEntry[]): number {
-    list.sort((a, b) => {
-      return b.pp - a.pp;
-    });
-
-    return [...list.values()].reduce(
-      (a, v, i) => a + v.pp * Math.pow(0.95, i),
-      0
-    );
+    return this.weightList(list.map((p) => p.pp));
   }
 
   public static async calculateScore(
