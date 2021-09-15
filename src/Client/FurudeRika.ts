@@ -2,10 +2,12 @@ import { Client, Collection, Intents } from 'discord.js';
 import consola from 'consola';
 import ICommand from '@discord-classes/SlashCommands/ICommand';
 import CommandsReader from '@furude-io/CommandsReader';
-import OsuTracker from '@furude-utils/handler/OsuTracker';
+import OsuTracker from '@furude-utils/tasks/OsuTracker';
+import DroidDataDumper from '@furude-utils/tasks/DroidDataDumper';
 
 class FurudeRika extends Client {
   private droidTracker: OsuTracker = new OsuTracker(this);
+  private droidDumper: DroidDataDumper = new DroidDataDumper(this);
   public commands: Collection<string, ICommand> = new Collection();
 
   public constructor() {
@@ -28,7 +30,8 @@ class FurudeRika extends Client {
 
     this.once('ready', async (client) => {
       this.logLogin(client);
-      await this.droidTracker.startTracking();
+      await this.droidTracker.start();
+      await this.droidDumper.start();
     });
 
     this.on('interactionCreate', async (interaction) => {

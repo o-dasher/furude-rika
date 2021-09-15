@@ -11,24 +11,16 @@ import DBPaths from '@furude-db/DBPaths';
 import DBGuild from '@furude-db/DBGuild';
 import OsuUser from '@furude-osu/Users/OsuUser';
 import consolaGlobalInstance from 'consola';
+import Task from './Task';
 
-class OsuTracker {
-  private client: Client;
+class OsuTracker extends Task {
   private time: number = 1000 * 60 * 15;
-  private runnedStart: boolean = false;
 
   public constructor(client: Client) {
-    this.client = client;
+    super(client);
   }
 
-  public async startTracking(): Promise<void> {
-    if (this.runnedStart) {
-      throw StringUtils.errorString(
-        'StartTracking() should be only executed once!'
-      );
-    }
-
-    this.runnedStart = true;
+  protected override async onStart(): Promise<void> {
     setIntervalAsync(async () => await this.update(), this.time);
   }
 
