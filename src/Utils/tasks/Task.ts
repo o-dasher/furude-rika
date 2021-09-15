@@ -3,6 +3,7 @@ import { Client } from 'discord.js';
 
 abstract class Task {
   protected readonly client: Client;
+  protected sleepTime: number = 5000;
   private runnedStart: boolean = false;
 
   public constructor(client: Client) {
@@ -17,6 +18,10 @@ abstract class Task {
     }
     this.runnedStart = true;
     await this.onStart();
+  }
+
+  protected async sleep(): Promise<void> {
+    return new Promise((res) => setTimeout(res, this.sleepTime));
   }
 
   protected abstract onStart(): Promise<void>;

@@ -19,13 +19,13 @@ class DroidDataDumper extends Task {
       const user = await new OsuDroidUser().buildUser(currentID);
       if (OsuUserHelper.userExists(user)) {
         const dbUser: Partial<DBDroidUser> = {
-          username: user.name?.toLowerCase() ?? ''
+          username: user.name!.toLowerCase()
         };
         await FurudeDB.db()
           .collection(DBPaths.droid_users)
           .doc(currentID.toString())
           .set(dbUser, { merge: true });
-        console.log(currentID);
+        await this.sleep();
       } else if (currentID > this.latestIDGrace) {
         currentID = this.firstValidUserID;
       }
