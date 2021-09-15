@@ -141,6 +141,7 @@ class DroidSubmit extends OsuGameCommand {
     user.pp.total = PPHelper.calculateFinalPerformancePoints(plays);
     user.pp.list = user.pp.list.sort((a, b) => b.pp - a.pp);
     dbUser.dpp = user.pp;
+    dbUser.username = osuUser?.name?.toLowerCase() ?? '';
 
     await FurudeDB.db()
       .collection(DBPaths.droid_users)

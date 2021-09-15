@@ -108,14 +108,12 @@ class OsuTracker {
             color: trackChannel.guild.me?.displayColor
           });
 
-          if (trackChannel) {
-            await trackChannel.send({
-              content: StringUtils.successString(
-                FastTS.recentScore(user, OsuServers.droid, i)
-              ),
-              embeds: [embed]
-            });
-          }
+          await trackChannel.send({
+            content: StringUtils.successString(
+              FastTS.recentScore(user, OsuServers.droid, i)
+            ),
+            embeds: [embed]
+          });
         }
       }
     }

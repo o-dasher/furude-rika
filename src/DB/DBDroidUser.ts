@@ -7,6 +7,7 @@ interface Skills {
 }
 
 class DBDroidUser {
+  username: string = '';
   dpp: DroidPPBoardPP = { total: 0, list: [] };
   skills: Skills = {
     speed: 0,

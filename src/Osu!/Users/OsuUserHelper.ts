@@ -1,4 +1,6 @@
+import DBPaths from '@furude-db/DBPaths';
 import DBUser from '@furude-db/DBUser';
+import FurudeDB from '@furude-db/FurudeDB';
 import Localizer from '@furude-localization/Localizer';
 import LocalizeTags from '@furude-localization/LocalizeTags';
 import OsuServer from '@furude-osu/Servers/OsuServer';
@@ -35,6 +37,15 @@ class OsuUserHelper {
         res.osuUser = await new BanchoUser().buildUser(id);
       } catch (err) {}
     } else if (server === OsuServers.droid) {
+      const foundUserDoc = (
+        await FurudeDB.db()
+          .collection(DBPaths.droid_users)
+          .where('username', '==', id.toString().toLowerCase())
+          .get()
+      ).docs[0];
+      if (foundUserDoc) {
+        id = foundUserDoc.id;
+      }
       id = parseInt(id.toString());
       if (!id && interaction) {
         await interaction.editReply(
