@@ -3,6 +3,7 @@ import DBPaths from '@furude-db/DBPaths';
 import FurudeDB from '@furude-db/FurudeDB';
 import OsuDroidUser from '@furude-osu/Users/OsuDroidUser';
 import OsuUserHelper from '@furude-osu/Users/OsuUserHelper';
+import consolaGlobalInstance from 'consola';
 import Task from './Task';
 
 class DroidDataDumper extends Task {
@@ -26,6 +27,9 @@ class DroidDataDumper extends Task {
           .doc(currentID.toString())
           .set(dbUser, { merge: true });
         await this.sleep();
+        consolaGlobalInstance.success(
+          `Dumped osu!droid profile for ${user.name}`
+        );
       } else if (currentID > this.latestIDGrace) {
         currentID = this.firstValidUserID;
       }
