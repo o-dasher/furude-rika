@@ -33,7 +33,7 @@ class TrackList extends SubCommand {
     const embed = new BotEmbed().setTitle(
       `${interaction.guild?.name} tracked users...`
     );
-    
+
     embed.description = '';
     if (guild.osu.tracks.length === 0) {
       embed.description += StringUtils.boldString(
@@ -41,7 +41,7 @@ class TrackList extends SubCommand {
       );
     } else {
       for (const [i, track] of guild.osu.tracks.entries()) {
-        embed.description += StringUtils.boldString(`${i + 1} - ${track.id}\n`);
+        embed.description += `**${i + 1} - ${track.id}**\n`;
       }
     }
 
