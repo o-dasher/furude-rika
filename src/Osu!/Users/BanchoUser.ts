@@ -13,18 +13,19 @@ class BanchoUser extends OsuUser {
     return this;
   }
   public async getScores(params: { limit?: number }): Promise<OsuScore[]> {
-    const scores = await ApiManager.banchoApi.getUserRecent({
-      u: this.id!.toString(),
-      limit: params.limit
-    });
-
-    const banchoScores: BanchoScore[] = [];
-    
-    scores.forEach((score) => {
-      banchoScores.push(new BanchoScore(score));
-    });
-
-    return banchoScores;
+    return (
+      await ApiManager.banchoApi.getUserRecent({
+        u: this.id!.toString(),
+        limit: params.limit
+      })
+    ).map((v) => new BanchoScore(v));
+  }
+  public async getBests(): Promise<OsuScore[]> {
+    return (
+      await ApiManager.banchoApi.getUserBest({
+        u: this.id!.toString()
+      })
+    ).map((v) => new BanchoScore(v));
   }
 }
 

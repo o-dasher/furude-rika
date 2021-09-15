@@ -6,9 +6,6 @@ import UserOption from '@discord-classes/SlashCommands/SlashOptions/UserOption';
 import SubCommand from '@discord-classes/SlashCommands/SubCommand';
 import OsuServer from '@furude-osu/Servers/OsuServer';
 import IOsuParams from '@furude-subs/Osu/Utils/IOsuParams';
-import DBPaths from '@furude-db/DBPaths';
-import DBUser from '@furude-db/DBUser';
-import OsuServers from '@furude-osu/Servers/OsuServers';
 
 abstract class OsuGameCommand extends SubCommand {
   protected constructor(params: {

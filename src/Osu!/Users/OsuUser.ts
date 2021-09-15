@@ -44,6 +44,7 @@ abstract class OsuUser {
   avatarUrl: string | null = null;
   public abstract buildUser(username: string | number): Promise<OsuUser>;
   public abstract getScores(params: { limit?: number }): Promise<OsuScore[]>;
+  public abstract getBests(): Promise<OsuScore[]>;
 }
 
 export default OsuUser;

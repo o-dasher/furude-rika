@@ -58,6 +58,15 @@ class DroidScrapeApi extends BaseApi {
             .get()
         ).data()
       };
+      user.bests = data.dpp.list.map((s) => {
+        const score = new OsuDroidScore();
+        score.accuracy = s.accuracy;
+        score.maxCombo = s.combo;
+        score.mods = s.mods;
+        score.pp = s.pp;
+        score.counts.miss = s.miss;
+        return score;
+      });
       user.pp.raw = data.dpp.total;
     }
 

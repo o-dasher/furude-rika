@@ -6,6 +6,7 @@ import OsuSet from '@furude-subs/Osu/OsuSet';
 import OsuCalc from '@furude-subs/Osu/OsuCalc';
 import DroidGroup from '@furude-subs/Osu/Groups/Droid/DroidGroup';
 import OsuTrack from '@furude-subs/Osu/Groups/Track/OsuTrack';
+import OsuTop from '@furude-subs/Osu/OsuTop';
 
 class Osu extends Command {
   constructor() {
@@ -15,6 +16,7 @@ class Osu extends Command {
     this.addSelfSubcommand(new OsuProfile());
     this.addSelfSubcommand(new OsuRecent());
     this.addSelfSubcommand(new OsuCalc());
+    this.addSelfSubcommand(new OsuTop());
     this.addSelfSubGroup(new DroidGroup());
     this.addSelfSubGroup(new OsuTrack());
   }

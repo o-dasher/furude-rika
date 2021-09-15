@@ -6,6 +6,7 @@ import DBUser from '@furude-db/DBUser';
 
 class OsuDroidUser extends OsuUser {
   public droidScores: OsuDroidScore[] = [];
+  public bests: OsuDroidScore[] = [];
 
   public async buildUser(
     username: string | number,
@@ -26,7 +27,11 @@ class OsuDroidUser extends OsuUser {
   }
 
   public async getScores(_params: { limit?: number }): Promise<OsuScore[]> {
-    return this.droidScores;
+    return this.droidScores.slice(0, _params.limit);
+  }
+
+  public async getBests(): Promise<OsuScore[]> {
+    return this.bests;
   }
 }
 
