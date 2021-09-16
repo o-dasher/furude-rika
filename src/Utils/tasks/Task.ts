@@ -1,3 +1,4 @@
+import Promises from '@furude-utils/Promises';
 import StringUtils from '@furude-utils/StringUtils';
 import { Client } from 'discord.js';
 

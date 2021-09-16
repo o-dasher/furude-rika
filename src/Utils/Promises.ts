@@ -4,3 +4,5 @@ abstract class Promises {
     return new Promise((res) => setTimeout(res, ms));
   }
 }
+
+export default Promises;
