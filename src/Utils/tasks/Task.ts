@@ -22,7 +22,7 @@ abstract class Task {
   }
 
   protected async sleep(): Promise<void> {
-    return new Promise((res) => setTimeout(res, this.sleepTime));
+    return Promises.sleep(this.sleepTime);
   }
 
   protected abstract onStart(): Promise<void>;

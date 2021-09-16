@@ -12,7 +12,7 @@ interface droidDataTask {
 
 class DroidDataDumper extends Task {
   public override name: string = 'droid_data_dumper';
-  protected override sleepTime: number = 10000;
+  protected override sleepTime: number = 5000;
   private latestIDGrace = 300000;
   private firstValidUserID = 2417 - 1;
 
@@ -37,13 +37,16 @@ class DroidDataDumper extends Task {
           .collection(DBPaths.droid_users)
           .doc(currentID.toString())
           .set(dbUser, { merge: true });
-        await FurudeDB.db().collection(DBPaths.tasks).doc(this.name).set(
-          {
-            currentID
-          },
-          { merge: true }
-        );
         await this.sleep();
+        if (currentID % 100 === 0) {
+          await FurudeDB.db().collection(DBPaths.tasks).doc(this.name).set(
+            {
+              currentID
+            },
+            { merge: true }
+          );
+          await this.sleep();
+        }
         consolaGlobalInstance.success(
           `Dumped osu!droid profile for ${user.name} at id: ${currentID}`
         );
