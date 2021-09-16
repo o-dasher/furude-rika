@@ -1,6 +1,10 @@
 import BotEmbed from '@discord-classes/Embed/BotEmbed';
+import ChannelOption from '@discord-classes/SlashCommands/SlashOptions/ChannelOption';
 import SubCommand from '@discord-classes/SlashCommands/SubCommand';
-import { SlashCommandIntegerOption } from '@discordjs/builders';
+import {
+  SlashCommandChannelOption,
+  SlashCommandIntegerOption
+} from '@discordjs/builders';
 import DBGuild from '@furude-db/DBGuild';
 import DBPaths from '@furude-db/DBPaths';
 import FurudeDB from '@furude-db/FurudeDB';
@@ -11,6 +15,8 @@ import { CommandInteraction, Permissions } from 'discord.js';
 
 class TrackOptions extends SubCommand {
   private minPP: SlashCommandIntegerOption;
+  private mainChannel: SlashCommandChannelOption;
+  private leaderboardChannel: SlashCommandChannelOption;
 
   public constructor() {
     super();
@@ -20,8 +26,19 @@ class TrackOptions extends SubCommand {
         (this.minPP = new SlashCommandIntegerOption()
           .setName('min_pp')
           .setDescription('Minimum pp required for score to be tracked.'))
+      )
+      .addChannelOption(
+        (this.mainChannel = new SlashCommandChannelOption()
+          .setName('main_channel')
+          .setDescription('The main channel for tracking users'))
+      )
+      .addChannelOption(
+        (this.leaderboardChannel = new SlashCommandChannelOption()
+          .setName('leaderboard_channel')
+          .setDescription(
+            'Channel to display a pp rank based on the tracked users.'
+          ))
       );
-
     this.permissions.push(Permissions.FLAGS.ADMINISTRATOR);
   }
 
@@ -32,8 +49,6 @@ class TrackOptions extends SubCommand {
       return;
     }
 
-    const minPP = interaction.options.getInteger(this.minPP.name);
-
     if (!interaction.guildId) {
       await interaction.editReply(
         StringUtils.errorString(
@@ -42,6 +57,12 @@ class TrackOptions extends SubCommand {
       );
       return;
     }
+
+    const minPP = interaction.options.getInteger(this.minPP.name);
+    const mainChannel = interaction.options.getChannel(this.mainChannel.name);
+    const leaderboardChannel = interaction.options.getChannel(
+      this.leaderboardChannel.name
+    );
 
     const doc = FurudeDB.db()
       .collection(DBPaths.guilds)
@@ -53,12 +74,22 @@ class TrackOptions extends SubCommand {
     );
 
     guild.osu.minPP = minPP ?? guild.osu.minPP;
+    guild.osu.trackChannelID =
+      mainChannel?.type === 'GUILD_TEXT'
+        ? mainChannel.id
+        : guild.osu.trackChannelID;
+    guild.osu.leaderboardChannelID =
+      leaderboardChannel?.type === 'GUILD_TEXT'
+        ? leaderboardChannel.id
+        : guild.osu.leaderboardChannelID;
 
-    await doc.set(guild, { merge: true });
+    await doc.set(JSON.parse(JSON.stringify(guild)), { merge: true });
     const embed = new BotEmbed(interaction);
 
     const options = {
-      minPP: guild.osu.minPP
+      minPP: guild.osu.minPP,
+      trackChannelID: guild.osu.trackChannelID,
+      leaderboardChannelID: guild.osu.leaderboardChannelID
     };
 
     let description = StringUtils.objectToKeyValueString(options);

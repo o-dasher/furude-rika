@@ -10,14 +10,13 @@ class BotEmbed extends MessageEmbed {
 
   public constructor(
     interaction?: CommandInteraction | null,
-    data?: MessageEmbed | MessageEmbedOptions,
+    data?: MessageEmbed | MessageEmbedOptions
   ) {
     super(data);
     this.setColor(
-      data?.color??
-        interaction?.guild?.me?.displayColor ??
-        this.defaultColor
+      data?.color ?? interaction?.guild?.me?.displayColor ?? this.defaultColor
     );
+    this.setTimestamp(new Date());
   }
 }
 

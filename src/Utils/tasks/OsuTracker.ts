@@ -12,6 +12,7 @@ import DBGuild from '@furude-db/DBGuild';
 import OsuUser from '@furude-osu/Users/OsuUser';
 import consolaGlobalInstance from 'consola';
 import Task from './Task';
+import BotEmbed from '@discord-classes/Embed/BotEmbed';
 
 class OsuTracker extends Task {
   public override name: string = 'osu_tracker';
@@ -22,6 +23,7 @@ class OsuTracker extends Task {
   }
 
   protected override async onStart(): Promise<void> {
+    await this.update();
     setIntervalAsync(async () => await this.update(), this.time);
   }
 
@@ -33,23 +35,32 @@ class OsuTracker extends Task {
     for await (const doc of guilds.docs) {
       const dbGuild: DBGuild = Object.assign(new DBGuild(), doc.data());
       let trackChannel: TextChannel | null = null;
-      if (!dbGuild.osu.trackChannelID || !dbGuild.osu.tracks) {
-        continue;
-      }
-      if (parseInt(dbGuild.osu.trackChannelID)) {
-        const channel = await this.client.channels.fetch(
+      let leaderBoardChannel: TextChannel | null = null;
+
+      try {
+        const tmpTrackChannel = await this.client.channels.fetch(
           dbGuild.osu.trackChannelID
         );
-        if (!channel || !(channel instanceof TextChannel)) {
-          continue;
-        }
-        trackChannel = channel;
-      } else {
-        continue;
+        trackChannel =
+          tmpTrackChannel instanceof TextChannel ? tmpTrackChannel : null;
+      } catch (err) {}
+      try {
+        const tmpLeaderBoardChannel = await this.client.channels
+          .fetch(dbGuild.osu.leaderboardChannelID)
+          .catch();
+        leaderBoardChannel =
+          tmpLeaderBoardChannel instanceof TextChannel
+            ? tmpLeaderBoardChannel
+            : null;
+      } catch (err) {}
+
+      if (trackChannel) {
+        consolaGlobalInstance.success(
+          `Started tracking osu! users for ${trackChannel.guild.name}`
+        );
       }
-      consolaGlobalInstance.success(
-        `Started tracking osu! users for ${trackChannel.guild.name}`
-      );
+
+      const guildTrackedUsers: OsuUser[] = [];
       for await (const track of dbGuild.osu.tracks) {
         const cachedUser = cachedUsers.find((u) => u.id == track.id);
         const server = OsuServers.getFromString(track.server);
@@ -68,7 +79,7 @@ class OsuTracker extends Task {
             undefined,
             undefined,
             undefined,
-            false
+            true
           )).osuUser;
 
         if (
@@ -79,35 +90,54 @@ class OsuTracker extends Task {
           continue;
         }
 
+        guildTrackedUsers.push(user);
         if (!cachedUser) {
           cachedUsers.push(user);
         }
 
         const scores = await user.getScores({});
 
-        for await (const [i, score] of scores.entries()) {
-          score.date = score.date as Date;
-          const delta = currentTime.getTime() - score.date.getTime();
+        if (trackChannel) {
+          for await (const [i, score] of scores.entries()) {
+            score.date = score.date as Date;
+            const delta = currentTime.getTime() - score.date.getTime();
 
-          if (delta > this.time) {
-            break;
+            if (delta > this.time) {
+              break;
+            }
+
+            await PPHelper.calculateScore(score, OsuServers.droid);
+            if (score.pp < dbGuild.osu!.minPP!) {
+              continue;
+            }
+            const embed = new RecentScoreEmbed(score, server, undefined, {
+              color: trackChannel.guild.me?.displayColor
+            });
+
+            await trackChannel.send({
+              content: StringUtils.successString(
+                FastTS.recentScore(user, OsuServers.droid, i)
+              ),
+              embeds: [embed]
+            });
           }
-
-          await PPHelper.calculateScore(score, OsuServers.droid);
-          if (score.pp < dbGuild.osu!.minPP!) {
-            continue;
-          }
-          const embed = new RecentScoreEmbed(score, server, undefined, {
-            color: trackChannel.guild.me?.displayColor
-          });
-
-          await trackChannel.send({
-            content: StringUtils.successString(
-              FastTS.recentScore(user, OsuServers.droid, i)
-            ),
-            embeds: [embed]
-          });
         }
+      }
+      if (leaderBoardChannel) {
+        const lbEmbed = new BotEmbed();
+        guildTrackedUsers.sort((a, b) => Number(b.pp?.raw) - Number(a.pp?.raw));
+        lbEmbed.description = '';
+        for (const [i, u] of guildTrackedUsers.entries()) {
+          lbEmbed.description += `${i + 1} - **${
+            u.name
+          }**: ${u.pp?.raw?.toFixed(2)}\n`;
+        }
+        await leaderBoardChannel.send({
+          content: StringUtils.successString(
+            `Leaderboard for ${leaderBoardChannel.guild.name}`
+          ),
+          embeds: [lbEmbed],
+        });
       }
     }
   }
