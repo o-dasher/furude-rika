@@ -12,7 +12,7 @@ interface droidDataTask {
 
 class DroidDataDumper extends Task {
   public override name: string = 'droid_data_dumper';
-  protected override sleepTime: number = 5000;
+  protected override sleepTime: number = 7500;
   private latestIDGrace = 300000;
   private firstValidUserID = 2417 - 1;
 
