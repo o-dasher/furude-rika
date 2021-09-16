@@ -8,7 +8,7 @@ abstract class ModUtils extends ModUtil {
   public static getStringRepr(mods: Mod[]): string {
     let str = '';
     mods.forEach((mod) => {
-      str = str.concat(mod.acronym);
+      str += mod.acronym;
     });
     return str.length == 0 ? '' : `+${str}`;
   }

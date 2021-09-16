@@ -32,7 +32,7 @@ class CommandsReader {
   }
 
   private static getCommands(subpath?: string): Command[] {
-    const fullpath = this.commandsPath.concat(subpath ?? '');
+    const fullpath = this.commandsPath + subpath ?? '';
     const commandsStrings = fs
       .readdirSync(fullpath)
       .filter((file) => file.endsWith('.ts'));

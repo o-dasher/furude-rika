@@ -12,7 +12,7 @@ import DBDroidUser from '@furude-db/DBDroidUser';
 
 class DroidScrapeApi extends BaseApi {
   public override baseUrl = 'http://ops.dgsrz.com/';
-  private profileEndPoint = new ParamString(this.baseUrl.concat('profile.php'));
+  private profileEndPoint = new ParamString(`${this.baseUrl}profile.php`);
 
   public async getUser(
     username: string,

@@ -6,7 +6,6 @@ import LocalizeTags from '@furude-localization/LocalizeTags';
 import StringUtils from '@furude-utils/StringUtils';
 import OsuServers from '@furude-osu/Servers/OsuServers';
 
-
 class OsuProfile extends OsuGameCommand {
   public constructor() {
     super({});
@@ -25,36 +24,29 @@ class OsuProfile extends OsuGameCommand {
     let performanceInfo = '';
 
     if (osuUser?.pp) {
-      performanceInfo = performanceInfo.concat(
-        `PP: ${Math.round(osuUser!.pp!.raw?.valueOf() ?? 0)}\n`
-      );
+      performanceInfo = performanceInfo += `PP: ${Math.round(
+        osuUser!.pp!.raw?.valueOf() ?? 0
+      )}\n`;
     }
-    performanceInfo = performanceInfo.concat(`Rank: #${osuUser!.pp!.rank} `);
+    performanceInfo += `Rank: #${osuUser!.pp!.rank} `;
     if (!(server === OsuServers.droid)) {
-      performanceInfo = performanceInfo.concat(
-        ` (#${osuUser!.pp!.countryRank})`
-      );
+      performanceInfo += ` (#${osuUser!.pp!.countryRank})`;
     }
-    performanceInfo = performanceInfo.concat(
-      `\nAccuracy: ${osuUser!.accuracyFormatted}\nPlayCount: ${
-        osuUser!.counts!.plays
-      }`
-    );
+    performanceInfo += `\nAccuracy: ${osuUser!.accuracyFormatted}\nPlayCount: ${
+      osuUser!.counts!.plays
+    }`;
+
     if (interaction.guild) {
-      performanceInfo = performanceInfo.concat(
-        `\nTotal Score: ${Localizer.localizeNumber(
-          osuUser?.scores!.total!,
-          interaction
-        )}\nRanked Score: ${Localizer.localizeNumber(
-          osuUser?.scores!.ranked!,
-          interaction
-        )}`
-      );
+      performanceInfo += `\nTotal Score: ${Localizer.localizeNumber(
+        osuUser?.scores!.total!,
+        interaction
+      )}\nRanked Score: ${Localizer.localizeNumber(
+        osuUser?.scores!.ranked!,
+        interaction
+      )}`;
     }
     if (!(server === OsuServers.droid)) {
-      performanceInfo = performanceInfo.concat(
-        `\nLevel: ${osuUser!.level!.toFixed(2)}`
-      );
+      performanceInfo += `\nLevel: ${osuUser!.level!.toFixed(2)}`;
     }
 
     const embed = new BotEmbed(interaction)
