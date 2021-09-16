@@ -23,7 +23,6 @@ class OsuTracker extends Task {
   }
 
   protected override async onStart(): Promise<void> {
-    await this.update();
     setIntervalAsync(async () => await this.update(), this.time);
   }
 
