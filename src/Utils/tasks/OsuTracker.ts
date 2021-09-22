@@ -44,9 +44,9 @@ class OsuTracker extends Task {
           tmpTrackChannel instanceof TextChannel ? tmpTrackChannel : null;
       } catch (err) {}
       try {
-        const tmpLeaderBoardChannel = await this.client.channels
-          .fetch(dbGuild.osu.leaderboardChannelID)
-          .catch();
+        const tmpLeaderBoardChannel = await this.client.channels.fetch(
+          dbGuild.osu.leaderboardChannelID
+        );
         leaderBoardChannel =
           tmpLeaderBoardChannel instanceof TextChannel
             ? tmpLeaderBoardChannel
@@ -135,7 +135,7 @@ class OsuTracker extends Task {
           content: StringUtils.successString(
             `Leaderboard for ${leaderBoardChannel.guild.name}`
           ),
-          embeds: [lbEmbed],
+          embeds: [lbEmbed]
         });
       }
     }
