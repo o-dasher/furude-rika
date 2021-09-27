@@ -55,11 +55,6 @@ class FurudeRika extends Client {
 
     process.on('unhandledRejection', (err) => {
       consola.error(err);
-      setTimeout(() => {
-        consola.success('Reseting from previous Exception');
-        this.login(process.env.BOT_TOKEN);
-        this.logLogin(this);
-      }, 2500);
     });
   }
 }
