@@ -1,10 +1,11 @@
-import OwnedAPIBeatmap from '@furude-osu/Users/beatmaps/OwnedAPIBeatmap';
+
 import axios from 'axios';
+import { Beatmap } from 'node-osu';
 
 abstract class MapUtils {
   private constructor() {}
 
-  public static getBeatmapPageUrl(beatmap: OwnedAPIBeatmap) {
+  public static getBeatmapPageUrl(beatmap: Beatmap) {
     return `https://osu.ppy.sh/beatmapsets/${beatmap.beatmapSetId}#osu/${beatmap.id}`;
   }
 
